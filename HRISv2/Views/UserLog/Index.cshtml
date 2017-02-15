@@ -1,0 +1,56 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HRISv2.Models.vUserProfileWithUsername>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h4>Usernames</h4>
+
+@using (Html.BeginForm("Index", "UserLog", FormMethod.Get))
+{
+    <div class="form-group form-inline">
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off" })
+        <input type="submit" value="Search Lastname" class="btn btn-flat" />
+    </div>
+}
+<table class="table table-striped">
+    <tr>
+        <th>
+            FULLNAME
+        </th>
+        <th>
+            EIC
+        </th>
+        <th>
+            USERNAME
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EIC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Reset", "Reset", new { id=item.EIC }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EIC })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))

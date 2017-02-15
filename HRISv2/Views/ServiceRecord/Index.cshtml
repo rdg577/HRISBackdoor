@@ -1,0 +1,61 @@
+﻿@*@model IEnumerable<HRISv2.Models.vUserProfileWithServices>*@
+
+@using PagedList.Mvc
+@model PagedList.IPagedList<HRISv2.Models.vUserProfileWithServices>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "ServiceRecord", FormMethod.Get))
+{
+    <div class="form-group form-inline">
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off" })
+        <input type="submit" value="Search Lastname" class="btn btn-flat" />
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    EIC
+                </th>
+                <th>
+                    Fullname
+                </th>
+                <th>
+                    Total No. of Services
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalServices)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "Display", new { id = item.EIC })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+

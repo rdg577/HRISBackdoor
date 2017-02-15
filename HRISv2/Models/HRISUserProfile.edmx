@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRISUserProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tappEmpGroup">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tranCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="payGroupCode" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tAttEmpArea">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="EIC" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tAttEmpScheme">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="isShifting" Type="int" />
+        </EntityType>
+        <EntityType Name="tAttScheme">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="SchemeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Valid_In1" Type="nvarchar" MaxLength="50" />
+          <Property Name="In1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Valid_Out1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Out1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Valid_In2" Type="nvarchar" MaxLength="50" />
+          <Property Name="In2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Valid_Out2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Out2" Type="nvarchar" MaxLength="50" />
+          <Property Name="SchemeDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="isShifting" Type="int" />
+          <Property Name="timeIn1" Type="time" Precision="7" />
+          <Property Name="timeOut1" Type="time" Precision="7" />
+          <Property Name="timeIn2" Type="time" Precision="7" />
+          <Property Name="timeOut2" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="tAttStationArea">
+          <Key>
+            <PropertyRef Name="AreaID" />
+          </Key>
+          <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="trefEmpGroup">
+          <Key>
+            <PropertyRef Name="recNo" />
+            <PropertyRef Name="empGroupCode" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vUserProfile">
+          <Key>
+            <PropertyRef Name="IDNo" />
+          </Key>
+          <Property Name="IDNo" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+          <Property Name="Birthdate" Type="date" />
+          <Property Name="Birthplace" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="200" />
+          <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
+          <Property Name="OfficeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="OfficeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
+          <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vUserProfileWithServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vUserProfileWithServices">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="EIC" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+          <Property Name="TotalServices" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vUserProfileWithUsername">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="IDNo" Type="nvarchar" MaxLength="4" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+          <Property Name="Birthdate" Type="date" />
+          <Property Name="Birthplace" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="200" />
+          <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
+          <Property Name="OfficeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="OfficeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
+          <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityContainer Name="HRISUserProfileModelStoreContainer">
+          <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vUserProfile" EntityType="Self.vUserProfile" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vUserProfile].[IDNo] AS [IDNo], 
+[vUserProfile].[EIC] AS [EIC], 
+[vUserProfile].[Fullname] AS [Fullname], 
+[vUserProfile].[Birthdate] AS [Birthdate], 
+[vUserProfile].[Birthplace] AS [Birthplace], 
+[vUserProfile].[Position] AS [Position], 
+[vUserProfile].[SubPosition] AS [SubPosition], 
+[vUserProfile].[OfficeCode] AS [OfficeCode], 
+[vUserProfile].[OfficeName] AS [OfficeName], 
+[vUserProfile].[JobStatus] AS [JobStatus], 
+[vUserProfile].[BATSArea] AS [BATSArea], 
+[vUserProfile].[AttendanceScheme] AS [AttendanceScheme], 
+[vUserProfile].[GroupName] AS [GroupName], 
+[vUserProfile].[GroupCode] AS [GroupCode], 
+[vUserProfile].[AreaID] AS [AreaID], 
+[vUserProfile].[SchemeCode] AS [SchemeCode]
+FROM [dbo].[vUserProfile] AS [vUserProfile]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vUserProfileWithServices" EntityType="Self.vUserProfileWithServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vUserProfileWithServices].[EIC] AS [EIC], 
+[vUserProfileWithServices].[Fullname] AS [Fullname], 
+[vUserProfileWithServices].[TotalServices] AS [TotalServices]
+FROM [dbo].[vUserProfileWithServices] AS [vUserProfileWithServices]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vUserProfileWithUsername" EntityType="Self.vUserProfileWithUsername" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vUserProfileWithUsername].[IDNo] AS [IDNo], 
+[vUserProfileWithUsername].[EIC] AS [EIC], 
+[vUserProfileWithUsername].[Fullname] AS [Fullname], 
+[vUserProfileWithUsername].[Birthdate] AS [Birthdate], 
+[vUserProfileWithUsername].[Birthplace] AS [Birthplace], 
+[vUserProfileWithUsername].[Position] AS [Position], 
+[vUserProfileWithUsername].[SubPosition] AS [SubPosition], 
+[vUserProfileWithUsername].[OfficeCode] AS [OfficeCode], 
+[vUserProfileWithUsername].[OfficeName] AS [OfficeName], 
+[vUserProfileWithUsername].[JobStatus] AS [JobStatus], 
+[vUserProfileWithUsername].[BATSArea] AS [BATSArea], 
+[vUserProfileWithUsername].[AttendanceScheme] AS [AttendanceScheme], 
+[vUserProfileWithUsername].[GroupName] AS [GroupName], 
+[vUserProfileWithUsername].[GroupCode] AS [GroupCode], 
+[vUserProfileWithUsername].[SchemeCode] AS [SchemeCode], 
+[vUserProfileWithUsername].[AreaID] AS [AreaID], 
+[vUserProfileWithUsername].[UserName] AS [UserName]
+FROM [dbo].[vUserProfileWithUsername] AS [vUserProfileWithUsername]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRISUserProfileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tappEmpGroup">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tranCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="payGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tAttEmpArea">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tAttEmpScheme">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="isShifting" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tAttScheme">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valid_In1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="In1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valid_Out1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Out1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valid_In2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="In2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valid_Out2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Out2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isShifting" Type="Int32" />
+          <Property Name="timeIn1" Type="Time" Precision="7" />
+          <Property Name="timeOut1" Type="Time" Precision="7" />
+          <Property Name="timeIn2" Type="Time" Precision="7" />
+          <Property Name="timeOut2" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="tAttStationArea">
+          <Key>
+            <PropertyRef Name="AreaID" />
+          </Key>
+          <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="trefEmpGroup">
+          <Key>
+            <PropertyRef Name="recNo" />
+            <PropertyRef Name="empGroupCode" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" />
+          <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" />
+          <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" />
+          <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" />
+          <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" />
+          <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" />
+          <EntitySet Name="vUserProfile" EntityType="HRISUserProfileModel.vUserProfile" />
+          <EntitySet Name="vUserProfileWithUsername" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
+          <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithServices" />
+        </EntityContainer>
+        <EntityType Name="vUserProfile">
+          <Key>
+            <PropertyRef Name="IDNo" />
+          </Key>
+          <Property Name="IDNo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SubPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="JobStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BATSArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AttendanceScheme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vUserProfileWithUsername">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="IDNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SubPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="JobStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BATSArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AttendanceScheme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vUserProfileWithServices">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="TotalServices" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRISUserProfileModelStoreContainer" CdmEntityContainer="HRISEntities">
+          <EntitySetMapping Name="tappEmpGroup">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpGroup">
+              <MappingFragment StoreEntitySet="tappEmpGroup">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="tranCode" ColumnName="tranCode" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+                <ScalarProperty Name="payGroupCode" ColumnName="payGroupCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAttEmpArea">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpArea">
+              <MappingFragment StoreEntitySet="tAttEmpArea">
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAttEmpScheme">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpScheme">
+              <MappingFragment StoreEntitySet="tAttEmpScheme">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAttScheme">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttScheme">
+              <MappingFragment StoreEntitySet="tAttScheme">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+                <ScalarProperty Name="Valid_In1" ColumnName="Valid_In1" />
+                <ScalarProperty Name="In1" ColumnName="In1" />
+                <ScalarProperty Name="Valid_Out1" ColumnName="Valid_Out1" />
+                <ScalarProperty Name="Out1" ColumnName="Out1" />
+                <ScalarProperty Name="Valid_In2" ColumnName="Valid_In2" />
+                <ScalarProperty Name="In2" ColumnName="In2" />
+                <ScalarProperty Name="Valid_Out2" ColumnName="Valid_Out2" />
+                <ScalarProperty Name="Out2" ColumnName="Out2" />
+                <ScalarProperty Name="SchemeDesc" ColumnName="SchemeDesc" />
+                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+                <ScalarProperty Name="timeIn1" ColumnName="timeIn1" />
+                <ScalarProperty Name="timeOut1" ColumnName="timeOut1" />
+                <ScalarProperty Name="timeIn2" ColumnName="timeIn2" />
+                <ScalarProperty Name="timeOut2" ColumnName="timeOut2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAttStationArea">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttStationArea">
+              <MappingFragment StoreEntitySet="tAttStationArea">
+                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="trefEmpGroup">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.trefEmpGroup">
+              <MappingFragment StoreEntitySet="trefEmpGroup">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserProfile">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfile">
+              <MappingFragment StoreEntitySet="vUserProfile">
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+                <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
+                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserProfileWithUsername">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithUsername">
+              <MappingFragment StoreEntitySet="vUserProfileWithUsername">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+                <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
+                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserProfileWithServices">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithServices">
+              <MappingFragment StoreEntitySet="vUserProfileWithServices">
+                <ScalarProperty Name="TotalServices" ColumnName="TotalServices" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

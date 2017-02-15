@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tappEmpGroup">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tranCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="payGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tAttEmpArea">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tAttEmpScheme">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="isShifting" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tAttScheme">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Valid_In1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="In1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Valid_Out1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Out1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Valid_In2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="In2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Valid_Out2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Out2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="isShifting" Type="Int32" />
+    <Property Name="timeIn1" Type="Time" Precision="7" />
+    <Property Name="timeOut1" Type="Time" Precision="7" />
+    <Property Name="timeIn2" Type="Time" Precision="7" />
+    <Property Name="timeOut2" Type="Time" Precision="7" />
+  </EntityType>
+  <EntityType Name="tAttStationArea">
+    <Key>
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="trefEmpGroup">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="empGroupCode" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vUserProfileWithUsername">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="IDNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Birthdate" Type="DateTime" Precision="0" />
+    <Property Name="Birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SubPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="JobStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BATSArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AttendanceScheme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" />
+    <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" />
+    <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" />
+    <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" />
+    <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" />
+    <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" />
+    <EntitySet Name="vUserProfileWithUsername" EntityType="Self.vUserProfileWithUsername" />
+  </EntityContainer>
+</Schema>

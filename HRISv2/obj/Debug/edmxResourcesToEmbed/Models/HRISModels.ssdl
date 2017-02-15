@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tappEmpGroup">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tranCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="payGroupCode" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tAttEmpArea">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="EIC" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tAttEmpScheme">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="isShifting" Type="int" />
+  </EntityType>
+  <EntityType Name="tAttScheme">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="SchemeName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Valid_In1" Type="nvarchar" MaxLength="50" />
+    <Property Name="In1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Valid_Out1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Out1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Valid_In2" Type="nvarchar" MaxLength="50" />
+    <Property Name="In2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Valid_Out2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Out2" Type="nvarchar" MaxLength="50" />
+    <Property Name="SchemeDesc" Type="nvarchar" MaxLength="100" />
+    <Property Name="isShifting" Type="int" />
+    <Property Name="timeIn1" Type="time" Precision="7" />
+    <Property Name="timeOut1" Type="time" Precision="7" />
+    <Property Name="timeIn2" Type="time" Precision="7" />
+    <Property Name="timeOut2" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="tAttStationArea">
+    <Key>
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="trefEmpGroup">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="empGroupCode" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'HRIS.dbo.vUserProfile' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vUserProfile">
+          <Property Name="idNo" Type="nvarchar" MaxLength="4" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="birthplace" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="200" />
+          <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
+          <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'HRIS.dbo.vUserProfileWithServices' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vUserProfileWithServices">
+          <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUserProfileWithUsername">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="IDNo" Type="nvarchar" MaxLength="4" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+    <Property Name="Birthdate" Type="date" />
+    <Property Name="Birthplace" Type="nvarchar" MaxLength="255" />
+    <Property Name="Position" Type="nvarchar" MaxLength="200" />
+    <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
+    <Property Name="OfficeCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="OfficeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
+    <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
+    <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityContainer Name="HRISModelStoreContainer">
+    <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vUserProfileWithUsername" EntityType="Self.vUserProfileWithUsername" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[vUserProfileWithUsername].[IDNo] AS [IDNo], 
+[vUserProfileWithUsername].[EIC] AS [EIC], 
+[vUserProfileWithUsername].[Fullname] AS [Fullname], 
+[vUserProfileWithUsername].[Birthdate] AS [Birthdate], 
+[vUserProfileWithUsername].[Birthplace] AS [Birthplace], 
+[vUserProfileWithUsername].[Position] AS [Position], 
+[vUserProfileWithUsername].[SubPosition] AS [SubPosition], 
+[vUserProfileWithUsername].[OfficeCode] AS [OfficeCode], 
+[vUserProfileWithUsername].[OfficeName] AS [OfficeName], 
+[vUserProfileWithUsername].[JobStatus] AS [JobStatus], 
+[vUserProfileWithUsername].[BATSArea] AS [BATSArea], 
+[vUserProfileWithUsername].[AttendanceScheme] AS [AttendanceScheme], 
+[vUserProfileWithUsername].[GroupName] AS [GroupName], 
+[vUserProfileWithUsername].[GroupCode] AS [GroupCode], 
+[vUserProfileWithUsername].[SchemeCode] AS [SchemeCode], 
+[vUserProfileWithUsername].[AreaID] AS [AreaID], 
+[vUserProfileWithUsername].[UserName] AS [UserName]
+FROM [dbo].[vUserProfileWithUsername] AS [vUserProfileWithUsername]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

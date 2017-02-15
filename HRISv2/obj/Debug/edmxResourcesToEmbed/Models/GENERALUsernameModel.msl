@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GENERALModelStoreContainer" CdmEntityContainer="GENERALEntities">
+    <EntitySetMapping Name="tlogUser">
+      <EntityTypeMapping TypeName="GENERALModel.tlogUser">
+        <MappingFragment StoreEntitySet="tlogUser">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="passWord" ColumnName="passWord" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

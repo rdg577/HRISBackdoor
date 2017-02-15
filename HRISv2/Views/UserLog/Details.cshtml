@@ -1,0 +1,137 @@
+﻿@model HRISv2.Models.vUserProfileWithUsername
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd style="background-color: yellow">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fullname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthplace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthplace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubPosition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubPosition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OfficeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OfficeCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OfficeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OfficeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BATSArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BATSArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttendanceScheme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttendanceScheme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SchemeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SchemeCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.EIC }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HRISUserProfileModelStoreContainer" CdmEntityContainer="HRISEntities">
+    <EntitySetMapping Name="tappEmpGroup">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpGroup">
+        <MappingFragment StoreEntitySet="tappEmpGroup">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="tranCode" ColumnName="tranCode" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="payGroupCode" ColumnName="payGroupCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tAttEmpArea">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpArea">
+        <MappingFragment StoreEntitySet="tAttEmpArea">
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tAttEmpScheme">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpScheme">
+        <MappingFragment StoreEntitySet="tAttEmpScheme">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tAttScheme">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tAttScheme">
+        <MappingFragment StoreEntitySet="tAttScheme">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+          <ScalarProperty Name="Valid_In1" ColumnName="Valid_In1" />
+          <ScalarProperty Name="In1" ColumnName="In1" />
+          <ScalarProperty Name="Valid_Out1" ColumnName="Valid_Out1" />
+          <ScalarProperty Name="Out1" ColumnName="Out1" />
+          <ScalarProperty Name="Valid_In2" ColumnName="Valid_In2" />
+          <ScalarProperty Name="In2" ColumnName="In2" />
+          <ScalarProperty Name="Valid_Out2" ColumnName="Valid_Out2" />
+          <ScalarProperty Name="Out2" ColumnName="Out2" />
+          <ScalarProperty Name="SchemeDesc" ColumnName="SchemeDesc" />
+          <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+          <ScalarProperty Name="timeIn1" ColumnName="timeIn1" />
+          <ScalarProperty Name="timeOut1" ColumnName="timeOut1" />
+          <ScalarProperty Name="timeIn2" ColumnName="timeIn2" />
+          <ScalarProperty Name="timeOut2" ColumnName="timeOut2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tAttStationArea">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tAttStationArea">
+        <MappingFragment StoreEntitySet="tAttStationArea">
+          <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trefEmpGroup">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.trefEmpGroup">
+        <MappingFragment StoreEntitySet="trefEmpGroup">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="groupName" ColumnName="groupName" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vUserProfile">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfile">
+        <MappingFragment StoreEntitySet="vUserProfile">
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+          <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+          <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+          <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+          <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
+          <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vUserProfileWithUsername">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithUsername">
+        <MappingFragment StoreEntitySet="vUserProfileWithUsername">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+          <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+          <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+          <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+          <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
+          <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vUserProfileWithServices">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithServices">
+        <MappingFragment StoreEntitySet="vUserProfileWithServices">
+          <ScalarProperty Name="TotalServices" ColumnName="TotalServices" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

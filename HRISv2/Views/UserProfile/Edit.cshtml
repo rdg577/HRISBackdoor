@@ -1,0 +1,209 @@
+﻿@model HRISv2.Models.vUserProfile
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>User Profile</h4>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col  col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Basic Info</div>
+                <div class="panel-body">
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IDNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.IDNo)</label>
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(model => model.EIC)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.Fullname)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.Birthdate)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Birthplace, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.Birthplace)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.Position)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubPosition, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.SubPosition)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OfficeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.OfficeName)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JobStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label class="form-control">@Html.ValueFor(model => model.JobStatus)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Available for Update</div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                <select name="empGroupCode" class="form-control">
+                                    @if (ViewBag.listEmpGroup == null)
+                                    {
+                                        <option value="">NONE</option>
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in ViewBag.listEmpGroup)
+                                        {
+                                            if (item.empGroupCode == Model.GroupCode)
+                                            {
+                                                <option selected="selected" value="@Html.Raw(item.empGroupCode)">@Html.Raw(item.groupName)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.empGroupCode)">@Html.Raw(item.groupName)</option>
+                                            }
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BATSArea, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                <select name="AreaID" class="form-control">
+                                    @{
+
+                                        if (string.IsNullOrWhiteSpace(Model.AreaID))
+                                        {
+                                            <option selected="selected" value="">None</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="">None</option>
+                                        }
+
+                                    }
+                                    @if (ViewBag.listStationArea != null)
+                                    {
+                                        foreach (var item in ViewBag.listStationArea)
+                                        {
+                                            if (item.AreaID == Model.AreaID)
+                                            {
+                                                <option selected="selected" value="@Html.Raw(item.AreaID)">@Html.Raw(item.Description)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.AreaID)">@Html.Raw(item.Description)</option>
+                                            }
+                                        }
+                                    }
+
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AttendanceScheme, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                <select name="SchemeCode" class="form-control">
+                                    @{
+                                        if (string.IsNullOrWhiteSpace(Model.AreaID))
+                                        {
+                                            <option selected="selected" value="">None</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="">None</option>
+                                        }
+                                    }
+
+                                    @if (ViewBag.listAttendanceScheme != null)
+                                    {
+                                        foreach (var item in ViewBag.listAttendanceScheme)
+                                        {
+                                            if (item.SchemeCode == Model.SchemeCode)
+                                            {
+                                                <option selected="selected" value="@Html.Raw(item.SchemeCode)">@Html.Raw(item.SchemeDesc)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.SchemeCode)">@Html.Raw(item.SchemeDesc)</option>
+                                            }
+                                        }
+                                    }
+
+                                    
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <input type="submit" value="Save" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
