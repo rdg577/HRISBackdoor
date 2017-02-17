@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+
+<h2>Service Record of @Html.Raw(ViewBag.Fullname)</h2>
+
+@foreach (var item in ViewBag.employeeServiceRecord)
+{
+    <div>@Html.Raw(item.dateFrom) : @Html.Raw(item.designation) : @Html.Raw(item.statusName)</div>
+}

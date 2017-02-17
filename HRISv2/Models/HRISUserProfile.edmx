@@ -15,6 +15,110 @@
           <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
           <Property Name="payGroupCode" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="tappEmployee">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idNo" Type="nvarchar" MaxLength="4" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="20" />
+          <Property Name="middleName" Type="nvarchar" MaxLength="20" />
+          <Property Name="extName" Type="nvarchar" MaxLength="10" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="birthplace" Type="nvarchar" MaxLength="255" />
+          <Property Name="fullnameFirst" Type="nvarchar" MaxLength="60" />
+          <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
+          <Property Name="gender" Type="int" />
+          <Property Name="prefixTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="sufixTitle" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tappEmpStatus">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statusCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="groupID" Type="int" />
+          <Property Name="isGovService" Type="int" />
+          <Property Name="isPlantilla" Type="int" />
+          <Property Name="class" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tappOffice">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="accronym" Type="nvarchar" MaxLength="10" />
+          <Property Name="officeServiceRec" Type="nvarchar" MaxLength="100" />
+          <Property Name="branch" Type="nvarchar" MaxLength="10" />
+          <Property Name="sortTag" Type="int" />
+          <Property Name="tagRemarks" Type="int" />
+        </EntityType>
+        <EntityType Name="tappPosition">
+          <Key>
+            <PropertyRef Name="positionCode" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="positionCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="fullDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="shortDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="accronym" Type="nvarchar" MaxLength="100" />
+          <Property Name="sg" Type="int" />
+        </EntityType>
+        <EntityType Name="tappSalarySched">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salaryId" Type="nvarchar" MaxLength="255" />
+          <Property Name="salaryCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="sg" Type="int" />
+          <Property Name="step" Type="int" />
+          <Property Name="rateMonth" Type="money" />
+          <Property Name="rateDay" Type="money" />
+          <Property Name="year" Type="int" />
+          <Property Name="isActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tappSalarySchem">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paySchemeCode" Type="nvarchar" MaxLength="4" />
+          <Property Name="paySchemeAcronym" Type="nvarchar" MaxLength="3" />
+          <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tappServiceRecord">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+          <Property Name="dateFrom" Type="date" />
+          <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+          <Property Name="designation" Type="nvarchar" MaxLength="200" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="30" />
+          <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
+          <Property Name="branch" Type="nvarchar" MaxLength="50" />
+          <Property Name="lwpay" Type="nvarchar" MaxLength="50" />
+          <Property Name="salaryPayroll" Type="money" />
+          <Property Name="salaryServiceRec" Type="money" />
+          <Property Name="paySchemeCode" Type="nvarchar" MaxLength="3" />
+          <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+          <Property Name="sepCause" Type="nvarchar" MaxLength="200" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="isGovernmentService" Type="nvarchar" MaxLength="3" />
+          <Property Name="isInsideGovernment" Type="nvarchar" MaxLength="3" />
+          <Property Name="SgStep" Type="nvarchar" MaxLength="5" />
+          <Property Name="isApproved" Type="int" />
+          <Property Name="dateApproved" Type="date" />
+          <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="tAttEmpArea">
           <Key>
             <PropertyRef Name="EIC" />
@@ -128,8 +232,46 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
           <Property Name="UserName" Type="nvarchar" MaxLength="30" />
         </EntityType>
+        <Function Name="fnGetEmployeeServiceRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eic" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="recNo" Type="int" Nullable="false" />
+                <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+                <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+                <Property Name="dateFrom" Type="date" />
+                <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+                <Property Name="designation" Type="nvarchar" MaxLength="200" />
+                <Property Name="statusName" Type="nvarchar" MaxLength="30" />
+                <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
+                <Property Name="branch" Type="nvarchar" MaxLength="50" />
+                <Property Name="lwpay" Type="nvarchar" MaxLength="50" />
+                <Property Name="salaryPayroll" Type="money" />
+                <Property Name="salaryServiceRec" Type="money" />
+                <Property Name="paySchemeCode" Type="nvarchar" MaxLength="3" />
+                <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+                <Property Name="sepCause" Type="nvarchar" MaxLength="200" />
+                <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+                <Property Name="isGovernmentService" Type="nvarchar" MaxLength="3" />
+                <Property Name="isInsideGovernment" Type="nvarchar" MaxLength="3" />
+                <Property Name="SgStep" Type="nvarchar" MaxLength="5" />
+                <Property Name="isApproved" Type="int" />
+                <Property Name="dateApproved" Type="date" />
+                <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="HRISUserProfileModelStoreContainer">
           <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappEmployee" EntityType="Self.tappEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappEmpStatus" EntityType="Self.tappEmpStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappOffice" EntityType="Self.tappOffice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappPosition" EntityType="Self.tappPosition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappSalarySched" EntityType="Self.tappSalarySched" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappServiceRecord" EntityType="Self.tappServiceRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
@@ -264,6 +406,16 @@ FROM [dbo].[vUserProfileWithUsername] AS [vUserProfileWithUsername]</DefiningQue
           <EntitySet Name="vUserProfile" EntityType="HRISUserProfileModel.vUserProfile" />
           <EntitySet Name="vUserProfileWithUsername" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
           <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithServices" />
+          <EntitySet Name="tappServiceRecord" EntityType="HRISUserProfileModel.tappServiceRecord" />
+          <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
+          <Parameter Name="eic" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tappEmployee" EntityType="HRISUserProfileModel.tappEmployee" />
+          <EntitySet Name="tappPosition" EntityType="HRISUserProfileModel.tappPosition" />
+          <EntitySet Name="tappEmpStatus" EntityType="HRISUserProfileModel.tappEmpStatus" />
+          <EntitySet Name="tappOffice" EntityType="HRISUserProfileModel.tappOffice" />
+          <EntitySet Name="tappSalarySchem" EntityType="HRISUserProfileModel.tappSalarySchem" />
+          <EntitySet Name="tappSalarySched" EntityType="HRISUserProfileModel.tappSalarySched" />
         </EntityContainer>
         <EntityType Name="vUserProfile">
           <Key>
@@ -315,6 +467,134 @@ FROM [dbo].[vUserProfileWithUsername] AS [vUserProfileWithUsername]</DefiningQue
           <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="TotalServices" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappServiceRecord">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="dateFrom" Type="DateTime" Precision="0" />
+          <Property Name="dateTo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="designation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="statusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="officeServiceRec" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lwpay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="salaryPayroll" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="salaryServiceRec" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="paySchemeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="sepCause" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="isGovernmentService" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="isInsideGovernment" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="SgStep" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="isApproved" Type="Int32" />
+          <Property Name="dateApproved" Type="DateTime" Precision="0" />
+          <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="fnGetEmployeeServiceRecords_Result">
+          <Property Type="Int32" Name="recNo" Nullable="false" />
+          <Property Type="String" Name="EIC" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Fullname" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="dateFrom" Nullable="true" Precision="10" />
+          <Property Type="String" Name="dateTo" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="designation" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="statusName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="officeServiceRec" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="branch" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lwpay" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="salaryPayroll" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="salaryServiceRec" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="paySchemeCode" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="paySchemeName" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="sepCause" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="officeCode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="isGovernmentService" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="isInsideGovernment" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="SgStep" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="isApproved" Nullable="true" />
+          <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
+          <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="tappEmployee">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="extName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Int32" />
+          <Property Name="prefixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sufixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappPosition">
+          <Key>
+            <PropertyRef Name="positionCode" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="positionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fullDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="shortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="accronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sg" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappEmpStatus">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="groupID" Type="Int32" />
+          <Property Name="isGovService" Type="Int32" />
+          <Property Name="isPlantilla" Type="Int32" />
+          <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappOffice">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="sortTag" Type="Int32" />
+          <Property Name="tagRemarks" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappSalarySchem">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paySchemeCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeAcronym" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappSalarySched">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salaryId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="salaryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sg" Type="Int32" />
+          <Property Name="step" Type="Int32" />
+          <Property Name="rateMonth" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="rateDay" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="isActive" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -444,6 +724,145 @@ FROM [dbo].[vUserProfileWithUsername] AS [vUserProfileWithUsername]</DefiningQue
                 <ScalarProperty Name="TotalServices" ColumnName="TotalServices" />
                 <ScalarProperty Name="Fullname" ColumnName="Fullname" />
                 <ScalarProperty Name="EIC" ColumnName="EIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappServiceRecord">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappServiceRecord">
+              <MappingFragment StoreEntitySet="tappServiceRecord">
+                <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
+                <ScalarProperty Name="dateApproved" ColumnName="dateApproved" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="SgStep" ColumnName="SgStep" />
+                <ScalarProperty Name="isInsideGovernment" ColumnName="isInsideGovernment" />
+                <ScalarProperty Name="isGovernmentService" ColumnName="isGovernmentService" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="sepCause" ColumnName="sepCause" />
+                <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
+                <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
+                <ScalarProperty Name="salaryServiceRec" ColumnName="salaryServiceRec" />
+                <ScalarProperty Name="salaryPayroll" ColumnName="salaryPayroll" />
+                <ScalarProperty Name="lwpay" ColumnName="lwpay" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="dateTo" ColumnName="dateTo" />
+                <ScalarProperty Name="dateFrom" ColumnName="dateFrom" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="fnGetEmployeeServiceRecords" FunctionName="HRISUserProfileModel.Store.fnGetEmployeeServiceRecords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HRISUserProfileModel.fnGetEmployeeServiceRecords_Result">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="dateFrom" ColumnName="dateFrom" />
+                <ScalarProperty Name="dateTo" ColumnName="dateTo" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="lwpay" ColumnName="lwpay" />
+                <ScalarProperty Name="salaryPayroll" ColumnName="salaryPayroll" />
+                <ScalarProperty Name="salaryServiceRec" ColumnName="salaryServiceRec" />
+                <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
+                <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
+                <ScalarProperty Name="sepCause" ColumnName="sepCause" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="isGovernmentService" ColumnName="isGovernmentService" />
+                <ScalarProperty Name="isInsideGovernment" ColumnName="isInsideGovernment" />
+                <ScalarProperty Name="SgStep" ColumnName="SgStep" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="dateApproved" ColumnName="dateApproved" />
+                <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tappEmployee">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmployee">
+              <MappingFragment StoreEntitySet="tappEmployee">
+                <ScalarProperty Name="sufixTitle" ColumnName="sufixTitle" />
+                <ScalarProperty Name="prefixTitle" ColumnName="prefixTitle" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+                <ScalarProperty Name="fullnameFirst" ColumnName="fullnameFirst" />
+                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="extName" ColumnName="extName" />
+                <ScalarProperty Name="middleName" ColumnName="middleName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="idNo" ColumnName="idNo" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappPosition">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappPosition">
+              <MappingFragment StoreEntitySet="tappPosition">
+                <ScalarProperty Name="sg" ColumnName="sg" />
+                <ScalarProperty Name="accronym" ColumnName="accronym" />
+                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
+                <ScalarProperty Name="fullDescription" ColumnName="fullDescription" />
+                <ScalarProperty Name="positionCode" ColumnName="positionCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappEmpStatus">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpStatus">
+              <MappingFragment StoreEntitySet="tappEmpStatus">
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="isPlantilla" ColumnName="isPlantilla" />
+                <ScalarProperty Name="isGovService" ColumnName="isGovService" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="statusCode" ColumnName="statusCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappOffice">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappOffice">
+              <MappingFragment StoreEntitySet="tappOffice">
+                <ScalarProperty Name="tagRemarks" ColumnName="tagRemarks" />
+                <ScalarProperty Name="sortTag" ColumnName="sortTag" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+                <ScalarProperty Name="accronym" ColumnName="accronym" />
+                <ScalarProperty Name="officeName" ColumnName="officeName" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappSalarySchem">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySchem">
+              <MappingFragment StoreEntitySet="tappSalarySchem">
+                <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
+                <ScalarProperty Name="paySchemeAcronym" ColumnName="paySchemeAcronym" />
+                <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappSalarySched">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySched">
+              <MappingFragment StoreEntitySet="tappSalarySched">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="rateDay" ColumnName="rateDay" />
+                <ScalarProperty Name="rateMonth" ColumnName="rateMonth" />
+                <ScalarProperty Name="step" ColumnName="step" />
+                <ScalarProperty Name="sg" ColumnName="sg" />
+                <ScalarProperty Name="salaryCode" ColumnName="salaryCode" />
+                <ScalarProperty Name="salaryId" ColumnName="salaryId" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

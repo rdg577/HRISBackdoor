@@ -10,6 +10,110 @@
     <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
     <Property Name="payGroupCode" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <EntityType Name="tappEmployee">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idNo" Type="nvarchar" MaxLength="4" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="20" />
+    <Property Name="middleName" Type="nvarchar" MaxLength="20" />
+    <Property Name="extName" Type="nvarchar" MaxLength="10" />
+    <Property Name="birthdate" Type="date" />
+    <Property Name="birthplace" Type="nvarchar" MaxLength="255" />
+    <Property Name="fullnameFirst" Type="nvarchar" MaxLength="60" />
+    <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
+    <Property Name="gender" Type="int" />
+    <Property Name="prefixTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="sufixTitle" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tappEmpStatus">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="statusCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="statusName" Type="nvarchar" MaxLength="50" />
+    <Property Name="groupID" Type="int" />
+    <Property Name="isGovService" Type="int" />
+    <Property Name="isPlantilla" Type="int" />
+    <Property Name="class" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tappOffice">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="accronym" Type="nvarchar" MaxLength="10" />
+    <Property Name="officeServiceRec" Type="nvarchar" MaxLength="100" />
+    <Property Name="branch" Type="nvarchar" MaxLength="10" />
+    <Property Name="sortTag" Type="int" />
+    <Property Name="tagRemarks" Type="int" />
+  </EntityType>
+  <EntityType Name="tappPosition">
+    <Key>
+      <PropertyRef Name="positionCode" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="positionCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="fullDescription" Type="nvarchar" MaxLength="100" />
+    <Property Name="shortDescription" Type="nvarchar" MaxLength="100" />
+    <Property Name="accronym" Type="nvarchar" MaxLength="100" />
+    <Property Name="sg" Type="int" />
+  </EntityType>
+  <EntityType Name="tappSalarySched">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="salaryId" Type="nvarchar" MaxLength="255" />
+    <Property Name="salaryCode" Type="nvarchar" MaxLength="255" />
+    <Property Name="sg" Type="int" />
+    <Property Name="step" Type="int" />
+    <Property Name="rateMonth" Type="money" />
+    <Property Name="rateDay" Type="money" />
+    <Property Name="year" Type="int" />
+    <Property Name="isActive" Type="int" />
+  </EntityType>
+  <EntityType Name="tappSalarySchem">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paySchemeCode" Type="nvarchar" MaxLength="4" />
+    <Property Name="paySchemeAcronym" Type="nvarchar" MaxLength="3" />
+    <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tappServiceRecord">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+    <Property Name="dateFrom" Type="date" />
+    <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+    <Property Name="designation" Type="nvarchar" MaxLength="200" />
+    <Property Name="statusName" Type="nvarchar" MaxLength="30" />
+    <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
+    <Property Name="branch" Type="nvarchar" MaxLength="50" />
+    <Property Name="lwpay" Type="nvarchar" MaxLength="50" />
+    <Property Name="salaryPayroll" Type="money" />
+    <Property Name="salaryServiceRec" Type="money" />
+    <Property Name="paySchemeCode" Type="nvarchar" MaxLength="3" />
+    <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+    <Property Name="sepCause" Type="nvarchar" MaxLength="200" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="isGovernmentService" Type="nvarchar" MaxLength="3" />
+    <Property Name="isInsideGovernment" Type="nvarchar" MaxLength="3" />
+    <Property Name="SgStep" Type="nvarchar" MaxLength="5" />
+    <Property Name="isApproved" Type="int" />
+    <Property Name="dateApproved" Type="date" />
+    <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
+  </EntityType>
   <EntityType Name="tAttEmpArea">
     <Key>
       <PropertyRef Name="EIC" />
@@ -123,8 +227,46 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
     <Property Name="UserName" Type="nvarchar" MaxLength="30" />
   </EntityType>
+  <Function Name="fnGetEmployeeServiceRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="eic" Type="nvarchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="recNo" Type="int" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="25" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
+          <Property Name="dateFrom" Type="date" />
+          <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+          <Property Name="designation" Type="nvarchar" MaxLength="200" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="30" />
+          <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
+          <Property Name="branch" Type="nvarchar" MaxLength="50" />
+          <Property Name="lwpay" Type="nvarchar" MaxLength="50" />
+          <Property Name="salaryPayroll" Type="money" />
+          <Property Name="salaryServiceRec" Type="money" />
+          <Property Name="paySchemeCode" Type="nvarchar" MaxLength="3" />
+          <Property Name="paySchemeName" Type="nvarchar" MaxLength="10" />
+          <Property Name="sepCause" Type="nvarchar" MaxLength="200" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="isGovernmentService" Type="nvarchar" MaxLength="3" />
+          <Property Name="isInsideGovernment" Type="nvarchar" MaxLength="3" />
+          <Property Name="SgStep" Type="nvarchar" MaxLength="5" />
+          <Property Name="isApproved" Type="int" />
+          <Property Name="dateApproved" Type="date" />
+          <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <EntityContainer Name="HRISUserProfileModelStoreContainer">
     <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappEmployee" EntityType="Self.tappEmployee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappEmpStatus" EntityType="Self.tappEmpStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappOffice" EntityType="Self.tappOffice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappPosition" EntityType="Self.tappPosition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappSalarySched" EntityType="Self.tappSalarySched" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappServiceRecord" EntityType="Self.tappServiceRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />

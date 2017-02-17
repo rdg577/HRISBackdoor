@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
+
 namespace HRISv2.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Linq;
     
     public partial class HRISEntities : DbContext
     {
@@ -34,5 +38,22 @@ namespace HRISv2.Models
         public DbSet<vUserProfile> vUserProfile { get; set; }
         public DbSet<vUserProfileWithUsername> vUserProfileWithUsername { get; set; }
         public DbSet<vUserProfileWithServices> vUserProfileWithServices { get; set; }
+        public DbSet<tappServiceRecord> tappServiceRecord { get; set; }
+        public DbSet<tappEmployee> tappEmployee { get; set; }
+        public DbSet<tappPosition> tappPosition { get; set; }
+        public DbSet<tappEmpStatus> tappEmpStatus { get; set; }
+        public DbSet<tappOffice> tappOffice { get; set; }
+        public DbSet<tappSalarySchem> tappSalarySchem { get; set; }
+        public DbSet<tappSalarySched> tappSalarySched { get; set; }
+    
+        [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
+        public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)
+        {
+            var eicParameter = eic != null ?
+                new ObjectParameter("eic", eic) :
+                new ObjectParameter("eic", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnGetEmployeeServiceRecords_Result>("[HRISEntities].[fnGetEmployeeServiceRecords](@eic)", eicParameter);
+        }
     }
 }

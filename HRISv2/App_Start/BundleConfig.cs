@@ -29,6 +29,20 @@ namespace HRISv2
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;
+
+            // setup for Kendo UI
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                 "~/Scripts/kendo/kendo.all.min.js",
+                 "~/Scripts/kendo/kendo.aspnetmvc.min.js"
+             ));
+
+
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
+                "~/Content/kendo/kendo.common-bootstrap.min.css",
+                "~/Content/kendo/kendo.bootstrap.min.css",
+                "~/Content/kendo/kendo.metrolightblue.min.css"));
+
+            bundles.IgnoreList.Clear();
         }
     }
 }

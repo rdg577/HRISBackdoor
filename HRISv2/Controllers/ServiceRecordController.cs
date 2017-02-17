@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using HRISv2.Models;
 using PagedList;
@@ -40,9 +42,38 @@ namespace HRISv2.Controllers
 
         public ActionResult Display(String id)
         {
-            return Content(id);
+            if(id==null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            // query employee service record
+            //var employeeServiceRecord = db.tappServiceRecord.Where(g => g.EIC == id).ToList();
+            IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = db.fnGetEmployeeServiceRecords(id).ToList();
+            if (!employeeServiceRecord.Any())
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Fullname = employeeServiceRecord.First().Fullname;
+            ViewBag.employeeServiceRecord = employeeServiceRecord.OrderByDescending(g=>g.dateFrom);
+
+            return View();
+
         }
 
-        
+        [HttpGet]
+        public ActionResult Create()
+        {
+            var employeeList = db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
+
+            ViewBag.employeeList = employeeList;
+            
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(String EIC)
+        {
+            return Content(EIC);
+        }
     }
 }

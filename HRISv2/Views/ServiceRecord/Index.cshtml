@@ -10,6 +10,8 @@
 
 <h2>Index</h2>
 
+<p>@Html.ActionLink("Create", "Create", null as object, new {@class = "btn btn-primary"})</p>
+
 @using (Html.BeginForm("Index", "ServiceRecord", FormMethod.Get))
 {
     <div class="form-group form-inline">
@@ -19,7 +21,7 @@
 }
 
 <div class="row">
-    <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="col-lg-8 col-md-12 col-sm-12">
         <table class="table table-striped">
             <tr>
                 <th>
@@ -43,7 +45,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Fullname)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.TotalServices)
                     </td>
                     <td>
