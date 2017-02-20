@@ -71,9 +71,18 @@ namespace HRISv2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(String EIC)
+        public ActionResult Create([Bind(Include="EIC, dateFrom, dateTo, designation, statusName, " +
+                  "officeServiceRec, branch, salaryPayroll, salaryServiceRec, paySchemeCode, paySchemeName, sepCause, officeCode")] tappServiceRecord tappServiceRecord)
         {
-            return Content(EIC);
+            if (ModelState.IsValid)
+            {
+                db.tappServiceRecord.Add(tappServiceRecord);
+                db.SaveChanges();
+
+                return RedirectToAction("Index","ServiceRecord");
+            }
+
+            return View();
         }
     }
 }

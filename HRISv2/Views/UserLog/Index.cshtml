@@ -12,7 +12,7 @@
 @using (Html.BeginForm("Index", "UserLog", FormMethod.Get))
 {
     <div class="form-group form-inline">
-        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off" })
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 280px" })
         <input type="submit" value="Search Lastname" class="btn btn-flat" />
     </div>
 }

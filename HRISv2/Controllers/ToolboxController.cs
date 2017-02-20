@@ -50,7 +50,18 @@ namespace HRISv2.Controllers
         {
             var list = (from r in db.tappOffice
                         orderby r.officeServiceRec
-                        select r).ToList();
+                        select new
+                        {
+                            recNo = r.recNo,
+                            officeCode = r.officeCode,
+                            officeName = r.officeName,
+                            accronym = r.accronym,
+                            officeServiceRec = r.officeServiceRec,
+                            officeServiceRecWithCode = r.officeServiceRec + " - " + r.officeCode,
+                            branch = r.branch,
+                            sortTag = r.sortTag,
+                            tagRemarks = r.tagRemarks
+                        }).ToList();
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }

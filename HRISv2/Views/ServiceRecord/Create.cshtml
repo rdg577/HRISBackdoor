@@ -3,9 +3,11 @@
 }
 
 <h2>Create</h2>
-<hr />
-@using (Html.BeginForm())
-{
+<hr/>
+
+@*@using (Html.BeginForm())
+{*@
+    
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -120,7 +122,7 @@
             @(Html.Kendo().DropDownList()
                   .Name("paySchemeName")
                   .DataTextField("paySchemeName")
-                  .DataValueField("paySchemeAcronym")
+                  .DataValueField("paySchemeCode")
                   .DataSource(g => g.Read("SalarySchemeList", "Toolbox"))
                   .OptionLabel("-- PLEASE SELECT --")
                   .HtmlAttributes(new { maxlength = "300", style = "width:200px;text-transform:uppercase;" })
@@ -140,7 +142,7 @@
                                   type: "GET",
                                   datatype: "json",
                                   success: function(data) {
-                                              var flag = $("#paySchemeName").val(); 
+                                              var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0,1);
                                                 if(flag == "D") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22}); }
                                                 else if(flag == "M") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth}); } 
                                                 else if(flag == "A") { $("#salaryPayroll").kendoNumericTextBox({ value: (data[0].rateMonth * 12)}); }
@@ -179,14 +181,15 @@
             @(Html.Kendo().DatePicker()
                   .Name("dateTo")
                   .Max(DateTime.Now)
-                  .HtmlAttributes(new { style = "width: 280px" }))
+                  .HtmlAttributes(new {style = "width: 280px"}))
+            <input type="checkbox" name="cbPresent" id="cbPresent"/> PRESENT
         </div>
 
         <div class="row form-group officeServiceRec">
             <label class="control-label col-lg-2">Office Service:</label>
             @(Html.Kendo().DropDownList()
                   .Name("officeServiceRec")
-                  .DataTextField("officeServiceRec")
+                  .DataTextField("officeServiceRecWithCode")
                   .DataValueField("officeServiceRec")
                   .DataSource(g => g.Read("OfficeList", "Toolbox"))
                   .OptionLabel("-- PLEASE SELECT --")
@@ -199,7 +202,89 @@
             <input type="text" name="branch" id="branch" value="PROV'L" style="width: 280px" class="form-control" />
         </div>
 
+        <div class="row form-group sepCause">
+            <label class="control-label col-lg-2">Separation Cause:</label>
+            <input type="text" name="sepCause" id="sepCause" value="" style="width: 280px" class="form-control" />
+        </div>
+
     </div>
 
     <input type="submit" id="btnClick" class="btn btn-primary" value="Create" />
-}
+@*}*@
+
+<script>
+    $("#btnClick").click(function () {
+        /** EXTRACTION OF DATA */
+        // extract EIC
+        var EIC = "";
+        var strEIC = $("#EIC").val();
+        if (strEIC.length > 0) {
+            var strArr = strEIC.split("-");
+            EIC = strArr[0].trim();
+        }
+        // extract employment employment period
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = "";
+        if (!$("#cbPresent").is(":checked")) {
+            dateTo = $("#dateTo").val();
+        }
+        // extract employee service designation
+        var designation = $("#designation").data("kendoDropDownList").text();
+        // extract employment status
+        var statusName = $("#statusName").data("kendoDropDownList").value();
+        // extract employment office service record
+        var officeServiceRec = $("#officeServiceRec").data("kendoDropDownList").value();
+        // extract branch
+        var branch = $("#branch").val;
+        // extract salaryPayroll
+        var salaryPayroll = $("#salaryPayroll").data("kendoNumericTextBox").value();
+        // extract salaryServiceRec, paySchemeName, paySchemeCode
+        var salaryServiceRec = "";
+        var paySchemeName = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
+        if (paySchemeName == "D") {
+            salaryServiceRec = salaryPayroll * 22 * 12;
+        } else if (paySchemeName == "M") {
+            salaryServiceRec = salaryPayroll / 12;
+        } else if (paySchemeName == "A") {
+            salaryServiceRec = salaryPayroll;
+        }
+        var paySchemeCode = $("#paySchemeName").data("kendoDropDownList").value();
+        // extract officeCode
+        var officeCode = "";
+        if ($("#officeServiceRec").data("kendoDropDownList").value().length > 0) {
+            officeCode = $("#officeServiceRec").data("kendoDropDownList").text().split("-")[1].trim();
+        }
+        // extract sepCause
+        var sepCause = $("#sepCause").val();
+        // extract form token
+        var token = $('input[name="__RequestVerificationToken"]').val();
+
+        
+        // INSERT DATA TO TABLE
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Create", "ServiceRecord")",
+            data: {
+                __RequestVerificationToken: token,
+                EIC: EIC,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
+                designation: designation,
+                statusName: statusName,
+                officeServiceRec: officeServiceRec,
+                branch: branch,
+                salaryPayroll: salaryPayroll,
+                salaryServiceRec: salaryServiceRec,
+                paySchemeCode: paySchemeCode,
+                paySchemeName: paySchemeName,
+                sepCause: sepCause,
+                officeCode: officeCode
+            },
+            success: function(data) {
+                window.location.href = '@Url.Content("~/ServiceRecord/Index")';
+            },
+            error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+        });
+
+    })
+</script>
