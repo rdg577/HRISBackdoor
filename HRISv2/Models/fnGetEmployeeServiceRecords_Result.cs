@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace HRISv2.Models
 {
     using System;
@@ -16,9 +18,12 @@ namespace HRISv2.Models
         public int recNo { get; set; }
         public string EIC { get; set; }
         public string Fullname { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> dateFrom { get; set; }
         public string dateTo { get; set; }
         public string designation { get; set; }
+        public Nullable<int> serviceTotal { get; set; }
         public string statusName { get; set; }
         public string officeServiceRec { get; set; }
         public string branch { get; set; }

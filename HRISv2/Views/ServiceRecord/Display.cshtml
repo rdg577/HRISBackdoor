@@ -1,10 +1,85 @@
-﻿@{
+﻿@using System.Collections
+@using HRISv2.Models
+@{
     ViewBag.Title = "title";
 }
 
-<h2>Service Record of @Html.Raw(ViewBag.Fullname)</h2>
+@Html.AntiForgeryToken()
 
-@foreach (var item in ViewBag.employeeServiceRecord)
-{
-    <div>@Html.Raw(item.dateFrom) : @Html.Raw(item.designation) : @Html.Raw(item.statusName)</div>
-}
+<h2>Service Record</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Html.Raw(ViewBag.Fullname)</div>
+    <table class="table table-responsive">
+        <thead>
+            <tr style="background-color: #00ff00; color: #ffffff;">
+                <th>Designation</th>
+                <th>Status</th>
+                <th>Office</th>
+                <th>Date Started</th>
+                <th>Date Ended</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = (IEnumerable<fnGetEmployeeServiceRecords_Result>)ViewBag.employeeServiceRecord;
+
+            // distinct employee services
+            var distinctEmployeeServices = employeeServiceRecord.Select(r => r.designation).Distinct();
+
+            foreach (var designation in distinctEmployeeServices.ToList())
+            {
+                // query service records of the said designation
+                var recordsAsPerService = employeeServiceRecord.Where(r => r.designation == designation).OrderByDescending(r => r.dateFrom).ToList();
+
+                // display services with first record has no background-color using the flag variable
+                var redFlag = "";
+                foreach (var rec in recordsAsPerService)
+                {
+                    <tr style="@redFlag">
+                        <td>@rec.designation</td>
+                        <td>@rec.statusName</td>
+                        <td>@rec.officeServiceRec</td>
+                        <td>@rec.dateFrom</td>
+                        <td>@rec.dateTo</td> 
+                        @if (redFlag != "")
+                        {
+                            <td>
+                                <button type="button" class="btn btn-default btn-sm" onclick="removeServiceRecord(@rec.recNo);">
+                                    <span class="glyphicon glyphicon-remove"></span> Remove
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+                        }
+                    </tr>
+                    redFlag = "background-color: #cc0000;color: #ffffff";
+                }
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function removeServiceRecord(recNo) {
+        var id = recNo;
+        if (confirm("Do you want to continue removing this service record?")) {
+            // extract form token
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            $.ajax({
+                url: "@Url.Action("Delete", "ServiceRecord")",
+                data: {
+                    __RequestVerificationToken: token,
+                    Id: recNo},
+                type: "POST",
+                success: function (data) {window.location.reload(true);},
+                error: function (errMsg) {console.log("Whoops! Something bad happen." + errMsg);}
+            });
+        }
+    }
+</script>

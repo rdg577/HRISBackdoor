@@ -10,7 +10,7 @@ namespace HRISv2.Controllers
 {
     public class ServiceRecordController : Controller
     {
-        private HRISEntities db = new HRISEntities();
+        private HRISEntities _db = new HRISEntities();
 
         // GET: ServiceRecord
         public ActionResult Index(string currentFilter, string searchString, int? page)
@@ -28,7 +28,7 @@ namespace HRISv2.Controllers
             const int pageSize = 40;
             int pageNumber = (page ?? 1);
 
-            var vUserProfileWithServices = db.vUserProfileWithServices;
+            var vUserProfileWithServices = _db.vUserProfileWithServices;
 
             // search
             if (!string.IsNullOrEmpty(searchString))
@@ -45,14 +45,16 @@ namespace HRISv2.Controllers
             if(id==null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             // query employee service record
-            //var employeeServiceRecord = db.tappServiceRecord.Where(g => g.EIC == id).ToList();
-            IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = db.fnGetEmployeeServiceRecords(id).ToList();
+            IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = _db.fnGetEmployeeServiceRecords(id).ToList();
+            
             if (!employeeServiceRecord.Any())
             {
                 return HttpNotFound();
             }
 
             ViewBag.Fullname = employeeServiceRecord.First().Fullname;
+            
+            // all employee services
             ViewBag.employeeServiceRecord = employeeServiceRecord.OrderByDescending(g=>g.dateFrom);
 
             return View();
@@ -62,7 +64,7 @@ namespace HRISv2.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var employeeList = db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
+            var employeeList = _db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
 
             ViewBag.employeeList = employeeList;
             
@@ -76,13 +78,24 @@ namespace HRISv2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.tappServiceRecord.Add(tappServiceRecord);
-                db.SaveChanges();
+                _db.tappServiceRecord.Add(tappServiceRecord);
+                _db.SaveChanges();
 
                 return RedirectToAction("Index","ServiceRecord");
             }
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            tappServiceRecord empServiceRecord = _db.tappServiceRecord.Find(id);
+            _db.tappServiceRecord.Remove(empServiceRecord);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

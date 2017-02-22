@@ -238,6 +238,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="dateFrom" Type="date" />
           <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
           <Property Name="designation" Type="nvarchar" MaxLength="200" />
+          <Property Name="serviceTotal" Type="int" />
           <Property Name="statusName" Type="nvarchar" MaxLength="30" />
           <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
           <Property Name="branch" Type="nvarchar" MaxLength="50" />
