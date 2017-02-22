@@ -1,0 +1,53 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HRISv2.Models.vDuplicateEICPlantillaPreparation>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+
+@*@model IEnumerable<HRISv2.Models.vDuplicateEICPlantillaPreparation>*@
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index", "DuplicatePlantilla", FormMethod.Get))
+{
+    <div class="form-group form-inline">
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 280px" })
+        <input type="submit" value="Search Lastname" class="btn btn-flat" />
+    </div>
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    Fullname
+                </th>
+                <th>
+                    Total Entries
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fullnameLast)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.totalEntries)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new {id = item.EIC})
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))

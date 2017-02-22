@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DuplicatePlantillaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceRecordController.cs" />
     <Compile Include="Controllers\ToolboxController.cs" />
@@ -185,6 +186,9 @@
     <Compile Include="Models\tappPosition.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tappPreparation.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tappSalarySched.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
@@ -210,6 +214,9 @@
       <DependentUpon>GENERALUsernameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\trefEmpGroup.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vDuplicateEICPlantillaPreparation.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vUserProfile.cs">
@@ -1827,6 +1834,8 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-HK.min.js.map" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js.map" />
     <Content Include="Scripts\src\js\kendo.router.min.js.map" />
+    <Content Include="Views\DuplicatePlantilla\Index.cshtml" />
+    <Content Include="Views\DuplicatePlantilla\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

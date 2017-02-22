@@ -86,6 +86,8 @@
     <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
       <Parameter Name="eic" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" />
+    <EntitySet Name="tappPreparation" EntityType="HRISUserProfileModel.tappPreparation" />
   </EntityContainer>
   <EntityType Name="vUserProfile">
     <Key>
@@ -267,4 +269,24 @@
     <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
     <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
   </ComplexType>
+  <EntityType Name="vDuplicateEICPlantillaPreparation">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="totalEntries" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tappPreparation">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="staffingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="dateEncoded" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

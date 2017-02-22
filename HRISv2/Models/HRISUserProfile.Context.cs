@@ -45,6 +45,8 @@ namespace HRISv2.Models
         public DbSet<tappOffice> tappOffice { get; set; }
         public DbSet<tappSalarySchem> tappSalarySchem { get; set; }
         public DbSet<tappSalarySched> tappSalarySched { get; set; }
+        public DbSet<vDuplicateEICPlantillaPreparation> vDuplicateEICPlantillaPreparation { get; set; }
+        public DbSet<tappPreparation> tappPreparation { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)

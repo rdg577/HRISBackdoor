@@ -266,5 +266,26 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="vDuplicateEICPlantillaPreparation">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vDuplicateEICPlantillaPreparation">
+        <MappingFragment StoreEntitySet="vDuplicateEICPlantillaPreparation">
+          <ScalarProperty Name="totalEntries" ColumnName="totalEntries" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tappPreparation">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tappPreparation">
+        <MappingFragment StoreEntitySet="tappPreparation">
+          <ScalarProperty Name="dateEncoded" ColumnName="dateEncoded" />
+          <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+          <ScalarProperty Name="AIC" ColumnName="AIC" />
+          <ScalarProperty Name="staffingCode" ColumnName="staffingCode" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

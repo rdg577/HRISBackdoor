@@ -21,6 +21,8 @@
         <EntityTypeShape EntityType="HRISUserProfileModel.tappOffice" Width="1.5" PointX="2.125" PointY="6.375" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySchem" Width="1.5" PointX="5.375" PointY="7" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySched" Width="1.5" PointX="0.5" PointY="9.625" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" Width="1.5" PointX="8.625" PointY="2.25" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappPreparation" Width="1.5" PointX="7" PointY="7.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
