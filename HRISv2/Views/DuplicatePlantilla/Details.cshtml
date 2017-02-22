@@ -55,20 +55,36 @@
 <script>
     function removePlantillaPrepration(recNo) {
         var id = recNo;
-        if (confirm("Do you want to continue removing this service record?")) {
-            // extract form token
-            var token = $('input[name="__RequestVerificationToken"]').val();
+        bootbox.confirm({
+            message: "Do you want to continue?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    // extract form token
+                    var token = $('input[name="__RequestVerificationToken"]').val();
 
-            $.ajax({
-                url: "@Url.Action("Delete", "DuplicatePlantilla")",
-                data: {
-                    __RequestVerificationToken: token,
-                    Id: id},
-                type: "POST",
-                success: function (data) {window.location.reload(true);},
-                error: function (errMsg) {console.log("Whoops! Something bad happen." + errMsg);}
-            });
-        }
+                    $.ajax({
+                        url: "@Url.Action("Delete", "DuplicatePlantilla")",
+                        data: {
+                        __RequestVerificationToken: token,
+                        Id: id},
+                        type: "POST",
+                        success: function (data) {window.location.reload(true);},
+                        error: function (errMsg) {console.log("Whoops! Something bad happen." + errMsg);}
+                    });
+                }
+            }
+        });
+        
     }
 </script>
 
