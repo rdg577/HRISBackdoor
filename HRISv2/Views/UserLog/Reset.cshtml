@@ -6,42 +6,48 @@
 
 <h2>Reset</h2>
 
-<h3>Are you sure you want to reset this?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IDNo)
-        </dt>
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: #008800; color: #ffffff;"><h4>Sure to reset user login account?</h4>
+    </div>
+    <div class="panel-body">
+        <div class="well well-sm" style="background-color: #ff4000; color: #ffffff"><span class="glyphicon glyphicon-warning-sign"> Reminder! </span> User has to be issued an EIC and register again.</div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.IDNo)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IDNo)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IDNo)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fullname)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Fullname)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Fullname)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Fullname)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Reset" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-actions no-color">
+                <input type="submit" value="Reset" class="btn btn-default" />
+            </div>
+        }
+    </div>
 </div>
+
+@Html.ActionLink("Back to List", "Index")

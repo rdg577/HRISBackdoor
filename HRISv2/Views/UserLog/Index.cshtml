@@ -7,48 +7,58 @@
 }
 
 <h2>Index</h2>
-<h4>Usernames</h4>
 
 @using (Html.BeginForm("Index", "UserLog", FormMethod.Get))
 {
     <div class="form-group form-inline">
-        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 280px" })
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 400px" })
         <input type="submit" value="Search Lastname" class="btn btn-flat" />
     </div>
 }
-<table class="table table-striped">
-    <tr>
-        <th>
-            FULLNAME
-        </th>
-        <th>
-            EIC
-        </th>
-        <th>
-            USERNAME
-        </th>
-        <th></th>
-    </tr>
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>Employee User Account</h4></div>
+    <table class="table table-hover">
+        <thead>
+        <tr style="background-color: #00bb00; color: #ffffff;">
+            <th>
+                FULLNAME
+            </th>
+            <th>
+                EIC
+            </th>
+            <th>
+                USERNAME
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+         @foreach (var item in Model)
+              {
+                  <tr>
+                      <td>
+                          @Html.DisplayFor(modelItem => item.Fullname)
+                      </td>
+                      <td>
+                          @Html.DisplayFor(modelItem => item.EIC)
+                      </td>
+                      <td>
+                          @Html.DisplayFor(modelItem => item.UserName)
+                      </td>
+                      <td>
+                          <a href="@Url.Action("Reset", "UserLog", new {id = item.EIC})" class="btn btn-xs btn-default" title="Reset account"><span class="glyphicon glyphicon-refresh"></span></a>
+                          <a href="@Url.Action("Details", "UserLog", new {id = item.EIC})" class="btn btn-xs btn-default" title="View details"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fullname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EIC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Reset", "Reset", new { id=item.EIC }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EIC })
-        </td>
-    </tr>
-}
+@*                          @Html.ActionLink("Reset", "Reset", new {id = item.EIC}) |*@
+@*                          @Html.ActionLink("Details", "Details", new {id = item.EIC})*@
+                      </td>
+                  </tr>
+              }
 
-</table>
+        </tbody>
+
+    </table>
+</div>
 
 
 <br />

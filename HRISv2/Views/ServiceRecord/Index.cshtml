@@ -2,7 +2,7 @@
 
 @using PagedList.Mvc
 @model PagedList.IPagedList<HRISv2.Models.vUserProfileWithServices>
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -10,51 +10,58 @@
 
 <h2>Index</h2>
 
-<p>@Html.ActionLink("Create", "Create", null as object, new {@class = "btn btn-primary"})</p>
+<p>@Html.ActionLink("Create Service Record", "Create", null as object, new { @class = "btn btn-primary" })</p>
 
 @using (Html.BeginForm("Index", "ServiceRecord", FormMethod.Get))
 {
     <div class="form-group form-inline">
-        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 280px" })
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 400px" })
         <input type="submit" value="Search Lastname" class="btn btn-flat" />
     </div>
 }
 
 <div class="row">
     <div class="col-lg-8 col-md-12 col-sm-12">
-        <table class="table table-striped">
-            <tr>
-                <th>
-                    EIC
-                </th>
-                <th>
-                    Fullname
-                </th>
-                <th>
-                    Total No. of Services
-                </th>
-                <th></th>
-            </tr>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>Employee Service Record</h4></div>
+            <table class="table table-hover">
+                <thead>
+                    <tr style="background-color: #00bb00; color: #ffffff">
+                        <th>
+                            EIC
+                        </th>
+                        <th>
+                            Fullname
+                        </th>
+                        <th>
+                            Total No. of Services
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EIC)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fullname)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.TotalServices)
+                            </td>
+                            <td>
+@*                                @Html.ActionLink("View", "Display", new { id = item.EIC })*@
+                                <a href="@Url.Action("Display", "ServiceRecord", new { id = item.EIC })" class="btn btn-xs btn-default" title="View details"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EIC)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fullname)
-                    </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.TotalServices)
-                    </td>
-                    <td>
-                        @Html.ActionLink("View", "Display", new { id = item.EIC })
-                    </td>
-                </tr>
-            }
-
-        </table>
+            </table>
+        </div>
         <br />
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))

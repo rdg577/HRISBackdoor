@@ -3,217 +3,269 @@
 }
 
 <h2>Create</h2>
-<hr/>
 
-@*@using (Html.BeginForm())
-{*@
-    
-    @Html.AntiForgeryToken()
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff">
+                <h4>Create New Employee Service Record</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group employee_name">
+                        <label class="control-label col-lg-2">Employee Name:</label>
+                        <div class="col-lg-6 col-xs-12">
+                            @(Html.Kendo().AutoComplete()
+                                        .Name("EIC")
+                                        .DataTextField("FullnameWithEIC")
+                                        .Filter("contains") // "startswith"
+                                        .MinLength(3)
+                                        .Suggest(true)
+                                        .DataSource(g => g.Read("EmployeeList", "Toolbox"))
+                                        .HtmlAttributes(new { maxlength = "300", style = "width:100%; text-transform:uppercase;" })
+                            )
+                        </div>
+                    </div>
 
-    <div class="form-horizontal">
-        <div class="row form-group employee_name">
-            <label class="control-label col-lg-2">Employee Name:</label>
-            @(Html.Kendo().AutoComplete()
-                  .Name("EIC")
-                  .DataTextField("FullnameWithEIC")
-                  .Filter("contains") // "startswith"
-                  .MinLength(3)
-                  .Suggest(true)
-                  .DataSource(g => g.Read("EmployeeList", "Toolbox"))
-                  .HtmlAttributes(new { maxlength = "300", style = "width:500px;text-transform:uppercase;" })
-            )
+                    <div class="form-group designation">
+                        <label class="control-label col-lg-2">Designation:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("designation")
+                              .DataTextField("fullDescription")
+                              .DataValueField("sg")
+                              .DataSource(g => g.Read("PositionList", "Toolbox"))
+                              .OptionLabel("-- PLEASE SELECT --")
+                              .HtmlAttributes(new { maxlength = "300", style = "text-transform:uppercase;" })
+                              .Events(events =>
+                              {
+                                  events.Change(
+                                    @<text>
+                                        function() {
+                                        var sg = $("#designation").val();
+                                        $("#sg").val(sg);
+                                        }
+                                    </text>
+                                      );
+                              })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group sg_level">
+                        <label class="control-label col-lg-2">SG Level:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="sg" id="sg" class="form-control" style="background-color: #ffffff; width:auto" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="form-group status_name">
+                        <label class="control-label col-lg-2">Employment Status:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("statusName")
+                              .DataTextField("statusName")
+                              .DataValueField("statusName")
+                              .DataSource(g => g.Read("WorkStatusList", "Toolbox"))
+                              .OptionLabel("-- PLEASE SELECT --")
+                              .HtmlAttributes(new { maxlength = "300", style = "width:auto;text-transform:uppercase;" })
+                              .Events(events =>
+                              {
+                                  events.Change(
+                                    @<text>
+                                        function() {
+                                        var step1To8 = [
+                                        { text: "STEP 1", value: "1" },
+                                        { text: "STEP 2", value: "2" },
+                                        { text: "STEP 3", value: "3" },
+                                        { text: "STEP 4", value: "4" },
+                                        { text: "STEP 5", value: "5" },
+                                        { text: "STEP 6", value: "6" },
+                                        { text: "STEP 7", value: "7" },
+                                        { text: "STEP 8", value: "8" }
+                                        ];
+
+                                        var step1 = [
+                                        { text: "STEP 1", value: "1" }
+                                        ];
+
+                                        var status_name = $("#statusName").val();
+                                        if(status_name.localeCompare("PERMANENT")==0 ||
+                                        status_name.localeCompare("ELECTIVE")==0 ||
+                                        status_name.localeCompare("CO-TERMINOUS")==0)
+                                        {
+                                        $("#step").kendoDropDownList({
+                                        dataTextField: "text",
+                                        dataValueField: "value",
+                                        dataSource: step1To8,
+                                        optionLabel: "-- PLEASE SELECT --",
+                                        });
+                                        }
+                                        else
+                                        {
+                                        $("#step").kendoDropDownList({
+                                        dataTextField: "text",
+                                        dataValueField: "value",
+                                        dataSource: step1,
+                                        optionLabel: "-- PLEASE SELECT --"
+                                        });
+                                        }
+                                        }
+                                    </text>
+                                      );
+                              })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group sg_level">
+                        <label class="control-label col-lg-2">Step No.:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("step")
+                              .HtmlAttributes(new { maxlength = "300", style = "width:auto; text-transform:uppercase;" })
+                            )
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group paySchemeName">
+                        <label class="control-label col-lg-2">Pay Scheme:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                                  .Name("paySchemeName")
+                                  .DataTextField("paySchemeName")
+                                  .DataValueField("paySchemeCode")
+                                  .DataSource(g => g.Read("SalarySchemeList", "Toolbox"))
+                                  .OptionLabel("-- PLEASE SELECT --")
+                                  .HtmlAttributes(new { maxlength = "300", style = "width:auto;text-transform:uppercase;" })
+                                  .Events(events =>
+                                  {
+                                      events.Change(
+                                        @<text>
+                                            function getSalarySchedule() {
+                                            var sgVal = $("#sg").val();
+                                            var stepVal = $("#step").val();
+
+                                            if(sgVal && stepVal) {
+                                            // query salary schedule using sg and step values
+                                            $.ajax({
+                                            url: "@Url.Action("GetSalarySchedule", "Toolbox")",
+                                            data: {sg:sgVal, step:stepVal},
+                                            type: "GET",
+                                            datatype: "json",
+                                            success: function(data) {
+                                            var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0,1);
+                                            if(flag == "D") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22}); }
+                                            else if(flag == "M") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth}); }
+                                            else if(flag == "A") { $("#salaryPayroll").kendoNumericTextBox({ value: (data[0].rateMonth * 12)}); }
+
+                                            },
+                                            error: function(errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+                                            });
+
+                                            } // end-of-if
+                                            } // end-of-function()
+                                        </text>
+                                          );
+                                  })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group salary">
+                        <label class="control-label col-lg-2">Salary:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().NumericTextBox()
+                              .Name("salaryPayroll")
+                              .Decimals(2)
+                              .Value(0)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group date_from">
+                        <label class="control-label col-lg-2">Date Started:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DatePicker()
+                              .Name("dateFrom")
+                              .Max(DateTime.Now)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group date_to">
+                        <label class="control-label col-lg-2">Date Ended:</label>
+                        <div class="col-lg-2 col-xs-12">
+                            @(Html.Kendo().DatePicker()
+                                  .Name("dateTo")
+                                  .Max(DateTime.Now)
+                                  )
+                            <input type="checkbox" name="cbPresent" id="cbPresent" /> PRESENT
+                        </div> 
+                    </div>
+
+                    <div class="form-group officeServiceRec">
+                        <label class="control-label col-lg-2">Office Service:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("officeServiceRec")
+                              .DataTextField("officeServiceRecWithCode")
+                              .DataValueField("officeServiceRec")
+                              .DataSource(g => g.Read("OfficeList", "Toolbox"))
+                              .OptionLabel("-- PLEASE SELECT --")
+                              .HtmlAttributes(new { maxlength = "300", style = "width:100%;text-transform:uppercase;" })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group branch">
+                        <label class="control-label col-lg-2">Branch:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="branch" id="branch" value="PROV'L" style="width: auto" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group sepCause">
+                        <label class="control-label col-lg-2">Separation Cause:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="sepCause" id="sepCause" value="" style="width: auto" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <div class="panel-footer">
+            <input type="submit" id="btnClick" class="btn btn-primary col-lg-offset-2" value="Create" />
         </div>
-
-        <div class="row form-group designation">
-            <label class="control-label col-lg-2">Designation:</label>
-            @(Html.Kendo().DropDownList()
-                  .Name("designation")
-                  .DataTextField("fullDescription")
-                  .DataValueField("sg")
-                  .DataSource(g => g.Read("PositionList", "Toolbox"))
-                  .OptionLabel("-- PLEASE SELECT --")
-                  .HtmlAttributes(new { maxlength = "300", style = "width:280px;text-transform:uppercase;" })
-                  .Events(events =>
-                  {
-                      events.Change(
-                        @<text>
-                            function() {
-                            var sg = $("#designation").val();
-                            $("#sg").val(sg);
-                            }
-                        </text>
-                        );
-                  })
-            )
         </div>
-
-        <div class="row form-group sg_level">
-            <label class="control-label col-lg-2">SG Level:</label>
-            <input type="text" name="sg" id="sg" class="form-control" style="width: 280px" readonly="readonly" />
-        </div>
-
-        <div class="row form-group status_name">
-            <label class="control-label col-lg-2">Employment Status:</label>
-            @(Html.Kendo().DropDownList()
-                  .Name("statusName")
-                  .DataTextField("statusName")
-                  .DataValueField("statusName")
-                  .DataSource(g => g.Read("WorkStatusList", "Toolbox"))
-                  .OptionLabel("-- PLEASE SELECT --")
-                  .HtmlAttributes(new { maxlength = "300", style = "width:280px;text-transform:uppercase;" })
-                  .Events(events =>
-                  {
-                      events.Change(
-                        @<text>
-                            function() {
-                            var step1To8 = [
-                            { text: "STEP 1", value: "1" },
-                            { text: "STEP 2", value: "2" },
-                            { text: "STEP 3", value: "3" },
-                            { text: "STEP 4", value: "4" },
-                            { text: "STEP 5", value: "5" },
-                            { text: "STEP 6", value: "6" },
-                            { text: "STEP 7", value: "7" },
-                            { text: "STEP 8", value: "8" }
-                            ];
-
-                            var step1 = [
-                            { text: "STEP 1", value: "1" }
-                            ];
-
-                            var status_name = $("#statusName").val();
-                            if(status_name.localeCompare("PERMANENT")==0 ||
-                            status_name.localeCompare("ELECTIVE")==0 ||
-                            status_name.localeCompare("CO-TERMINOUS")==0)
-                            {
-                            $("#step").kendoDropDownList({
-                            dataTextField: "text",
-                            dataValueField: "value",
-                            dataSource: step1To8,
-                            optionLabel: "-- PLEASE SELECT --",
-                            });
-                            }
-                            else
-                            {
-                            $("#step").kendoDropDownList({
-                            dataTextField: "text",
-                            dataValueField: "value",
-                            dataSource: step1,
-                            optionLabel: "-- PLEASE SELECT --"
-                            });
-                            }
-                            }
-                        </text>
-                        );
-                  })
-            )
-        </div>
-
-        <div class="row form-group sg_level">
-            <label class="control-label col-lg-2">Step No.:</label>
-            @(Html.Kendo().DropDownList()
-                .Name("step")
-                .HtmlAttributes(new { maxlength = "300", style = "width:280px;text-transform:uppercase;" })
-            )
-        </div>
-
-        <div class="row form-group paySchemeName">
-            <label class="control-label col-lg-2">Pay Scheme:</label>
-            @(Html.Kendo().DropDownList()
-                  .Name("paySchemeName")
-                  .DataTextField("paySchemeName")
-                  .DataValueField("paySchemeCode")
-                  .DataSource(g => g.Read("SalarySchemeList", "Toolbox"))
-                  .OptionLabel("-- PLEASE SELECT --")
-                  .HtmlAttributes(new { maxlength = "300", style = "width:200px;text-transform:uppercase;" })
-                  .Events(events =>
-                  {
-                      events.Change(
-                          @<text>
-                              function getSalarySchedule() {
-                              var sgVal = $("#sg").val();
-                              var stepVal = $("#step").val();
-
-                              if(sgVal && stepVal) {
-                              // query salary schedule using sg and step values
-                              $.ajax({
-                                  url: "@Url.Action("GetSalarySchedule", "Toolbox")",
-                                  data: {sg:sgVal, step:stepVal},
-                                  type: "GET",
-                                  datatype: "json",
-                                  success: function(data) {
-                                              var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0,1);
-                                                if(flag == "D") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22}); }
-                                                else if(flag == "M") { $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth}); } 
-                                                else if(flag == "A") { $("#salaryPayroll").kendoNumericTextBox({ value: (data[0].rateMonth * 12)}); }
-
-                                  },
-                                  error: function(errMsg) { alert("Whoops! Something bad happen." + errMsg); }
-                              });
-
-                              } // end-of-if
-                              } // end-of-function()
-                           </text>
-                          );
-                  })
-            )
-        </div>
-
-        <div class="row form-group salary">
-            <label class="control-label col-lg-2">Salary:</label>
-            @(Html.Kendo().NumericTextBox()
-                .Name("salaryPayroll")
-                .Decimals(2)
-                .Value(0)
-            )
-        </div>
-
-        <div class="row form-group date_from">
-            <label class="control-label col-lg-2">Date Started:</label>
-            @(Html.Kendo().DatePicker()
-                  .Name("dateFrom")
-                  .Max(DateTime.Now)
-                  .HtmlAttributes(new { style = "width: 280px" }))
-        </div>
-
-        <div class="row form-group date_to">
-            <label class="control-label col-lg-2">Date Ended:</label>
-            @(Html.Kendo().DatePicker()
-                  .Name("dateTo")
-                  .Max(DateTime.Now)
-                  .HtmlAttributes(new {style = "width: 280px"}))
-            <input type="checkbox" name="cbPresent" id="cbPresent"/> PRESENT
-        </div>
-
-        <div class="row form-group officeServiceRec">
-            <label class="control-label col-lg-2">Office Service:</label>
-            @(Html.Kendo().DropDownList()
-                  .Name("officeServiceRec")
-                  .DataTextField("officeServiceRecWithCode")
-                  .DataValueField("officeServiceRec")
-                  .DataSource(g => g.Read("OfficeList", "Toolbox"))
-                  .OptionLabel("-- PLEASE SELECT --")
-                  .HtmlAttributes(new { maxlength = "300", style = "width:500px;text-transform:uppercase;" })
-            )
-        </div>
-
-        <div class="row form-group branch">
-            <label class="control-label col-lg-2">Branch:</label>
-            <input type="text" name="branch" id="branch" value="PROV'L" style="width: 280px" class="form-control" />
-        </div>
-
-        <div class="row form-group sepCause">
-            <label class="control-label col-lg-2">Separation Cause:</label>
-            <input type="text" name="sepCause" id="sepCause" value="" style="width: 280px" class="form-control" />
-        </div>
-
     </div>
-
-    <input type="submit" id="btnClick" class="btn btn-primary" value="Create" />
-@*}*@
+</div>
 
 <script>
-    $("#btnClick").click(function () {
+    $("#btnClick").click(function() {
+        bootbox.confirm({
+            message: "<p>Done reviewing the data?</p><p>Click YES to continue.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    savingData();
+                }
+            }
+        });
+    });
+
+    function savingData() {
         /** EXTRACTION OF DATA */
         // extract EIC
         var EIC = "";
@@ -259,32 +311,31 @@
         // extract form token
         var token = $('input[name="__RequestVerificationToken"]').val();
 
-        
+
         // INSERT DATA TO TABLE
         $.ajax({
             type: "POST",
             url: "@Url.Action("Create", "ServiceRecord")",
             data: {
-                __RequestVerificationToken: token,
-                EIC: EIC,
-                dateFrom: dateFrom,
-                dateTo: dateTo,
-                designation: designation,
-                statusName: statusName,
-                officeServiceRec: officeServiceRec,
-                branch: branch,
-                salaryPayroll: salaryPayroll,
-                salaryServiceRec: salaryServiceRec,
-                paySchemeCode: paySchemeCode,
-                paySchemeName: paySchemeName,
-                sepCause: sepCause,
-                officeCode: officeCode
+            __RequestVerificationToken: token,
+            EIC: EIC,
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            designation: designation,
+            statusName: statusName,
+            officeServiceRec: officeServiceRec,
+            branch: branch,
+            salaryPayroll: salaryPayroll,
+            salaryServiceRec: salaryServiceRec,
+            paySchemeCode: paySchemeCode,
+            paySchemeName: paySchemeName,
+            sepCause: sepCause,
+            officeCode: officeCode
             },
-            success: function(data) {
+            success: function (data) {
                 window.location.href = '@Url.Content("~/ServiceRecord/Index")';
             },
             error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
         });
-
-    })
+    }
 </script>

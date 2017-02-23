@@ -188,7 +188,8 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
-                                <input type="submit" value="Save" class="btn btn-default" />
+                                <button type="button" class="btn btn-default" onclick="confirmSubmission();"><span class="glyphicon glyphicon-saved"></span> Save</button>
+                                @*<input type="submit" value="Save" class="btn btn-default"/>*@
                             </div>
                         </div>
                     </div>
@@ -204,6 +205,25 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    function confirmSubmission() {
+        bootbox.confirm({
+            message: "<p>Have you already reviewed the details?</p><p>Click YES to continue saving.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    $("form").submit();
+                }
+            }
+        });
+    }
+</script>

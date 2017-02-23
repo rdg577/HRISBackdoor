@@ -1,85 +1,87 @@
 ﻿@using PagedList.Mvc
 @model PagedList.IPagedList<HRISv2.Models.vUserProfile>
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-<h4>Profiles</h4>
 
 @using (Html.BeginForm("Index", "UserProfile", FormMethod.Get))
 {
     <div class="form-group form-inline">
-        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 280px" })
-        <input type="submit" value="Search Lastname" class="btn btn-flat"/>
+        @Html.TextBox("CurrentFilter", ViewBag.CurrentFilter as string, new { @class = "form-control", @autocomplete = "off", @style = "width: 400px" })
+        <input type="submit" value="Search Lastname" class="btn btn-flat" />
     </div>
 }
-<table class="table">
-    <tr>
-        <th>
-            FULLNAME
-        </th>
-        <th>
-            BIRTHDATE
-        </th>
-        <th>
-            WARM BODY OFFICE
-        </th>
-        <th>
-            OFFICE AND GROUP NAME
-        </th>
-        <th>
-            JOB STATUS
-        </th>
-        <th>
-            BATS AREA
-        </th>
-        <th>
-            ATTENDANCE SCHEME
-        </th>
-        <th></th>
-    </tr>
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>Employee User Profile</h4></div>
+    <table class="table table-hover">
+        <thead style="background-color: #00bb00; color: #ffffff">
+            <tr>
+                <th>
+                    FULLNAME
+                </th>
+                <th>
+                    BIRTHDATE
+                </th>
+                <th>
+                    WARM BODY OFFICE
+                </th>
+                <th>
+                    OFFICE AND GROUP NAME
+                </th>
+                <th>
+                    JOB STATUS
+                </th>
+                <th>
+                    BATS AREA
+                </th>
+                <th>
+                    ATTENDANCE SCHEME
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fullname)
+                        <div style="font-size: 8pt;">
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Birthdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OfficeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OfficeName) / @Html.DisplayFor(modelItem => item.GroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BATSArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttendanceScheme)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "UserProfile", new {id = item.EIC})" class="btn btn-xs btn-default" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="@Url.Action("Details", "UserProfile", new { id = item.EIC })" class="btn btn-xs btn-default" title="View details"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-                <div style="font-size: 8pt;">
-                    @Html.DisplayFor(modelItem => item.Position)
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birthdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficeName) / @Html.DisplayFor(modelItem => item.GroupName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BATSArea)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AttendanceScheme)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.EIC }) |
-                @Html.ActionLink("Details", "Details", new { id = item.EIC })
-                @Html.ActionLink("SR", "Display", "ServiceRecord", new { id=item.EIC }, null)
-            </td>
-        </tr>
-    }
-
-</table>
-
-<br/>
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))
