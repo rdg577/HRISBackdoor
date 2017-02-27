@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\DuplicatePlantillaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceRecordController.cs" />
@@ -1837,6 +1838,12 @@
     <Content Include="Scripts\src\js\kendo.router.min.js.map" />
     <Content Include="Views\DuplicatePlantilla\Index.cshtml" />
     <Content Include="Views\DuplicatePlantilla\Details.cshtml" />
+    <Content Include="Views\DataManagement\Index.cshtml" />
+    <Content Include="Views\DataManagement\EditUserProfile.cshtml" />
+    <Content Include="Views\DataManagement\DetailsUserProfile.cshtml" />
+    <Content Include="Views\DataManagement\RemoveLoginAccount.cshtml" />
+    <Content Include="Views\DataManagement\DisplayServiceRecord.cshtml" />
+    <Content Include="Views\DataManagement\DetailsPlantilla.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

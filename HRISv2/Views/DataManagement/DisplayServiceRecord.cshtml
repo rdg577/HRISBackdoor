@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Collections
+@using HRISv2.Models
+@{
+    ViewBag.Title = "title";
+}
+
+@Html.AntiForgeryToken()
+
+<h2>Service Record Details</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>@Html.Raw(ViewBag.Fullname)</h4></div>
+    <table class="table table-responsive">
+        <thead>
+            <tr style="background-color: #00bb00; color: #ffffff;">
+                <th>Designation</th>
+                <th>Status</th>
+                <th>Office</th>
+                <th>Date Started</th>
+                <th>Date Ended</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = (IEnumerable<fnGetEmployeeServiceRecords_Result>)ViewBag.employeeServiceRecord;
+                var redFlag = "";
+                foreach (var item in employeeServiceRecord.ToList())
+                {
+
+                    var dateFrom = Convert.ToDateTime(item.dateFrom);
+
+                    <tr style="@redFlag">
+                        <td>@item.designation</td>
+                        <td>@item.statusName</td>
+                        <td>@item.officeServiceRec</td>
+                        <td>@dateFrom.ToShortDateString()</td>
+                        <td>@item.dateTo</td>
+                        @if (redFlag != "")
+                        {
+                            <td>
+                                <button type="button" class="btn btn-default btn-sm" onclick="removeServiceRecord(@item.recNo);">
+                                    Remove <span class="glyphicon glyphicon-trash"></span> 
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+                        }
+                    </tr>
+
+                        redFlag = "background-color: #ff0000;color: #ffffff";
+
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function removeServiceRecord(recNo) {
+        var id = recNo;
+        bootbox.confirm({
+            message: "Do you want to continue?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    // extract form token
+                    var token = $('input[name="__RequestVerificationToken"]').val();
+
+                    $.ajax({
+                        url: "@Url.Action("DeleteServiceRecord", "DataManagement")",
+                        data: {
+                            __RequestVerificationToken: token,
+                            Id: id
+                        },
+                        type: "POST",
+                        success: function(data) { window.location.reload(true); },
+                        error: function(errMsg) { console.log("Whoops! Something bad happen." + errMsg); }
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+@Html.ActionLink("Back to List", "Index")

@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model HRISv2.Models.vUserProfile
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style type="text/css">
+    th {
+        text-align: right;
+    }
+</style>
+
+<h2>Details</h2>
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>@Html.DisplayFor(model => model.Fullname)</h4></div>
+            <table class="table table-hover">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.IDNo)</th>
+                    <td>@Html.DisplayFor(model => model.IDNo)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Fullname)</th>
+                    <td>@Html.DisplayFor(model => model.Fullname)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Birthdate)</th>
+                    <td>@Html.DisplayFor(model => model.Birthdate)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Birthplace)</th>
+                    <td>@Html.DisplayFor(model => model.Birthplace)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Position)</th>
+                    <td>@Html.DisplayFor(model => model.Position)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.SubPosition)</th>
+                    <td>@Html.DisplayFor(model => model.SubPosition)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.JobStatus)</th>
+                    <td>@Html.DisplayFor(model => model.JobStatus)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.OfficeName)</th>
+                    <td>@Html.DisplayFor(model => model.OfficeName)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.BATSArea)</th>
+                    <td>@Html.DisplayFor(model => model.BATSArea)</td>
+                </tr>
+                <tr>
+                    <th>WARM BODY OFFICE :</th>
+                    <td>@Html.DisplayFor(model => model.OfficeName)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.AttendanceScheme)</th>
+                    <td>@Html.DisplayFor(model => model.AttendanceScheme)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditUserProfile", new { id = Model.EIC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Details Plantilla";
+}
+
+<h2>Details Plantilla</h2>
+
+@using HRISv2.Models
+
+@Html.AntiForgeryToken()
+
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>@Html.Raw(ViewBag.Fullname)</h4></div>
+            <table class="table table-responsive">
+                <thead>
+                    <tr style="background-color: #00bb00; color: #ffffff;">
+                        <th>Staffing Code</th>
+                        <th>Date Encoded</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        IEnumerable<tappPreparation> tappPreparations = (IEnumerable<tappPreparation>)ViewBag.tappPreparations;
+
+                        // display plantilla preparation with first record has no background-color using the flag variable
+                        var redFlag = "";
+                        foreach (var rec in tappPreparations.OrderByDescending(r => r.dateEncoded).ToList())
+                        {
+                            <tr style="@redFlag">
+                                <td>@rec.staffingCode</td>
+                                <td>@rec.dateEncoded</td>
+                                @if (redFlag != "")
+                                {
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm" onclick="removePlantillaPrepration(@rec.recNo);">
+                                            Remove <span class="glyphicon glyphicon-trash"></span> 
+                                        </button>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>&nbsp;</td>
+                                }
+                            </tr>
+                                redFlag = "background-color: #ff0000;color: #ffffff";
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function removePlantillaPrepration(recNo) {
+        var id = recNo;
+        bootbox.confirm({
+            message: "Do you want to continue?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    // extract form token
+                    var token = $('input[name="__RequestVerificationToken"]').val();
+
+                    $.ajax({
+                        url: "@Url.Action("DeletePlatilla", "DataManagement")",
+                        data: {
+                        __RequestVerificationToken: token,
+                        Id: id},
+                        type: "POST",
+                        success: function (data) {window.location.reload(true);},
+                        error: function (errMsg) {console.log("Whoops! Something bad happen." + errMsg);}
+                    });
+                }
+            }
+        });
+
+    }
+</script>
+

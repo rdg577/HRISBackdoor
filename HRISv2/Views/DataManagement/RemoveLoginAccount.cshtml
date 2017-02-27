@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model HRISv2.Models.vUserProfileWithUsername
+
+@{
+    ViewBag.Title = "Reset Login Account";
+}
+<style type="text/css">
+    th {
+        text-align: right;
+    }
+</style>
+<h2>Reset Login Account</h2>
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>@Html.DisplayFor(model => model.Fullname)</h4>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.IDNo)</th>
+                    <td>@Html.DisplayFor(model => model.IDNo)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                    <td>@Html.DisplayFor(model => model.UserName)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Fullname)</th>
+                    <td>@Html.DisplayFor(model => model.Fullname)</td>
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        @if (!string.IsNullOrEmpty(Model.UserName))
+                        {
+                            using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <button type="button" class="btn btn-primary" onclick="confirmSubmission();">Reset <span class="glyphicon glyphicon-refresh"></span></button>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script>
+    function confirmSubmission() {
+        bootbox.confirm({
+            message: "<p>Have you already reviewed the details?</p><p>Click YES to continue saving.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    $("form").submit();
+                }
+            }
+        });
+    }
+</script>
