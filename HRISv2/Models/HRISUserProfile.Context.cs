@@ -29,24 +29,24 @@ namespace HRISv2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<tappEmpGroup> tappEmpGroup { get; set; }
-        public DbSet<tAttEmpArea> tAttEmpArea { get; set; }
-        public DbSet<tAttEmpScheme> tAttEmpScheme { get; set; }
-        public DbSet<tAttScheme> tAttScheme { get; set; }
-        public DbSet<tAttStationArea> tAttStationArea { get; set; }
-        public DbSet<trefEmpGroup> trefEmpGroup { get; set; }
-        public DbSet<vUserProfile> vUserProfile { get; set; }
-        public DbSet<vUserProfileWithUsername> vUserProfileWithUsername { get; set; }
-        public DbSet<vUserProfileWithServices> vUserProfileWithServices { get; set; }
-        public DbSet<tappServiceRecord> tappServiceRecord { get; set; }
-        public DbSet<tappEmployee> tappEmployee { get; set; }
-        public DbSet<tappPosition> tappPosition { get; set; }
-        public DbSet<tappEmpStatus> tappEmpStatus { get; set; }
-        public DbSet<tappOffice> tappOffice { get; set; }
-        public DbSet<tappSalarySchem> tappSalarySchem { get; set; }
-        public DbSet<tappSalarySched> tappSalarySched { get; set; }
-        public DbSet<vDuplicateEICPlantillaPreparation> vDuplicateEICPlantillaPreparation { get; set; }
-        public DbSet<tappPreparation> tappPreparation { get; set; }
+        public DbSet<tappEmpGroup> tappEmpGroups { get; set; }
+        public DbSet<tappEmployee> tappEmployees { get; set; }
+        public DbSet<tappEmpStatu> tappEmpStatus { get; set; }
+        public DbSet<tappOffice> tappOffices { get; set; }
+        public DbSet<tappPosition> tappPositions { get; set; }
+        public DbSet<tappPreparation> tappPreparations { get; set; }
+        public DbSet<tappSalarySched> tappSalaryScheds { get; set; }
+        public DbSet<tappSalarySchem> tappSalarySchems { get; set; }
+        public DbSet<tappServiceRecord> tappServiceRecords { get; set; }
+        public DbSet<tAttEmpArea> tAttEmpAreas { get; set; }
+        public DbSet<tAttEmpScheme> tAttEmpSchemes { get; set; }
+        public DbSet<tAttScheme> tAttSchemes { get; set; }
+        public DbSet<tAttStationArea> tAttStationAreas { get; set; }
+        public DbSet<trefEmpGroup> trefEmpGroups { get; set; }
+        public DbSet<vDuplicateEICPlantillaPreparation> vDuplicateEICPlantillaPreparations { get; set; }
+        public DbSet<vUserProfile> vUserProfiles { get; set; }
+        public DbSet<vUserProfileWithService> vUserProfileWithServices { get; set; }
+        public DbSet<vUserProfileWithUsername> vUserProfileWithUsernames { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)

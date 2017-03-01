@@ -178,7 +178,7 @@
     <Compile Include="Models\tappEmployee.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tappEmpStatus.cs">
+    <Compile Include="Models\tappEmpStatu.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tappOffice.cs">
@@ -223,7 +223,7 @@
     <Compile Include="Models\vUserProfile.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vUserProfileWithServices.cs">
+    <Compile Include="Models\vUserProfileWithService.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vUserProfileWithUsername.cs">
@@ -1844,6 +1844,7 @@
     <Content Include="Views\DataManagement\RemoveLoginAccount.cshtml" />
     <Content Include="Views\DataManagement\DisplayServiceRecord.cshtml" />
     <Content Include="Views\DataManagement\DetailsPlantilla.cshtml" />
+    <Content Include="Views\DataManagement\CreateServiceRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

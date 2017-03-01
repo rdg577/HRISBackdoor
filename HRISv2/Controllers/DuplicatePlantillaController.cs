@@ -26,7 +26,7 @@ namespace HRISv2.Controllers
             int pageSize = 15;
             int pageNumber = (page ?? 1);
 
-            var vDuplicateEICPlantillaPreparation = _db.vDuplicateEICPlantillaPreparation;
+            var vDuplicateEICPlantillaPreparation = _db.vDuplicateEICPlantillaPreparations;
 
             // search
             if (!string.IsNullOrEmpty(searchString))
@@ -41,10 +41,10 @@ namespace HRISv2.Controllers
         public ActionResult Details(string id)
         {
             // query all plantilla preparation records per EIC
-            IEnumerable<tappPreparation> tappPreparations = _db.tappPreparation.Where(r=>r.AIC==id);
+            IEnumerable<tappPreparation> tappPreparations = _db.tappPreparations.Where(r=>r.AIC==id);
             ViewBag.tappPreparations = tappPreparations;
 
-            var empRec = _db.vDuplicateEICPlantillaPreparation.SingleOrDefault(r => r.EIC == id);
+            var empRec = _db.vDuplicateEICPlantillaPreparations.SingleOrDefault(r => r.EIC == id);
             var fullname = empRec != null ? empRec.fullnameLast : "";
             ViewBag.Fullname = fullname;
 
@@ -55,8 +55,8 @@ namespace HRISv2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            tappPreparation tappPreparation = _db.tappPreparation.Find(id);
-            _db.tappPreparation.Remove(tappPreparation);
+            tappPreparation tappPreparation = _db.tappPreparations.Find(id);
+            _db.tappPreparations.Remove(tappPreparation);
             _db.SaveChanges();
 
             return RedirectToAction("Index");

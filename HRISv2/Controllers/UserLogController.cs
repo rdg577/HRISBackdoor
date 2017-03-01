@@ -27,7 +27,7 @@ namespace HRISv2.Controllers
             const int pageSize = 20;
             int pageNumber = (page ?? 1);
 
-            var userProfileWithUsername = db.vUserProfileWithUsername;
+            var userProfileWithUsername = db.vUserProfileWithUsernames;
 
             // search
             if (!string.IsNullOrEmpty(searchString))
@@ -45,7 +45,7 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsername.Find(id);
+            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsernames.Find(id);
             if (vUserProfileWithUsername == null)
             {
                 return HttpNotFound();
@@ -60,7 +60,7 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsername.Find(id);
+            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsernames.Find(id);
             if (vUserProfileWithUsername == null)
             {
                 return HttpNotFound();

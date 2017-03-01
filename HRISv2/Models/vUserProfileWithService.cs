@@ -12,14 +12,10 @@ namespace HRISv2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tappEmpStatus
+    public partial class vUserProfileWithService
     {
-        public int recNo { get; set; }
-        public string statusCode { get; set; }
-        public string statusName { get; set; }
-        public Nullable<int> groupID { get; set; }
-        public Nullable<int> isGovService { get; set; }
-        public Nullable<int> isPlantilla { get; set; }
-        public string @class { get; set; }
+        public string EIC { get; set; }
+        public string Fullname { get; set; }
+        public Nullable<int> TotalServices { get; set; }
     }
 }

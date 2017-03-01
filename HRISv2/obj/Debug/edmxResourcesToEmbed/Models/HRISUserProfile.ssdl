@@ -196,24 +196,26 @@ warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does n
 warning 6002: The table/view 'HRIS.dbo.vUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vUserProfile">
     <Key>
-      <PropertyRef Name="IDNo" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="EIC" />
     </Key>
-    <Property Name="IDNo" Type="nvarchar" MaxLength="4" Nullable="false" />
-    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="IDNo" Type="nvarchar" MaxLength="4" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
-    <Property Name="Birthdate" Type="date" />
-    <Property Name="Birthplace" Type="nvarchar" MaxLength="255" />
+    <Property Name="birthdate" Type="date" />
+    <Property Name="birthplace" Type="nvarchar" MaxLength="255" />
     <Property Name="Position" Type="nvarchar" MaxLength="200" />
     <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
-    <Property Name="OfficeCode" Type="nvarchar" MaxLength="20" />
-    <Property Name="OfficeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="officeName" Type="nvarchar" MaxLength="100" />
     <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
     <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
-    <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="groupName" Type="nvarchar" MaxLength="100" />
     <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
-    <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
     <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vUserProfileWithServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -306,22 +308,23 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     </EntitySet>
     <EntitySet Name="vUserProfile" EntityType="Self.vUserProfile" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
+    [vUserProfile].[ID] AS [ID], 
     [vUserProfile].[IDNo] AS [IDNo], 
     [vUserProfile].[EIC] AS [EIC], 
     [vUserProfile].[Fullname] AS [Fullname], 
-    [vUserProfile].[Birthdate] AS [Birthdate], 
-    [vUserProfile].[Birthplace] AS [Birthplace], 
+    [vUserProfile].[birthdate] AS [birthdate], 
+    [vUserProfile].[birthplace] AS [birthplace], 
     [vUserProfile].[Position] AS [Position], 
     [vUserProfile].[SubPosition] AS [SubPosition], 
-    [vUserProfile].[OfficeCode] AS [OfficeCode], 
-    [vUserProfile].[OfficeName] AS [OfficeName], 
+    [vUserProfile].[officeCode] AS [officeCode], 
+    [vUserProfile].[officeName] AS [officeName], 
     [vUserProfile].[JobStatus] AS [JobStatus], 
     [vUserProfile].[BATSArea] AS [BATSArea], 
     [vUserProfile].[AttendanceScheme] AS [AttendanceScheme], 
-    [vUserProfile].[GroupName] AS [GroupName], 
+    [vUserProfile].[groupName] AS [groupName], 
     [vUserProfile].[GroupCode] AS [GroupCode], 
-    [vUserProfile].[AreaID] AS [AreaID], 
-    [vUserProfile].[SchemeCode] AS [SchemeCode]
+    [vUserProfile].[SchemeCode] AS [SchemeCode], 
+    [vUserProfile].[AreaID] AS [AreaID]
     FROM [dbo].[vUserProfile] AS [vUserProfile]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vUserProfileWithServices" EntityType="Self.vUserProfileWithServices" store:Type="Views" store:Schema="dbo">

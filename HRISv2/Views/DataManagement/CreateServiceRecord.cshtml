@@ -1,0 +1,427 @@
+﻿@using HRISv2.Models
+@{
+    ViewBag.Title = "Create";
+}
+ 
+<h2>Create</h2>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #008800; color: #ffffff">
+                <h4>Create New Employee Service Record</h4>
+                <p>You are redirected here because it has been detected that the selected employee has no service record...</p>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group employee_name">
+                        <label class="control-label col-lg-2">Employee Name:</label>
+                        <div class="col-lg-6 col-xs-12">
+                            @{
+                                var employee = (tappEmployee)ViewBag.employee;
+                                if (employee != null)
+                                {
+                                    <label style="width: 100%" class="form-control">@employee.fullnameLast</label>
+                                    <input type="hidden" id="EIC" name="EIC" value="@employee.EIC" />
+                                }
+                            }
+
+                            @*@(Html.Kendo().AutoComplete()
+                                        .Name("EIC")
+                                        .DataTextField("FullnameWithEIC")
+                                        .Filter("contains") // "startswith"
+                                        .MinLength(3)
+                                        .Suggest(true)
+                                        .DataSource(g => g.Read("EmployeeList", "Toolbox"))
+                                        .HtmlAttributes(new { maxlength = "300", style = "width:100%; text-transform:uppercase;" })
+                            )*@
+                        </div>
+                    </div>
+
+                    <div class="form-group designation">
+                        <label class="control-label col-lg-2">Designation:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("designation")
+                              .DataTextField("fullDescription")
+                              .DataValueField("sg")
+                              .DataSource(g => g.Read("PositionList", "Toolbox"))
+                              .OptionLabel("-- PLEASE SELECT --")
+                              .HtmlAttributes(new { maxlength = "300", style = "width: 50%; text-transform:uppercase;" })
+                              .Events(events =>
+                              {
+                                  events.Change(
+                                    @<text>
+                                        function() {
+                                            // display salary grade level
+                                            var sg = $("#designation").val();
+                                            $("#sg").val(sg);
+
+
+                                            $("#statusName").kendoDropDownList({
+                                                dataSource: null,
+                                                optionLabel: "--PLEASE SELECT--"
+                                            });
+
+                                            // load employment status
+                                            var ds = new kendo.data.DataSource({
+                                                transport: {
+                                                    read:  {
+                                                        url: "@Url.Action("WorkStatusList","Toolbox")",
+                                                        dataType: "json" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                                                    }
+                                                }
+                                            });
+
+                                            jQuery("#statusName").kendoDropDownList({
+                                                change:
+                                                    function() {
+                                                        // reset salary value
+                                                        $("#salaryPayroll").kendoNumericTextBox({ value: (0)});
+
+                                                        var step1To8 = [
+                                                            { text: "STEP 1", value: "1" },
+                                                            { text: "STEP 2", value: "2" },
+                                                            { text: "STEP 3", value: "3" },
+                                                            { text: "STEP 4", value: "4" },
+                                                            { text: "STEP 5", value: "5" },
+                                                            { text: "STEP 6", value: "6" },
+                                                            { text: "STEP 7", value: "7" },
+                                                            { text: "STEP 8", value: "8" }
+                                                        ];
+
+                                                        var step1 = [
+                                                            { text: "STEP 1", value: "1" }
+                                                        ];
+
+                                                        var status_name = $("#statusName").val();
+                                                        if(status_name.localeCompare("PERMANENT")==0 ||
+                                                        status_name.localeCompare("ELECTIVE")==0 ||
+                                                        status_name.localeCompare("CO-TERMINOUS")==0)
+                                                        {
+                                                            $("#step").kendoDropDownList({
+                                                                dataTextField: "text",
+                                                                dataValueField: "value",
+                                                                dataSource: step1To8,
+                                                                optionLabel: "--PLEASE SELECT--",
+                                                                change: function() { displayPayScheme() }
+                                                            });
+                                                        }
+                                                        else
+                                                        {
+                                                            $("#step").kendoDropDownList({
+                                                                dataTextField: "text",
+                                                                dataValueField: "value",
+                                                                dataSource: step1, 
+                                                                optionLabel: "--PLEASE SELECT--",
+                                                                change: function() { displayPayScheme() }
+                                                            });
+                                                        }
+                                                    } // end - function()
+
+                                                ,dataSource: ds
+                                                ,dataTextField: "statusName"
+                                                ,dataValueField: "statusName"
+                                                ,optionLabel: "--PLEASE SELECT--"
+                                                ,htmlAttributes: { maxlength : "300", style : "width:auto; text-transform:uppercase;" }
+                                            }); // end - jQuery("#statusName")
+
+
+                                            $("#step").kendoDropDownList({
+                                                dataTextField: "text",
+                                                dataValueField: "value",
+                                                dataSource: null,
+                                                optionLabel: "--PLEASE SELECT--"
+                                            });
+
+                                            $("#paySchemeName").kendoDropDownList({
+                                                dataSource: null,
+                                                dataTextField: "paySchemeName",
+                                                dataValueField: "paySchemeCode",
+                                                optionLabel: "-- PLEASE SELECT --"
+                                            });
+
+                                            $("#salaryPayroll").kendoNumericTextBox({ value: 0 });
+
+
+                                        }
+                                    </text>
+                                    ); // end - events.Change
+                              }) // end - .Events
+                            )
+
+                            <div style="padding-top: 4px;">SG Level:
+                                <input 
+                                    type="text" name="sg" id="sg" 
+                                    style="background-color: #ffffff; 
+                                            border: 1px solid #ccc; -ms-border-radius: 4px; border-radius: 4px;
+                                            height: 34px;
+                                            padding: 6px 12px;
+                                            width: 60px" readonly="readonly" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*<div class="form-group sg_level">
+                        <label class="control-label col-lg-2">SG Level:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="sg" id="sg" class="form-control" style="background-color: #ffffff; width:auto" readonly="readonly" />
+                        </div>
+                    </div>*@
+
+                    <div class="form-group status_name">
+                        <label class="control-label col-lg-2">Employment Status:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                                .Name("statusName")
+                                .HtmlAttributes(new { style = "width:210px; text-transform:uppercase;" })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group sg_level">
+                        <label class="control-label col-lg-2">Step No.:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                                .Name("step")
+                                .HtmlAttributes(new { style = "width:180px; text-transform:uppercase;" })
+                            )
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group paySchemeName">
+                        <label class="control-label col-lg-2">Pay Scheme:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                                  .Name("paySchemeName")
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group salary">
+                        <label class="control-label col-lg-2">Salary:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().NumericTextBox()
+                              .Name("salaryPayroll")
+                              .Decimals(2)
+                              .Value(0)
+                              .Spinners(false)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group date_from">
+                        <label class="control-label col-lg-2">Date Started:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DatePicker()
+                              .Name("dateFrom")
+                              .Max(DateTime.Now)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group date_to">
+                        <label class="control-label col-lg-2">Date Ended:</label>
+                        <div class="col-lg-2 col-xs-12">
+                            @(Html.Kendo().DatePicker()
+                                  .Name("dateTo")
+                                  .Max(DateTime.Now)
+                                  )
+                            <input type="checkbox" name="cbPresent" id="cbPresent" /> PRESENT
+                        </div> 
+                    </div>
+
+                    <div class="form-group officeServiceRec">
+                        <label class="control-label col-lg-2">Office Service:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                              .Name("officeServiceRec")
+                              .DataTextField("officeServiceRecWithCode")
+                              .DataValueField("officeServiceRec")
+                              .DataSource(g => g.Read("OfficeList", "Toolbox"))
+                              .OptionLabel("-- PLEASE SELECT --")
+                              .HtmlAttributes(new { maxlength = "300", style = "width:100%;text-transform:uppercase;" })
+                            )
+                        </div>
+                    </div>
+
+                    <div class="form-group branch">
+                        <label class="control-label col-lg-2">Branch:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="branch" id="branch" value="PROV'L" style="width: auto" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group sepCause">
+                        <label class="control-label col-lg-2">Separation Cause:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            <input type="text" name="sepCause" id="sepCause" value="" style="width: auto" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <div class="panel-footer">
+            <input type="submit" id="btnClick" class="btn btn-primary col-lg-offset-2" value="Create" />
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnClick").click(function() {
+        bootbox.confirm({
+            message: "<p>Done reviewing the data?</p><p>Click YES to continue.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    savingData();
+                }
+            }
+        });
+    });
+
+    function savingData() {
+        /** EXTRACTION OF DATA */
+        // extract EIC
+        var EIC = "";
+        var strEIC = $("#EIC").val();
+        if (strEIC.length > 0) {
+            var strArr = strEIC.split("-");
+            EIC = strArr[0].trim();
+        }
+        // extract employment employment period
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = "";
+        if (!$("#cbPresent").is(":checked")) {
+            dateTo = $("#dateTo").val();
+        }
+        // extract employee service designation
+        var designation = $("#designation").data("kendoDropDownList").text();
+        // extract employment status
+        var statusName = $("#statusName").data("kendoDropDownList").value();
+        // extract employment office service record
+        var officeServiceRec = $("#officeServiceRec").data("kendoDropDownList").value();
+        // extract branch
+        var branch = $("#branch").val;
+        // extract salaryPayroll
+        var salaryPayroll = $("#salaryPayroll").data("kendoNumericTextBox").value();
+        // extract salaryServiceRec, paySchemeName, paySchemeCode
+        var salaryServiceRec = "";
+        var paySchemeName = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
+        if (paySchemeName == "D") {
+            salaryServiceRec = salaryPayroll * 22 * 12;
+        } else if (paySchemeName == "M") {
+            salaryServiceRec = salaryPayroll / 12;
+        } else if (paySchemeName == "A") {
+            salaryServiceRec = salaryPayroll;
+        }
+        var paySchemeCode = $("#paySchemeName").data("kendoDropDownList").value();
+        // extract officeCode
+        var officeCode = "";
+        if ($("#officeServiceRec").data("kendoDropDownList").value().length > 0) {
+            officeCode = $("#officeServiceRec").data("kendoDropDownList").text().split("-")[1].trim();
+        }
+        // extract sepCause
+        var sepCause = $("#sepCause").val();
+        // extract form token
+        var token = $('input[name="__RequestVerificationToken"]').val();
+
+
+        // INSERT DATA TO TABLE
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Create", "ServiceRecord")",
+            data: {
+                __RequestVerificationToken: token,
+                EIC: EIC,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
+                designation: designation,
+                statusName: statusName,
+                officeServiceRec: officeServiceRec,
+                branch: branch,
+                salaryPayroll: salaryPayroll,
+                salaryServiceRec: salaryServiceRec,
+                paySchemeCode: paySchemeCode,
+                paySchemeName: paySchemeName,
+                sepCause: sepCause,
+                officeCode: officeCode
+            },
+            success: function (data) {
+                window.location.href = '@Url.Content("~/ServiceRecord/Index")';
+            },
+            error: function(errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+        });
+    }
+
+    function displayPayScheme() {
+        // initialize salary
+        $("#salaryPayroll").kendoNumericTextBox({ value: 0 });
+        displaySalary();
+
+        $("#paySchemeName").kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "@Url.Action("SalarySchemeList", "Toolbox")" // /hris/Toolbox/SalarySchemeList
+                    }
+                }
+            },
+            dataTextField: "paySchemeName",
+            dataValueField: "paySchemeCode",
+            optionLabel: "-- PLEASE SELECT --",
+            change:
+                function () {
+                    $("#salaryPayroll").kendoNumericTextBox({ value: 0 });
+                    displaySalary();
+                } // end-of-function()
+
+        });
+    }
+
+    function displaySalary() {
+        var sgVal = $("#sg").val();
+        var stepVal = $("#step").val();
+
+        if (sgVal && stepVal) {
+            // query salary schedule using sg and step values
+            $.ajax({
+                url: "@Url.Action("GetSalarySchedule", "Toolbox")", // /hris/Toolbox/GetSalarySchedule
+                data: { sg: sgVal, step: stepVal },
+                type: "GET",
+                datatype: "json",
+                success: function (data) {
+                    var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
+                    if (flag == "D") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22 });
+                        //displaySalary(data[0].rateMonth / 22)
+                    }
+                    else if (flag == "M") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth });
+                        //displaySalary(data[0].rateMonth)
+                    }
+                    else if (flag == "A") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth * 12 });
+                        //displaySalary(data[0].rateMonth * 12)
+                    }
+
+                },
+                error: function (errMsg) { console.log("Whoops! Something bad happen." + errMsg) }
+            });
+        
+        } // end-of-if
+    }
+</script>

@@ -1,17 +1,14 @@
 ﻿@{
-    Layout = null;
+    Layout = "_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+<div class="row">
+    <div class="">
+
+        <hgroup class="jumbotron">
+            <h1 class="text-danger">Info.!</h1>
+            <h2 class="text-danger">@ViewBag.ErrorMessage</h2>
+        </hgroup>
+    </div>
+</div>
+

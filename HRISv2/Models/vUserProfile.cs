@@ -7,9 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace HRISv2.Models
 {
     using System;
@@ -17,53 +14,22 @@ namespace HRISv2.Models
     
     public partial class vUserProfile
     {
-        [DisplayName("ID NO.:")]
+        public long ID { get; set; }
         public string IDNo { get; set; }
-
-        [DisplayName("EIC:")]
         public string EIC { get; set; }
-
-        [DisplayName("FULLNAME:")]
         public string Fullname { get; set; }
-
-        [DisplayName("BIRTHDATE:")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public Nullable<System.DateTime> Birthdate { get; set; }
-
-        [DisplayName("BIRTHPLACE:")]
-        public string Birthplace { get; set; }
-
-        [DisplayName("POSITION:")]
+        public Nullable<System.DateTime> birthdate { get; set; }
+        public string birthplace { get; set; }
         public string Position { get; set; }
-
-        [DisplayName("SUB-POSITION:")]
         public string SubPosition { get; set; }
-
-        [DisplayName("OFFICE CODE:")]
-        public string OfficeCode { get; set; }
-
-        [DisplayName("OFFICE NAME:")]
-        public string OfficeName { get; set; }
-
-        [DisplayName("EMPLOYMENT STATUS:")]
+        public string officeCode { get; set; }
+        public string officeName { get; set; }
         public string JobStatus { get; set; }
-
-        [DisplayName("BATS AREA:")]
         public string BATSArea { get; set; }
-
-        [DisplayName("ATTENDANCE SCHEME:")]
         public string AttendanceScheme { get; set; }
-
-        [DisplayName("GROUP NAME:")]
-        public string GroupName { get; set; }
-
-        [DisplayName("GROUP CODE:")]
+        public string groupName { get; set; }
         public string GroupCode { get; set; }
-
-        [DisplayName("AREA ID:")]
-        public string AreaID { get; set; }
-
-        [DisplayName("SCHEME CODE:")]
         public string SchemeCode { get; set; }
+        public string AreaID { get; set; }
     }
 }

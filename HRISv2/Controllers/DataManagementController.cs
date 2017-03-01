@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HRISv2.Models;
 using PagedList;
@@ -30,15 +29,19 @@ namespace HRISv2.Controllers
             int pageSize = 20;
             int pageNumber = (page ?? 1);
 
-            var vUserProfile = db.vUserProfile;
+            var vUserProfile = db.vUserProfiles;
+            var tappEmployee = db.tappEmployees;
+
+            ViewBag.vUserProfile = vUserProfile;
 
             // search
             if (!string.IsNullOrEmpty(searchString))
             {
-                return View(vUserProfile.Where(u => u.Fullname.StartsWith(searchString)).Distinct().OrderBy(u => u.Fullname).ToPagedList(pageNumber, pageSize));
+                return View(tappEmployee.Where(u => u.fullnameLast.StartsWith(searchString)).Distinct().OrderBy(u => u.fullnameLast).ToPagedList(pageNumber, pageSize));
             }
-            return View(vUserProfile.OrderBy(u => u.Fullname).ToPagedList(pageNumber, pageSize));
+            return View(tappEmployee.OrderBy(u => u.fullnameLast).ToPagedList(pageNumber, pageSize));
         }
+
 
         // GET: EditUserProfile/5
         public ActionResult EditUserProfile(string id)
@@ -47,19 +50,21 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfile vUserProfile = db.vUserProfile.FirstOrDefault(g => g.EIC == id);
+            vUserProfile vUserProfile = db.vUserProfiles.FirstOrDefault(g => g.EIC == id);
             if (vUserProfile == null)
             {
-                return HttpNotFound();
+                ViewBag.ErrorMessage = "Record cannot be found.";
+                return RedirectToAction("Index");
+                return HttpNotFound("Record cannot be found.");
             }
 
-            var listEmpGroup = db.trefEmpGroup.ToList();
+            var listEmpGroup = db.trefEmpGroups.ToList();
             ViewBag.listEmpGroup = listEmpGroup;
 
-            var listStationArea = db.tAttStationArea.ToList();
+            var listStationArea = db.tAttStationAreas.ToList();
             ViewBag.listStationArea = listStationArea;
 
-            var listAttendanceScheme = db.tAttScheme.ToList();
+            var listAttendanceScheme = db.tAttSchemes.ToList();
             ViewBag.listAttendanceScheme = listAttendanceScheme;
 
             return View(vUserProfile);
@@ -70,51 +75,51 @@ namespace HRISv2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("EditUserProfile")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEditUserProfile(string EIC, string empGroupCode, string AreaID, string SchemeCode)
+        public ActionResult EditUserProfile(string EIC, string empGroupCode, string AreaID, string SchemeCode)
         {
             try
             {
                 // fetch record
-                if (db.tappEmpGroup.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tappEmpGroups.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tappEmpGroup empGroup = new tappEmpGroup();
                     empGroup.EIC = EIC;
                     empGroup.empGroupCode = empGroupCode;
-                    db.tappEmpGroup.Add(empGroup);
+                    db.tappEmpGroups.Add(empGroup);
                 }
                 else
                 {
                     // update group code/name
-                    tappEmpGroup empGroup = db.tappEmpGroup.Single(r => r.EIC == EIC);
+                    tappEmpGroup empGroup = db.tappEmpGroups.Single(r => r.EIC == EIC);
                     empGroup.empGroupCode = empGroupCode;
                 }
 
-                if (db.tAttEmpScheme.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tAttEmpSchemes.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tAttEmpScheme attEmpScheme = new tAttEmpScheme();
                     attEmpScheme.EIC = EIC;
                     attEmpScheme.SchemeCode = SchemeCode;
-                    db.tAttEmpScheme.Add(attEmpScheme);
+                    db.tAttEmpSchemes.Add(attEmpScheme);
                 }
                 else
                 {
                     // update attendance scheme
-                    tAttEmpScheme attndScheme = db.tAttEmpScheme.Single(r => r.EIC == EIC);
+                    tAttEmpScheme attndScheme = db.tAttEmpSchemes.Single(r => r.EIC == EIC);
                     attndScheme.SchemeCode = SchemeCode;
                 }
 
-                if (db.tAttEmpArea.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tAttEmpAreas.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tAttEmpArea areaBATS = new tAttEmpArea();
                     areaBATS.EIC = EIC;
                     areaBATS.AreaID = AreaID;
-                    db.tAttEmpArea.Add(areaBATS);
+                    db.tAttEmpAreas.Add(areaBATS);
 
                 }
                 else
                 {
                     // update attendance scheme
-                    tAttEmpArea areaBATS = db.tAttEmpArea.SingleOrDefault(r => r.EIC == EIC);
+                    tAttEmpArea areaBATS = db.tAttEmpAreas.SingleOrDefault(r => r.EIC == EIC);
                     areaBATS.AreaID = AreaID;
                 }
 
@@ -127,7 +132,7 @@ namespace HRISv2.Controllers
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
-                vUserProfile vUserProfile = db.vUserProfile.Single(r => r.EIC == EIC);
+                vUserProfile vUserProfile = db.vUserProfiles.Single(r => r.EIC == EIC);
                 return View(vUserProfile);
             }
         }
@@ -139,7 +144,7 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfile vUserProfile = db.vUserProfile.FirstOrDefault(g => g.EIC == id);
+            vUserProfile vUserProfile = db.vUserProfiles.FirstOrDefault(g => g.EIC == id);
             if (vUserProfile == null)
             {
                 return HttpNotFound();
@@ -154,7 +159,7 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsername.Find(id);
+            vUserProfileWithUsername vUserProfileWithUsername = db.vUserProfileWithUsernames.Find(id);
             if (vUserProfileWithUsername == null)
             {
                 return HttpNotFound();
@@ -181,9 +186,13 @@ namespace HRISv2.Controllers
             // query employee service record
             IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = db.fnGetEmployeeServiceRecords(id).ToList();
 
+            // if there is no service record, redirect to
+            // create service record form
             if (!employeeServiceRecord.Any())
             {
-                return HttpNotFound();
+                var employee = db.tappEmployees.SingleOrDefault(r => r.EIC == id);
+                ViewBag.employee = employee;
+                return View("CreateServiceRecord");
             }
 
             ViewBag.Fullname = employeeServiceRecord.First().Fullname;
@@ -200,8 +209,8 @@ namespace HRISv2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteServiceRecord(int id)
         {
-            tappServiceRecord empServiceRecord = db.tappServiceRecord.Find(id);
-            db.tappServiceRecord.Remove(empServiceRecord);
+            tappServiceRecord empServiceRecord = db.tappServiceRecords.Find(id);
+            db.tappServiceRecords.Remove(empServiceRecord);
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -211,10 +220,10 @@ namespace HRISv2.Controllers
         public ActionResult DetailsPlantilla(string id)
         {
             // query all plantilla preparation records per EIC
-            IEnumerable<tappPreparation> tappPreparations = db.tappPreparation.Where(r => r.AIC == id);
+            IEnumerable<tappPreparation> tappPreparations = db.tappPreparations.Where(r => r.AIC == id);
             ViewBag.tappPreparations = tappPreparations;
 
-            var empRec = db.vDuplicateEICPlantillaPreparation.SingleOrDefault(r => r.EIC == id);
+            var empRec = db.vDuplicateEICPlantillaPreparations.SingleOrDefault(r => r.EIC == id);
             var fullname = empRec != null ? empRec.fullnameLast : "";
             ViewBag.Fullname = fullname;
 
@@ -225,8 +234,8 @@ namespace HRISv2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePlatilla(int id)
         {
-            tappPreparation tappPreparation = db.tappPreparation.Find(id);
-            db.tappPreparation.Remove(tappPreparation);
+            tappPreparation tappPreparation = db.tappPreparations.Find(id);
+            db.tappPreparations.Remove(tappPreparation);
             db.SaveChanges();
 
             return RedirectToAction("Index");

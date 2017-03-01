@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace HRISv2.Models
 {
     using System;
@@ -20,8 +18,6 @@ namespace HRISv2.Models
         public string staffingCode { get; set; }
         public string AIC { get; set; }
         public string userEIC { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public Nullable<System.DateTime> dateEncoded { get; set; }
     }
 }

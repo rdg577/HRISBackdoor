@@ -21,47 +21,52 @@
             <div class="panel-heading" style="background-color: #008800; color: #ffffff"><h4>@Html.DisplayFor(model => model.Fullname)</h4></div>
             <table class="table table-hover">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.IDNo)</th>
+                    <th>ID NO.:</th>
                     <td>@Html.DisplayFor(model => model.IDNo)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Fullname)</th>
+                    <th>FULLNAME:</th>
                     <td>@Html.DisplayFor(model => model.Fullname)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Birthdate)</th>
-                    <td>@Html.DisplayFor(model => model.Birthdate)</td>
+                    <th>BIRTHDATE:</th>
+                    @{
+                        var bdate = Convert.ToDateTime(Model.birthdate).ToShortDateString();
+                        <td>
+                            @bdate
+                        </td>
+                    } 
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Birthplace)</th>
-                    <td>@Html.DisplayFor(model => model.Birthplace)</td>
+                    <th>BIRTHPLACE</th>
+                    <td>@Html.DisplayFor(model => model.birthplace)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Position)</th>
+                    <th>POSITION:</th>
                     <td>@Html.DisplayFor(model => model.Position)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.SubPosition)</th>
+                    <th>SUB-POSITION:</th>
                     <td>@Html.DisplayFor(model => model.SubPosition)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.JobStatus)</th>
+                    <th>EMPLOYMENT STATUS:</th>
                     <td>@Html.DisplayFor(model => model.JobStatus)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.OfficeName)</th>
-                    <td>@Html.DisplayFor(model => model.OfficeName)</td>
+                    <th>OFFICE NAME:</th>
+                    <td>@Html.DisplayFor(model => model.officeName)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.BATSArea)</th>
+                    <th>BATS AREA:</th>
                     <td>@Html.DisplayFor(model => model.BATSArea)</td>
                 </tr>
                 <tr>
                     <th>WARM BODY OFFICE :</th>
-                    <td>@Html.DisplayFor(model => model.OfficeName)</td>
+                    <td>@Html.DisplayFor(model => model.officeName)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.AttendanceScheme)</th>
+                    <th>ATTENDANCE SCHEME:</th>
                     <td>@Html.DisplayFor(model => model.AttendanceScheme)</td>
                 </tr>
             </table>

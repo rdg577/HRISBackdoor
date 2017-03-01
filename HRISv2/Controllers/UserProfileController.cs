@@ -27,7 +27,7 @@ namespace HRISv2.Controllers
             int pageSize = 20;
             int pageNumber = (page ?? 1);
 
-            var vUserProfile = db.vUserProfile;
+            var vUserProfile = db.vUserProfiles;
 
             // search
             if (!string.IsNullOrEmpty(searchString))
@@ -44,7 +44,7 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfile vUserProfile = db.vUserProfile.FirstOrDefault(g => g.EIC == id);
+            vUserProfile vUserProfile = db.vUserProfiles.FirstOrDefault(g => g.EIC == id);
             if (vUserProfile == null)
             {
                 return HttpNotFound();
@@ -82,19 +82,19 @@ namespace HRISv2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            vUserProfile vUserProfile = db.vUserProfile.FirstOrDefault(g => g.EIC == id);
+            vUserProfile vUserProfile = db.vUserProfiles.FirstOrDefault(g => g.EIC == id);
             if (vUserProfile == null)
             {
                 return HttpNotFound();
             }
 
-            var listEmpGroup = db.trefEmpGroup.ToList();
+            var listEmpGroup = db.trefEmpGroups.ToList();
             ViewBag.listEmpGroup = listEmpGroup;
 
-            var listStationArea = db.tAttStationArea.ToList();
+            var listStationArea = db.tAttStationAreas.ToList();
             ViewBag.listStationArea = listStationArea;
 
-            var listAttendanceScheme = db.tAttScheme.ToList();
+            var listAttendanceScheme = db.tAttSchemes.ToList();
             ViewBag.listAttendanceScheme = listAttendanceScheme;
 
             return View(vUserProfile);
@@ -110,46 +110,46 @@ namespace HRISv2.Controllers
             try
             {
                 // fetch record
-                if (db.tappEmpGroup.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tappEmpGroups.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tappEmpGroup empGroup = new tappEmpGroup();
                     empGroup.EIC = EIC;
                     empGroup.empGroupCode = empGroupCode;
-                    db.tappEmpGroup.Add(empGroup);
+                    db.tappEmpGroups.Add(empGroup);
                 }
                 else
                 {
                     // update group code/name
-                    tappEmpGroup empGroup = db.tappEmpGroup.Single(r => r.EIC == EIC);
+                    tappEmpGroup empGroup = db.tappEmpGroups.Single(r => r.EIC == EIC);
                     empGroup.empGroupCode = empGroupCode;
                 }
 
-                if (db.tAttEmpScheme.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tAttEmpSchemes.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tAttEmpScheme attEmpScheme = new tAttEmpScheme();
                     attEmpScheme.EIC = EIC;
                     attEmpScheme.SchemeCode = SchemeCode;
-                    db.tAttEmpScheme.Add(attEmpScheme);
+                    db.tAttEmpSchemes.Add(attEmpScheme);
                 }
                 else
                 {
                     // update attendance scheme
-                    tAttEmpScheme attndScheme = db.tAttEmpScheme.Single(r => r.EIC == EIC);
+                    tAttEmpScheme attndScheme = db.tAttEmpSchemes.Single(r => r.EIC == EIC);
                     attndScheme.SchemeCode = SchemeCode;
                 }
 
-                if (db.tAttEmpArea.SingleOrDefault(r => r.EIC == EIC) == null)
+                if (db.tAttEmpAreas.SingleOrDefault(r => r.EIC == EIC) == null)
                 {
                     tAttEmpArea areaBATS = new tAttEmpArea();
                     areaBATS.EIC = EIC;
                     areaBATS.AreaID = AreaID;
-                    db.tAttEmpArea.Add(areaBATS);
+                    db.tAttEmpAreas.Add(areaBATS);
 
                 }
                 else
                 {
                     // update attendance scheme
-                    tAttEmpArea areaBATS = db.tAttEmpArea.SingleOrDefault(r => r.EIC == EIC);
+                    tAttEmpArea areaBATS = db.tAttEmpAreas.SingleOrDefault(r => r.EIC == EIC);
                     areaBATS.AreaID = AreaID;
                 }
 
@@ -162,7 +162,7 @@ namespace HRISv2.Controllers
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
-                vUserProfile vUserProfile = db.vUserProfile.Single(r => r.EIC == EIC);
+                vUserProfile vUserProfile = db.vUserProfiles.Single(r => r.EIC == EIC);
                 return View(vUserProfile);
             }
         }

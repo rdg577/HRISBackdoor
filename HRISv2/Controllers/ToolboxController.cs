@@ -15,7 +15,7 @@ namespace HRISv2.Controllers
         public JsonResult EmployeeList()
         {
             //var list = db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
-            var list = (from r in db.tappEmployee
+            var list = (from r in db.tappEmployees
                         orderby r.fullnameLast
                         select new
                         {
@@ -29,7 +29,7 @@ namespace HRISv2.Controllers
 
         public JsonResult PositionList()
         {
-            var list = (from r in db.tappPosition
+            var list = (from r in db.tappPositions
                         orderby r.fullDescription
                         select r).ToList();
 
@@ -48,7 +48,7 @@ namespace HRISv2.Controllers
         
         public JsonResult OfficeList()
         {
-            var list = (from r in db.tappOffice
+            var list = (from r in db.tappOffices
                         orderby r.officeServiceRec
                         select new
                         {
@@ -68,7 +68,7 @@ namespace HRISv2.Controllers
 
         public JsonResult SalarySchemeList()
         {
-            var list = (from r in db.tappSalarySchem
+            var list = (from r in db.tappSalarySchems
                         orderby r.paySchemeName
                         select new
                         {
@@ -83,7 +83,7 @@ namespace HRISv2.Controllers
 
         public JsonResult GetSalarySchedule(int sg, int step)
         {
-            var salSched = (from r in db.tappSalarySched
+            var salSched = (from r in db.tappSalaryScheds
                             where r.sg == sg
                             where r.step == step
                             where r.isActive == 1

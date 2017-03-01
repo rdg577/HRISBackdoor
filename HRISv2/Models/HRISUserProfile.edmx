@@ -201,24 +201,26 @@ warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does n
 warning 6002: The table/view 'HRIS.dbo.vUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vUserProfile">
           <Key>
-            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EIC" />
           </Key>
-          <Property Name="IDNo" Type="nvarchar" MaxLength="4" Nullable="false" />
-          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="IDNo" Type="nvarchar" MaxLength="4" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
-          <Property Name="Birthdate" Type="date" />
-          <Property Name="Birthplace" Type="nvarchar" MaxLength="255" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="birthplace" Type="nvarchar" MaxLength="255" />
           <Property Name="Position" Type="nvarchar" MaxLength="200" />
           <Property Name="SubPosition" Type="nvarchar" MaxLength="100" />
-          <Property Name="OfficeCode" Type="nvarchar" MaxLength="20" />
-          <Property Name="OfficeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="officeName" Type="nvarchar" MaxLength="100" />
           <Property Name="JobStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="BATSArea" Type="nvarchar" MaxLength="100" />
           <Property Name="AttendanceScheme" Type="nvarchar" MaxLength="50" />
-          <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="100" />
           <Property Name="GroupCode" Type="nvarchar" MaxLength="20" />
-          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
           <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vUserProfileWithServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -311,22 +313,23 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           </EntitySet>
           <EntitySet Name="vUserProfile" EntityType="Self.vUserProfile" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vUserProfile].[ID] AS [ID], 
     [vUserProfile].[IDNo] AS [IDNo], 
     [vUserProfile].[EIC] AS [EIC], 
     [vUserProfile].[Fullname] AS [Fullname], 
-    [vUserProfile].[Birthdate] AS [Birthdate], 
-    [vUserProfile].[Birthplace] AS [Birthplace], 
+    [vUserProfile].[birthdate] AS [birthdate], 
+    [vUserProfile].[birthplace] AS [birthplace], 
     [vUserProfile].[Position] AS [Position], 
     [vUserProfile].[SubPosition] AS [SubPosition], 
-    [vUserProfile].[OfficeCode] AS [OfficeCode], 
-    [vUserProfile].[OfficeName] AS [OfficeName], 
+    [vUserProfile].[officeCode] AS [officeCode], 
+    [vUserProfile].[officeName] AS [officeName], 
     [vUserProfile].[JobStatus] AS [JobStatus], 
     [vUserProfile].[BATSArea] AS [BATSArea], 
     [vUserProfile].[AttendanceScheme] AS [AttendanceScheme], 
-    [vUserProfile].[GroupName] AS [GroupName], 
+    [vUserProfile].[groupName] AS [groupName], 
     [vUserProfile].[GroupCode] AS [GroupCode], 
-    [vUserProfile].[AreaID] AS [AreaID], 
-    [vUserProfile].[SchemeCode] AS [SchemeCode]
+    [vUserProfile].[SchemeCode] AS [SchemeCode], 
+    [vUserProfile].[AreaID] AS [AreaID]
     FROM [dbo].[vUserProfile] AS [vUserProfile]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vUserProfileWithServices" EntityType="Self.vUserProfileWithServices" store:Type="Views" store:Schema="dbo">
@@ -362,6 +365,29 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HRISUserProfileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tappEmpGroups" EntityType="HRISUserProfileModel.tappEmpGroup" />
+          <EntitySet Name="tappEmployees" EntityType="HRISUserProfileModel.tappEmployee" />
+          <EntitySet Name="tappEmpStatus" EntityType="HRISUserProfileModel.tappEmpStatu" />
+          <EntitySet Name="tappOffices" EntityType="HRISUserProfileModel.tappOffice" />
+          <EntitySet Name="tappPositions" EntityType="HRISUserProfileModel.tappPosition" />
+          <EntitySet Name="tappPreparations" EntityType="HRISUserProfileModel.tappPreparation" />
+          <EntitySet Name="tappSalaryScheds" EntityType="HRISUserProfileModel.tappSalarySched" />
+          <EntitySet Name="tappSalarySchems" EntityType="HRISUserProfileModel.tappSalarySchem" />
+          <EntitySet Name="tappServiceRecords" EntityType="HRISUserProfileModel.tappServiceRecord" />
+          <EntitySet Name="tAttEmpAreas" EntityType="HRISUserProfileModel.tAttEmpArea" />
+          <EntitySet Name="tAttEmpSchemes" EntityType="HRISUserProfileModel.tAttEmpScheme" />
+          <EntitySet Name="tAttSchemes" EntityType="HRISUserProfileModel.tAttScheme" />
+          <EntitySet Name="tAttStationAreas" EntityType="HRISUserProfileModel.tAttStationArea" />
+          <EntitySet Name="trefEmpGroups" EntityType="HRISUserProfileModel.trefEmpGroup" />
+          <EntitySet Name="vDuplicateEICPlantillaPreparations" EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" />
+          <EntitySet Name="vUserProfiles" EntityType="HRISUserProfileModel.vUserProfile" />
+          <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithService" />
+          <EntitySet Name="vUserProfileWithUsernames" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
+          <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
+            <Parameter Name="eic" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
         <EntityType Name="tappEmpGroup">
           <Key>
             <PropertyRef Name="recNo" />
@@ -372,11 +398,125 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="payGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tappEmployee">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="extName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Int32" />
+          <Property Name="prefixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sufixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappEmpStatu">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="groupID" Type="Int32" />
+          <Property Name="isGovService" Type="Int32" />
+          <Property Name="isPlantilla" Type="Int32" />
+          <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappOffice">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="sortTag" Type="Int32" />
+          <Property Name="tagRemarks" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappPosition">
+          <Key>
+            <PropertyRef Name="positionCode" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="positionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fullDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="shortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="accronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sg" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappPreparation">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staffingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="dateEncoded" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tappSalarySched">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salaryId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="salaryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sg" Type="Int32" />
+          <Property Name="step" Type="Int32" />
+          <Property Name="rateMonth" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="rateDay" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="isActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappSalarySchem">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paySchemeCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeAcronym" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappServiceRecord">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="dateFrom" Type="DateTime" Precision="0" />
+          <Property Name="dateTo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="designation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="statusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="officeServiceRec" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lwpay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="salaryPayroll" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="salaryServiceRec" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="paySchemeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="sepCause" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="isGovernmentService" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="isInsideGovernment" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="SgStep" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="isApproved" Type="Int32" />
+          <Property Name="dateApproved" Type="DateTime" Precision="0" />
+          <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tAttEmpArea">
           <Key>
             <PropertyRef Name="EIC" />
           </Key>
-          <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tAttEmpScheme">
@@ -415,7 +555,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             <PropertyRef Name="AreaID" />
           </Key>
           <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AreaID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="trefEmpGroup">
@@ -424,53 +564,50 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             <PropertyRef Name="empGroupCode" />
           </Key>
           <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="empGroupCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" />
-          <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" />
-          <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" />
-          <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" />
-          <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" />
-          <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" />
-          <EntitySet Name="vUserProfile" EntityType="HRISUserProfileModel.vUserProfile" />
-          <EntitySet Name="vUserProfileWithUsername" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
-          <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithServices" />
-          <EntitySet Name="tappServiceRecord" EntityType="HRISUserProfileModel.tappServiceRecord" />
-          <EntitySet Name="tappEmployee" EntityType="HRISUserProfileModel.tappEmployee" />
-          <EntitySet Name="tappPosition" EntityType="HRISUserProfileModel.tappPosition" />
-          <EntitySet Name="tappEmpStatus" EntityType="HRISUserProfileModel.tappEmpStatus" />
-          <EntitySet Name="tappOffice" EntityType="HRISUserProfileModel.tappOffice" />
-          <EntitySet Name="tappSalarySchem" EntityType="HRISUserProfileModel.tappSalarySchem" />
-          <EntitySet Name="tappSalarySched" EntityType="HRISUserProfileModel.tappSalarySched" />
-          <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
-          <Parameter Name="eic" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" />
-          <EntitySet Name="tappPreparation" EntityType="HRISUserProfileModel.tappPreparation" />
-        </EntityContainer>
+        <EntityType Name="vDuplicateEICPlantillaPreparation">
+          <Key>
+            <PropertyRef Name="recNo" />
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="totalEntries" Type="Int32" />
+        </EntityType>
         <EntityType Name="vUserProfile">
           <Key>
-            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EIC" />
           </Key>
-          <Property Name="IDNo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="IDNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Birthdate" Type="DateTime" Precision="0" />
-          <Property Name="Birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SubPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OfficeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="OfficeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="JobStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BATSArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AttendanceScheme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vUserProfileWithService">
+          <Key>
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="TotalServices" Type="Int32" />
         </EntityType>
         <EntityType Name="vUserProfileWithUsername">
           <Key>
@@ -493,118 +630,6 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vUserProfileWithServices">
-          <Key>
-            <PropertyRef Name="EIC" />
-          </Key>
-          <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="TotalServices" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tappServiceRecord">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="dateFrom" Type="DateTime" Precision="0" />
-          <Property Name="dateTo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="designation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="statusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="officeServiceRec" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lwpay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="salaryPayroll" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="salaryServiceRec" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="paySchemeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="sepCause" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="isGovernmentService" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="isInsideGovernment" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="SgStep" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="isApproved" Type="Int32" />
-          <Property Name="dateApproved" Type="DateTime" Precision="0" />
-          <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tappEmployee">
-          <Key>
-            <PropertyRef Name="EIC" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="extName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="birthdate" Type="DateTime" Precision="0" />
-          <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="gender" Type="Int32" />
-          <Property Name="prefixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sufixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tappPosition">
-          <Key>
-            <PropertyRef Name="positionCode" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="positionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="fullDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="shortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="accronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="sg" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tappEmpStatus">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="statusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="groupID" Type="Int32" />
-          <Property Name="isGovService" Type="Int32" />
-          <Property Name="isPlantilla" Type="Int32" />
-          <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tappOffice">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="sortTag" Type="Int32" />
-          <Property Name="tagRemarks" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tappSalarySchem">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="paySchemeCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="paySchemeAcronym" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tappSalarySched">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="salaryId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="salaryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="sg" Type="Int32" />
-          <Property Name="step" Type="Int32" />
-          <Property Name="rateMonth" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="rateDay" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="year" Type="Int32" />
-          <Property Name="isActive" Type="Int32" />
         </EntityType>
         <ComplexType Name="fnGetEmployeeServiceRecords_Result">
           <Property Type="Int32" Name="recNo" Nullable="false" />
@@ -631,158 +656,119 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
           <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
         </ComplexType>
-        <EntityType Name="vDuplicateEICPlantillaPreparation">
-          <Key>
-            <PropertyRef Name="recNo" />
-            <PropertyRef Name="EIC" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="totalEntries" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tappPreparation">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="staffingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="dateEncoded" Type="DateTime" Precision="3" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HRISUserProfileModelStoreContainer" CdmEntityContainer="HRISEntities">
-          <EntitySetMapping Name="tappEmpGroup">
+          <EntitySetMapping Name="tappEmpGroups">
             <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpGroup">
               <MappingFragment StoreEntitySet="tappEmpGroup">
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-                <ScalarProperty Name="tranCode" ColumnName="tranCode" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
                 <ScalarProperty Name="payGroupCode" ColumnName="payGroupCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tAttEmpArea">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpArea">
-              <MappingFragment StoreEntitySet="tAttEmpArea">
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tAttEmpScheme">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpScheme">
-              <MappingFragment StoreEntitySet="tAttEmpScheme">
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
-                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tAttScheme">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttScheme">
-              <MappingFragment StoreEntitySet="tAttScheme">
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
-                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
-                <ScalarProperty Name="Valid_In1" ColumnName="Valid_In1" />
-                <ScalarProperty Name="In1" ColumnName="In1" />
-                <ScalarProperty Name="Valid_Out1" ColumnName="Valid_Out1" />
-                <ScalarProperty Name="Out1" ColumnName="Out1" />
-                <ScalarProperty Name="Valid_In2" ColumnName="Valid_In2" />
-                <ScalarProperty Name="In2" ColumnName="In2" />
-                <ScalarProperty Name="Valid_Out2" ColumnName="Valid_Out2" />
-                <ScalarProperty Name="Out2" ColumnName="Out2" />
-                <ScalarProperty Name="SchemeDesc" ColumnName="SchemeDesc" />
-                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
-                <ScalarProperty Name="timeIn1" ColumnName="timeIn1" />
-                <ScalarProperty Name="timeOut1" ColumnName="timeOut1" />
-                <ScalarProperty Name="timeIn2" ColumnName="timeIn2" />
-                <ScalarProperty Name="timeOut2" ColumnName="timeOut2" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tAttStationArea">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttStationArea">
-              <MappingFragment StoreEntitySet="tAttStationArea">
-                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="trefEmpGroup">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.trefEmpGroup">
-              <MappingFragment StoreEntitySet="trefEmpGroup">
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
-                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="tranCode" ColumnName="tranCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappEmployees">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmployee">
+              <MappingFragment StoreEntitySet="tappEmployee">
+                <ScalarProperty Name="sufixTitle" ColumnName="sufixTitle" />
+                <ScalarProperty Name="prefixTitle" ColumnName="prefixTitle" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+                <ScalarProperty Name="fullnameFirst" ColumnName="fullnameFirst" />
+                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="extName" ColumnName="extName" />
+                <ScalarProperty Name="middleName" ColumnName="middleName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="idNo" ColumnName="idNo" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappEmpStatus">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpStatu">
+              <MappingFragment StoreEntitySet="tappEmpStatus">
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="isPlantilla" ColumnName="isPlantilla" />
+                <ScalarProperty Name="isGovService" ColumnName="isGovService" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="statusCode" ColumnName="statusCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappOffices">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappOffice">
+              <MappingFragment StoreEntitySet="tappOffice">
+                <ScalarProperty Name="tagRemarks" ColumnName="tagRemarks" />
+                <ScalarProperty Name="sortTag" ColumnName="sortTag" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+                <ScalarProperty Name="accronym" ColumnName="accronym" />
+                <ScalarProperty Name="officeName" ColumnName="officeName" />
                 <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vUserProfile">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfile">
-              <MappingFragment StoreEntitySet="vUserProfile">
-                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
-                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
-                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
-                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
-                <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
-                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+          <EntitySetMapping Name="tappPositions">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappPosition">
+              <MappingFragment StoreEntitySet="tappPosition">
+                <ScalarProperty Name="sg" ColumnName="sg" />
+                <ScalarProperty Name="accronym" ColumnName="accronym" />
+                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
+                <ScalarProperty Name="fullDescription" ColumnName="fullDescription" />
+                <ScalarProperty Name="positionCode" ColumnName="positionCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vUserProfileWithUsername">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithUsername">
-              <MappingFragment StoreEntitySet="vUserProfileWithUsername">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
-                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
-                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
-                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
-                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
-                <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
-                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+          <EntitySetMapping Name="tappPreparations">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappPreparation">
+              <MappingFragment StoreEntitySet="tappPreparation">
+                <ScalarProperty Name="dateEncoded" ColumnName="dateEncoded" />
+                <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+                <ScalarProperty Name="AIC" ColumnName="AIC" />
+                <ScalarProperty Name="staffingCode" ColumnName="staffingCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vUserProfileWithServices">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithServices">
-              <MappingFragment StoreEntitySet="vUserProfileWithServices">
-                <ScalarProperty Name="TotalServices" ColumnName="TotalServices" />
-                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <EntitySetMapping Name="tappSalaryScheds">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySched">
+              <MappingFragment StoreEntitySet="tappSalarySched">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="rateDay" ColumnName="rateDay" />
+                <ScalarProperty Name="rateMonth" ColumnName="rateMonth" />
+                <ScalarProperty Name="step" ColumnName="step" />
+                <ScalarProperty Name="sg" ColumnName="sg" />
+                <ScalarProperty Name="salaryCode" ColumnName="salaryCode" />
+                <ScalarProperty Name="salaryId" ColumnName="salaryId" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappServiceRecord">
+          <EntitySetMapping Name="tappSalarySchems">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySchem">
+              <MappingFragment StoreEntitySet="tappSalarySchem">
+                <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
+                <ScalarProperty Name="paySchemeAcronym" ColumnName="paySchemeAcronym" />
+                <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappServiceRecords">
             <EntityTypeMapping TypeName="HRISUserProfileModel.tappServiceRecord">
               <MappingFragment StoreEntitySet="tappServiceRecord">
                 <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
@@ -809,87 +795,128 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappEmployee">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmployee">
-              <MappingFragment StoreEntitySet="tappEmployee">
-                <ScalarProperty Name="sufixTitle" ColumnName="sufixTitle" />
-                <ScalarProperty Name="prefixTitle" ColumnName="prefixTitle" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
-                <ScalarProperty Name="fullnameFirst" ColumnName="fullnameFirst" />
-                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
-                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
-                <ScalarProperty Name="extName" ColumnName="extName" />
-                <ScalarProperty Name="middleName" ColumnName="middleName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <EntitySetMapping Name="tAttEmpAreas">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpArea">
+              <MappingFragment StoreEntitySet="tAttEmpArea">
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
                 <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="idNo" ColumnName="idNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAttEmpSchemes">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttEmpScheme">
+              <MappingFragment StoreEntitySet="tAttEmpScheme">
+                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappPosition">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappPosition">
-              <MappingFragment StoreEntitySet="tappPosition">
-                <ScalarProperty Name="sg" ColumnName="sg" />
-                <ScalarProperty Name="accronym" ColumnName="accronym" />
-                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
-                <ScalarProperty Name="fullDescription" ColumnName="fullDescription" />
-                <ScalarProperty Name="positionCode" ColumnName="positionCode" />
+          <EntitySetMapping Name="tAttSchemes">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttScheme">
+              <MappingFragment StoreEntitySet="tAttScheme">
+                <ScalarProperty Name="timeOut2" ColumnName="timeOut2" />
+                <ScalarProperty Name="timeIn2" ColumnName="timeIn2" />
+                <ScalarProperty Name="timeOut1" ColumnName="timeOut1" />
+                <ScalarProperty Name="timeIn1" ColumnName="timeIn1" />
+                <ScalarProperty Name="isShifting" ColumnName="isShifting" />
+                <ScalarProperty Name="SchemeDesc" ColumnName="SchemeDesc" />
+                <ScalarProperty Name="Out2" ColumnName="Out2" />
+                <ScalarProperty Name="Valid_Out2" ColumnName="Valid_Out2" />
+                <ScalarProperty Name="In2" ColumnName="In2" />
+                <ScalarProperty Name="Valid_In2" ColumnName="Valid_In2" />
+                <ScalarProperty Name="Out1" ColumnName="Out1" />
+                <ScalarProperty Name="Valid_Out1" ColumnName="Valid_Out1" />
+                <ScalarProperty Name="In1" ColumnName="In1" />
+                <ScalarProperty Name="Valid_In1" ColumnName="Valid_In1" />
+                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappEmpStatus">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappEmpStatus">
-              <MappingFragment StoreEntitySet="tappEmpStatus">
-                <ScalarProperty Name="class" ColumnName="class" />
-                <ScalarProperty Name="isPlantilla" ColumnName="isPlantilla" />
-                <ScalarProperty Name="isGovService" ColumnName="isGovService" />
-                <ScalarProperty Name="groupID" ColumnName="groupID" />
-                <ScalarProperty Name="statusName" ColumnName="statusName" />
-                <ScalarProperty Name="statusCode" ColumnName="statusCode" />
+          <EntitySetMapping Name="tAttStationAreas">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttStationArea">
+              <MappingFragment StoreEntitySet="tAttStationArea">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="trefEmpGroups">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.trefEmpGroup">
+              <MappingFragment StoreEntitySet="trefEmpGroup">
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappOffice">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappOffice">
-              <MappingFragment StoreEntitySet="tappOffice">
-                <ScalarProperty Name="tagRemarks" ColumnName="tagRemarks" />
-                <ScalarProperty Name="sortTag" ColumnName="sortTag" />
-                <ScalarProperty Name="branch" ColumnName="branch" />
-                <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
-                <ScalarProperty Name="accronym" ColumnName="accronym" />
+          <EntitySetMapping Name="vDuplicateEICPlantillaPreparations">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vDuplicateEICPlantillaPreparation">
+              <MappingFragment StoreEntitySet="vDuplicateEICPlantillaPreparation">
+                <ScalarProperty Name="totalEntries" ColumnName="totalEntries" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserProfiles">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfile">
+              <MappingFragment StoreEntitySet="vUserProfile">
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
                 <ScalarProperty Name="officeName" ColumnName="officeName" />
                 <ScalarProperty Name="officeCode" ColumnName="officeCode" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappSalarySchem">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySchem">
-              <MappingFragment StoreEntitySet="tappSalarySchem">
-                <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
-                <ScalarProperty Name="paySchemeAcronym" ColumnName="paySchemeAcronym" />
-                <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <EntitySetMapping Name="vUserProfileWithServices">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithService">
+              <MappingFragment StoreEntitySet="vUserProfileWithServices">
+                <ScalarProperty Name="TotalServices" ColumnName="TotalServices" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tappSalarySched">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappSalarySched">
-              <MappingFragment StoreEntitySet="tappSalarySched">
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="rateDay" ColumnName="rateDay" />
-                <ScalarProperty Name="rateMonth" ColumnName="rateMonth" />
-                <ScalarProperty Name="step" ColumnName="step" />
-                <ScalarProperty Name="sg" ColumnName="sg" />
-                <ScalarProperty Name="salaryCode" ColumnName="salaryCode" />
-                <ScalarProperty Name="salaryId" ColumnName="salaryId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <EntitySetMapping Name="vUserProfileWithUsernames">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vUserProfileWithUsername">
+              <MappingFragment StoreEntitySet="vUserProfileWithUsername">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="AttendanceScheme" ColumnName="AttendanceScheme" />
+                <ScalarProperty Name="BATSArea" ColumnName="BATSArea" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+                <ScalarProperty Name="OfficeName" ColumnName="OfficeName" />
+                <ScalarProperty Name="OfficeCode" ColumnName="OfficeCode" />
+                <ScalarProperty Name="SubPosition" ColumnName="SubPosition" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -922,27 +949,6 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="vDuplicateEICPlantillaPreparation">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.vDuplicateEICPlantillaPreparation">
-              <MappingFragment StoreEntitySet="vDuplicateEICPlantillaPreparation">
-                <ScalarProperty Name="totalEntries" ColumnName="totalEntries" />
-                <ScalarProperty Name="EIC" ColumnName="EIC" />
-                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tappPreparation">
-            <EntityTypeMapping TypeName="HRISUserProfileModel.tappPreparation">
-              <MappingFragment StoreEntitySet="tappPreparation">
-                <ScalarProperty Name="dateEncoded" ColumnName="dateEncoded" />
-                <ScalarProperty Name="userEIC" ColumnName="userEIC" />
-                <ScalarProperty Name="AIC" ColumnName="AIC" />
-                <ScalarProperty Name="staffingCode" ColumnName="staffingCode" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -957,7 +963,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

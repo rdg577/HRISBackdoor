@@ -1,5 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HRISUserProfileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tappEmpGroups" EntityType="HRISUserProfileModel.tappEmpGroup" />
+    <EntitySet Name="tappEmployees" EntityType="HRISUserProfileModel.tappEmployee" />
+    <EntitySet Name="tappEmpStatus" EntityType="HRISUserProfileModel.tappEmpStatu" />
+    <EntitySet Name="tappOffices" EntityType="HRISUserProfileModel.tappOffice" />
+    <EntitySet Name="tappPositions" EntityType="HRISUserProfileModel.tappPosition" />
+    <EntitySet Name="tappPreparations" EntityType="HRISUserProfileModel.tappPreparation" />
+    <EntitySet Name="tappSalaryScheds" EntityType="HRISUserProfileModel.tappSalarySched" />
+    <EntitySet Name="tappSalarySchems" EntityType="HRISUserProfileModel.tappSalarySchem" />
+    <EntitySet Name="tappServiceRecords" EntityType="HRISUserProfileModel.tappServiceRecord" />
+    <EntitySet Name="tAttEmpAreas" EntityType="HRISUserProfileModel.tAttEmpArea" />
+    <EntitySet Name="tAttEmpSchemes" EntityType="HRISUserProfileModel.tAttEmpScheme" />
+    <EntitySet Name="tAttSchemes" EntityType="HRISUserProfileModel.tAttScheme" />
+    <EntitySet Name="tAttStationAreas" EntityType="HRISUserProfileModel.tAttStationArea" />
+    <EntitySet Name="trefEmpGroups" EntityType="HRISUserProfileModel.trefEmpGroup" />
+    <EntitySet Name="vDuplicateEICPlantillaPreparations" EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" />
+    <EntitySet Name="vUserProfiles" EntityType="HRISUserProfileModel.vUserProfile" />
+    <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithService" />
+    <EntitySet Name="vUserProfileWithUsernames" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
+    <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
+      <Parameter Name="eic" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
       <PropertyRef Name="recNo" />
@@ -10,11 +33,125 @@
     <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="payGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="tappEmployee">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="extName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="gender" Type="Int32" />
+    <Property Name="prefixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sufixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tappEmpStatu">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="statusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="groupID" Type="Int32" />
+    <Property Name="isGovService" Type="Int32" />
+    <Property Name="isPlantilla" Type="Int32" />
+    <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tappOffice">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="sortTag" Type="Int32" />
+    <Property Name="tagRemarks" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tappPosition">
+    <Key>
+      <PropertyRef Name="positionCode" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="positionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="fullDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="shortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="accronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="sg" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tappPreparation">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="staffingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="dateEncoded" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="tappSalarySched">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="salaryId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="salaryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="sg" Type="Int32" />
+    <Property Name="step" Type="Int32" />
+    <Property Name="rateMonth" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="rateDay" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="isActive" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tappSalarySchem">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="paySchemeCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="paySchemeAcronym" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tappServiceRecord">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="dateFrom" Type="DateTime" Precision="0" />
+    <Property Name="dateTo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="designation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="statusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="officeServiceRec" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="lwpay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="salaryPayroll" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="salaryServiceRec" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="paySchemeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="sepCause" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="isGovernmentService" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="isInsideGovernment" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SgStep" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="isApproved" Type="Int32" />
+    <Property Name="dateApproved" Type="DateTime" Precision="0" />
+    <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="tAttEmpArea">
     <Key>
       <PropertyRef Name="EIC" />
     </Key>
-    <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="tAttEmpScheme">
@@ -53,7 +190,7 @@
       <PropertyRef Name="AreaID" />
     </Key>
     <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AreaID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="trefEmpGroup">
@@ -62,53 +199,50 @@
       <PropertyRef Name="empGroupCode" />
     </Key>
     <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="empGroupCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" />
-    <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" />
-    <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" />
-    <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" />
-    <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" />
-    <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" />
-    <EntitySet Name="vUserProfile" EntityType="HRISUserProfileModel.vUserProfile" />
-    <EntitySet Name="vUserProfileWithUsername" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
-    <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithServices" />
-    <EntitySet Name="tappServiceRecord" EntityType="HRISUserProfileModel.tappServiceRecord" />
-    <EntitySet Name="tappEmployee" EntityType="HRISUserProfileModel.tappEmployee" />
-    <EntitySet Name="tappPosition" EntityType="HRISUserProfileModel.tappPosition" />
-    <EntitySet Name="tappEmpStatus" EntityType="HRISUserProfileModel.tappEmpStatus" />
-    <EntitySet Name="tappOffice" EntityType="HRISUserProfileModel.tappOffice" />
-    <EntitySet Name="tappSalarySchem" EntityType="HRISUserProfileModel.tappSalarySchem" />
-    <EntitySet Name="tappSalarySched" EntityType="HRISUserProfileModel.tappSalarySched" />
-    <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
-      <Parameter Name="eic" Mode="In" Type="String" />
-    </FunctionImport>
-    <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" />
-    <EntitySet Name="tappPreparation" EntityType="HRISUserProfileModel.tappPreparation" />
-  </EntityContainer>
+  <EntityType Name="vDuplicateEICPlantillaPreparation">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="totalEntries" Type="Int32" />
+  </EntityType>
   <EntityType Name="vUserProfile">
     <Key>
-      <PropertyRef Name="IDNo" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="EIC" />
     </Key>
-    <Property Name="IDNo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
-    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="IDNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Birthdate" Type="DateTime" Precision="0" />
-    <Property Name="Birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="SubPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="OfficeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="OfficeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="JobStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="BATSArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="AttendanceScheme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="GroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vUserProfileWithService">
+    <Key>
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="TotalServices" Type="Int32" />
   </EntityType>
   <EntityType Name="vUserProfileWithUsername">
     <Key>
@@ -131,118 +265,6 @@
     <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
     <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="vUserProfileWithServices">
-    <Key>
-      <PropertyRef Name="EIC" />
-    </Key>
-    <Property Name="EIC" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-    <Property Name="Fullname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="TotalServices" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tappServiceRecord">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-    <Property Name="dateFrom" Type="DateTime" Precision="0" />
-    <Property Name="dateTo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-    <Property Name="designation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="statusName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="officeServiceRec" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="lwpay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="salaryPayroll" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="salaryServiceRec" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="paySchemeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="sepCause" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="isGovernmentService" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <Property Name="isInsideGovernment" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <Property Name="SgStep" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="isApproved" Type="Int32" />
-    <Property Name="dateApproved" Type="DateTime" Precision="0" />
-    <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="tappEmployee">
-    <Key>
-      <PropertyRef Name="EIC" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="idNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="extName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="birthdate" Type="DateTime" Precision="0" />
-    <Property Name="birthplace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="gender" Type="Int32" />
-    <Property Name="prefixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="sufixTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="tappPosition">
-    <Key>
-      <PropertyRef Name="positionCode" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="positionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="fullDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="shortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="accronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="sg" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tappEmpStatus">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="statusCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="groupID" Type="Int32" />
-    <Property Name="isGovService" Type="Int32" />
-    <Property Name="isPlantilla" Type="Int32" />
-    <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="tappOffice">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="sortTag" Type="Int32" />
-    <Property Name="tagRemarks" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tappSalarySchem">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="paySchemeCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-    <Property Name="paySchemeAcronym" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <Property Name="paySchemeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="tappSalarySched">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="salaryId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="salaryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="sg" Type="Int32" />
-    <Property Name="step" Type="Int32" />
-    <Property Name="rateMonth" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="rateDay" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="year" Type="Int32" />
-    <Property Name="isActive" Type="Int32" />
   </EntityType>
   <ComplexType Name="fnGetEmployeeServiceRecords_Result">
     <Property Type="Int32" Name="recNo" Nullable="false" />
@@ -269,24 +291,4 @@
     <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
     <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
   </ComplexType>
-  <EntityType Name="vDuplicateEICPlantillaPreparation">
-    <Key>
-      <PropertyRef Name="recNo" />
-      <PropertyRef Name="EIC" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="totalEntries" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tappPreparation">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="staffingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="AIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="dateEncoded" Type="DateTime" Precision="3" />
-  </EntityType>
 </Schema>

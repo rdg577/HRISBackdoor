@@ -64,7 +64,7 @@ namespace HRISv2.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var employeeList = _db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
+            var employeeList = _db.tappEmployees.OrderBy(g => g.fullnameLast).ToList();
 
             ViewBag.employeeList = employeeList;
             
@@ -78,7 +78,7 @@ namespace HRISv2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.tappServiceRecord.Add(tappServiceRecord);
+                _db.tappServiceRecords.Add(tappServiceRecord);
                 _db.SaveChanges();
 
                 return RedirectToAction("Index","ServiceRecord");
@@ -91,8 +91,8 @@ namespace HRISv2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            tappServiceRecord empServiceRecord = _db.tappServiceRecord.Find(id);
-            _db.tappServiceRecord.Remove(empServiceRecord);
+            tappServiceRecord empServiceRecord = _db.tappServiceRecords.Find(id);
+            _db.tappServiceRecords.Remove(empServiceRecord);
             _db.SaveChanges();
 
             return RedirectToAction("Index");

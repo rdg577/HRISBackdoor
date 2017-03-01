@@ -28,7 +28,7 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
-                            @Html.LabelFor(model => model.IDNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">ID No.:</label>
                             <div class="col-md-10">
                                 <label class="form-control">@Html.ValueFor(model => model.IDNo)</label>
                             </div>
@@ -37,49 +37,49 @@
                         @Html.HiddenFor(model => model.EIC)
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Fullname:</label>
                             <div class="col-md-10">
                                 <label class="form-control">@Html.ValueFor(model => model.Fullname)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Birthdate</label>
                             <div class="col-md-10">
-                                <label class="form-control">@Html.ValueFor(model => model.Birthdate)</label>
+                                <label class="form-control">@Html.ValueFor(model => model.birthdate)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Birthplace, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Birthplace:</label>
                             <div class="col-md-10">
-                                <label class="form-control">@Html.ValueFor(model => model.Birthplace)</label>
+                                <label class="form-control">@Html.ValueFor(model => model.birthplace)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Position:</label>
                             <div class="col-md-10">
                                 <label class="form-control">@Html.ValueFor(model => model.Position)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.SubPosition, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Sub-Position:</label>
                             <div class="col-md-10">
                                 <label class="form-control">@Html.ValueFor(model => model.SubPosition)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.OfficeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Office Name:</label>
                             <div class="col-md-10">
-                                <label class="form-control">@Html.ValueFor(model => model.OfficeName)</label>
+                                <label class="form-control">@Html.ValueFor(model => model.officeName)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.JobStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label for="" class="control-label col-md-2">Job Status:</label>
                             <div class="col-md-10">
                                 <label class="form-control">@Html.ValueFor(model => model.JobStatus)</label>
                             </div>
@@ -95,7 +95,7 @@
                 <div class="panel-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-4" })
+                            @Html.LabelFor(model => model.groupName, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
                                 <select name="empGroupCode" class="form-control">
                                     @if (ViewBag.listEmpGroup == null)
@@ -127,14 +127,14 @@
                                 <select name="AreaID" class="form-control">
                                     @{
 
-    if (string.IsNullOrWhiteSpace(Model.AreaID))
-    {
-        <option selected="selected" value="">None</option>
-    }
-    else
-    {
-        <option value="">None</option>
-    }
+                                        if (string.IsNullOrWhiteSpace(Model.AreaID))
+                                        {
+                                            <option selected="selected" value="">None</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="">None</option>
+                                        }
 
                                     }
                                     @if (ViewBag.listStationArea != null)
@@ -162,14 +162,14 @@
                             <div class="col-md-8">
                                 <select name="SchemeCode" class="form-control">
                                     @{
-    if (string.IsNullOrWhiteSpace(Model.AreaID))
-    {
-        <option selected="selected" value="">None</option>
-    }
-    else
-    {
-        <option value="">None</option>
-    }
+                                        if (string.IsNullOrWhiteSpace(Model.AreaID))
+                                        {
+                                            <option selected="selected" value="">None</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="">None</option>
+                                        }
                                     }
 
                                     @if (ViewBag.listAttendanceScheme != null)
@@ -195,8 +195,8 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
-                                <button type="button" class="btn btn-default" onclick="confirmSubmission();"><span class="glyphicon glyphicon-saved"></span> Save</button>
-                                @*<input type="submit" value="Save" class="btn btn-default"/>*@
+                                <button type="button" class="btn btn-primary" onclick="confirmSubmission();">Save <span class="glyphicon glyphicon-saved"></span></button>
+                                
                             </div>
                         </div>
                     </div>
