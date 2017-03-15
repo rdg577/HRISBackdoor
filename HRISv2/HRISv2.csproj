@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\DuplicatePlantillaController.cs" />
+    <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceRecordController.cs" />
     <Compile Include="Controllers\ToolboxController.cs" />
@@ -157,6 +158,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GENERALUsernameModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\HRISMonitoringModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRISMonitoringModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HRISMonitoringModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HRISMonitoringModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRISMonitoringModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\HRISUserProfile.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +188,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRISUserProfile.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\tappAction.cs">
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tappActionDetail.cs">
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tappEmpGroup.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
@@ -180,6 +202,9 @@
     </Compile>
     <Compile Include="Models\tappEmpStatu.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tappFAQ.cs">
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tappOffice.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
@@ -214,10 +239,25 @@
     <Compile Include="Models\tlogUser.cs">
       <DependentUpon>GENERALUsernameModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tpassSlipApp.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\trefEmpGroup.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\trefQuestion.cs">
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\trefRemark.cs">
+      <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vDuplicateEICPlantillaPreparation.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vpassSlipApp.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPtlosApp.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vUserProfile.cs">
@@ -704,6 +744,23 @@
     <Content Include="Content\kendo\kendo.silver.mobile.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.mobile.min.css.map" />
+    <EntityDeploy Include="Models\HRISMonitoringModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HRISMonitoringModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\HRISMonitoringModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRISMonitoringModel.edmx</DependentUpon>
+      <LastGenOutput>HRISMonitoringModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HRISMonitoringModel.edmx.diagram">
+      <DependentUpon>HRISMonitoringModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\HRISMonitoringModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRISMonitoringModel.edmx</DependentUpon>
+      <LastGenOutput>HRISMonitoringModel.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1845,6 +1902,7 @@
     <Content Include="Views\DataManagement\DisplayServiceRecord.cshtml" />
     <Content Include="Views\DataManagement\DetailsPlantilla.cshtml" />
     <Content Include="Views\DataManagement\CreateServiceRecord.cshtml" />
+    <Content Include="Views\FAQ\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

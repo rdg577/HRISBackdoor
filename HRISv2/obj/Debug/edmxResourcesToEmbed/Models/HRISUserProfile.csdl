@@ -22,6 +22,9 @@
     <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
       <Parameter Name="eic" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="tpassSlipApps" EntityType="HRISUserProfileModel.tpassSlipApp" />
+    <EntitySet Name="vpassSlipApps" EntityType="HRISUserProfileModel.vpassSlipApp" />
+    <EntitySet Name="vPtlosApps" EntityType="HRISUserProfileModel.vPtlosApp" />
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -291,4 +294,77 @@
     <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
     <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
   </ComplexType>
+  <EntityType Name="tpassSlipApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="controlNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="timeOut" Type="DateTime" Precision="3" />
+    <Property Name="timeIn" Type="DateTime" Precision="3" />
+    <Property Name="destination" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="isOfficial" Type="Int32" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="apprvEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="isOfficialprev" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vpassSlipApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" />
+    <Property Name="controlNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="timeOut" Type="DateTime" Precision="3" />
+    <Property Name="timeIn" Type="DateTime" Precision="3" />
+    <Property Name="destination" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="isOfficial" Type="Int32" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="apprvEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="In1" Type="DateTime" Precision="3" />
+    <Property Name="Out1" Type="DateTime" Precision="3" />
+    <Property Name="In2" Type="DateTime" Precision="3" />
+    <Property Name="Out2" Type="DateTime" Precision="3" />
+    <Property Name="outDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vPtlosApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="empGroupCode" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" />
+    <Property Name="controlNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="dateApplied" Type="DateTime" Precision="3" />
+    <Property Name="proceedTo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="nameText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="departure" Type="DateTime" Precision="3" />
+    <Property Name="arrival" Type="DateTime" Precision="3" />
+    <Property Name="returnOfficial" Type="DateTime" Precision="3" />
+    <Property Name="remarks" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="recommendEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="approvedDate" Type="DateTime" Precision="3" />
+    <Property Name="recommendStatus" Type="Int32" />
+    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="approvePos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="approveStatus" Type="Int32" />
+    <Property Name="isPrintable" Type="Int32" />
+    <Property Name="facilitatorEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="recomName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="aprName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="empGroupCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Tag" Type="Int32" />
+  </EntityType>
 </Schema>

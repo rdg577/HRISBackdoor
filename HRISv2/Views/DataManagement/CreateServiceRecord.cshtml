@@ -26,16 +26,6 @@
                                     <input type="hidden" id="EIC" name="EIC" value="@employee.EIC" />
                                 }
                             }
-
-                            @*@(Html.Kendo().AutoComplete()
-                                        .Name("EIC")
-                                        .DataTextField("FullnameWithEIC")
-                                        .Filter("contains") // "startswith"
-                                        .MinLength(3)
-                                        .Suggest(true)
-                                        .DataSource(g => g.Read("EmployeeList", "Toolbox"))
-                                        .HtmlAttributes(new { maxlength = "300", style = "width:100%; text-transform:uppercase;" })
-                            )*@
                         </div>
                     </div>
 
@@ -164,12 +154,6 @@
                         </div>
                     </div>
 
-                    @*<div class="form-group sg_level">
-                        <label class="control-label col-lg-2">SG Level:</label>
-                        <div class="col-lg-10 col-xs-12">
-                            <input type="text" name="sg" id="sg" class="form-control" style="background-color: #ffffff; width:auto" readonly="readonly" />
-                        </div>
-                    </div>*@
 
                     <div class="form-group status_name">
                         <label class="control-label col-lg-2">Employment Status:</label>

@@ -170,6 +170,23 @@
     <Property Name="AreaID" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="tpassSlipApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="timeOut" Type="datetime" />
+    <Property Name="timeIn" Type="datetime" />
+    <Property Name="destination" Type="nvarchar" MaxLength="150" />
+    <Property Name="purpose" Type="nvarchar" MaxLength="255" />
+    <Property Name="isOfficial" Type="int" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="apprvEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="isOfficialprev" Type="nvarchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="trefEmpGroup">
     <Key>
       <PropertyRef Name="recNo" />
@@ -191,6 +208,66 @@ warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does n
     <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
     <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="totalEntries" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vpassSlipApp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vpassSlipApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" Nullable="false" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date" Type="varchar" MaxLength="10" />
+    <Property Name="timeOut" Type="datetime" />
+    <Property Name="timeIn" Type="datetime" />
+    <Property Name="destination" Type="nvarchar" MaxLength="150" />
+    <Property Name="purpose" Type="nvarchar" MaxLength="255" />
+    <Property Name="isOfficial" Type="int" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="fullnameFirst" Type="nvarchar" MaxLength="60" />
+    <Property Name="apprvEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="In1" Type="datetime" />
+    <Property Name="Out1" Type="datetime" />
+    <Property Name="In2" Type="datetime" />
+    <Property Name="Out2" Type="datetime" />
+    <Property Name="outDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vPtlosApp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vPtlosApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+      <PropertyRef Name="empGroupCode" />
+    </Key>
+    <Property Name="recNo" Type="int" Nullable="false" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="25" />
+    <Property Name="dateApplied" Type="datetime" />
+    <Property Name="proceedTo" Type="nvarchar" MaxLength="150" />
+    <Property Name="purpose" Type="nvarchar(max)" />
+    <Property Name="nameText" Type="nvarchar(max)" />
+    <Property Name="departure" Type="datetime" />
+    <Property Name="arrival" Type="datetime" />
+    <Property Name="returnOfficial" Type="datetime" />
+    <Property Name="remarks" Type="nvarchar" MaxLength="150" />
+    <Property Name="recommendEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="approvedDate" Type="datetime" />
+    <Property Name="recommendStatus" Type="int" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="approvePos" Type="nvarchar" MaxLength="50" />
+    <Property Name="approveStatus" Type="int" />
+    <Property Name="isPrintable" Type="int" />
+    <Property Name="facilitatorEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="recomName" Type="nvarchar" MaxLength="60" />
+    <Property Name="aprName" Type="nvarchar" MaxLength="60" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="accronym" Type="nvarchar" MaxLength="10" />
+    <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="Tag" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -297,6 +374,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tpassSlipApp" EntityType="Self.tpassSlipApp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="Self.vDuplicateEICPlantillaPreparation" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -305,6 +383,59 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     [vDuplicateEICPlantillaPreparation].[EIC] AS [EIC], 
     [vDuplicateEICPlantillaPreparation].[totalEntries] AS [totalEntries]
     FROM [dbo].[vDuplicateEICPlantillaPreparation] AS [vDuplicateEICPlantillaPreparation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vpassSlipApp" EntityType="Self.vpassSlipApp" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vpassSlipApp].[recNo] AS [recNo], 
+    [vpassSlipApp].[controlNo] AS [controlNo], 
+    [vpassSlipApp].[EIC] AS [EIC], 
+    [vpassSlipApp].[Date] AS [Date], 
+    [vpassSlipApp].[timeOut] AS [timeOut], 
+    [vpassSlipApp].[timeIn] AS [timeIn], 
+    [vpassSlipApp].[destination] AS [destination], 
+    [vpassSlipApp].[purpose] AS [purpose], 
+    [vpassSlipApp].[isOfficial] AS [isOfficial], 
+    [vpassSlipApp].[statusID] AS [statusID], 
+    [vpassSlipApp].[fullnameFirst] AS [fullnameFirst], 
+    [vpassSlipApp].[apprvEIC] AS [apprvEIC], 
+    [vpassSlipApp].[empGroupCode] AS [empGroupCode], 
+    [vpassSlipApp].[In1] AS [In1], 
+    [vpassSlipApp].[Out1] AS [Out1], 
+    [vpassSlipApp].[In2] AS [In2], 
+    [vpassSlipApp].[Out2] AS [Out2], 
+    [vpassSlipApp].[outDate] AS [outDate]
+    FROM [dbo].[vpassSlipApp] AS [vpassSlipApp]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vPtlosApp" EntityType="Self.vPtlosApp" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vPtlosApp].[recNo] AS [recNo], 
+    [vPtlosApp].[controlNo] AS [controlNo], 
+    [vPtlosApp].[dateApplied] AS [dateApplied], 
+    [vPtlosApp].[proceedTo] AS [proceedTo], 
+    [vPtlosApp].[purpose] AS [purpose], 
+    [vPtlosApp].[nameText] AS [nameText], 
+    [vPtlosApp].[departure] AS [departure], 
+    [vPtlosApp].[arrival] AS [arrival], 
+    [vPtlosApp].[returnOfficial] AS [returnOfficial], 
+    [vPtlosApp].[remarks] AS [remarks], 
+    [vPtlosApp].[recommendEIC] AS [recommendEIC], 
+    [vPtlosApp].[approvedDate] AS [approvedDate], 
+    [vPtlosApp].[recommendStatus] AS [recommendStatus], 
+    [vPtlosApp].[approveEIC] AS [approveEIC], 
+    [vPtlosApp].[approvePos] AS [approvePos], 
+    [vPtlosApp].[approveStatus] AS [approveStatus], 
+    [vPtlosApp].[isPrintable] AS [isPrintable], 
+    [vPtlosApp].[facilitatorEIC] AS [facilitatorEIC], 
+    [vPtlosApp].[recomName] AS [recomName], 
+    [vPtlosApp].[aprName] AS [aprName], 
+    [vPtlosApp].[empGroupCode] AS [empGroupCode], 
+    [vPtlosApp].[groupName] AS [groupName], 
+    [vPtlosApp].[officeCode] AS [officeCode], 
+    [vPtlosApp].[accronym] AS [accronym], 
+    [vPtlosApp].[officeName] AS [officeName], 
+    [vPtlosApp].[userEIC] AS [userEIC], 
+    [vPtlosApp].[Tag] AS [Tag]
+    FROM [dbo].[vPtlosApp] AS [vPtlosApp]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vUserProfile" EntityType="Self.vUserProfile" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

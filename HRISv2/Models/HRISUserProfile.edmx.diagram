@@ -4,25 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4e550389f08a4337af094c71f602b17b" Name="Diagram1">
+      <Diagram DiagramId="4e550389f08a4337af094c71f602b17b" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="HRISUserProfileModel.tappEmpGroup" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappEmployee" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappEmpStatu" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tappOffice" Width="1.5" PointX="4.75" PointY="4.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tappPosition" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappOffice" Width="1.5" PointX="4.75" PointY="3.25" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappPosition" Width="1.5" PointX="0.75" PointY="2.875" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappPreparation" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySched" Width="1.5" PointX="6.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySchem" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySched" Width="1.5" PointX="6.75" PointY="2.875" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappSalarySchem" Width="1.5" PointX="4.75" PointY="6" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappServiceRecord" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tAttEmpArea" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tAttEmpScheme" Width="1.5" PointX="2.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.tAttScheme" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tAttEmpArea" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tAttEmpScheme" Width="1.5" PointX="2.75" PointY="4.625" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tAttScheme" Width="1.5" PointX="6.75" PointY="5.75" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tAttStationArea" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.trefEmpGroup" Width="1.5" PointX="10.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" Width="1.5" PointX="4.75" PointY="10.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.vUserProfile" Width="1.5" PointX="10.75" PointY="6.75" />
-        <EntityTypeShape EntityType="HRISUserProfileModel.vUserProfileWithService" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.trefEmpGroup" Width="1.5" PointX="10.75" PointY="2.5" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vDuplicateEICPlantillaPreparation" Width="1.5" PointX="2.75" PointY="6.5" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vUserProfile" Width="1.5" PointX="10.75" PointY="4.5" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vUserProfileWithService" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vUserProfileWithUsername" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tpassSlipApp" Width="1.5" PointX="8.75" PointY="6" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vpassSlipApp" Width="1.5" PointX="12.75" PointY="5.125" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vPtlosApp" Width="1.5" PointX="0.75" PointY="8.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

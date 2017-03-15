@@ -288,5 +288,80 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tpassSlipApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tpassSlipApp">
+        <MappingFragment StoreEntitySet="tpassSlipApp">
+          <ScalarProperty Name="isOfficialprev" ColumnName="isOfficialprev" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="apprvEIC" ColumnName="apprvEIC" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="isOfficial" ColumnName="isOfficial" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="destination" ColumnName="destination" />
+          <ScalarProperty Name="timeIn" ColumnName="timeIn" />
+          <ScalarProperty Name="timeOut" ColumnName="timeOut" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vpassSlipApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vpassSlipApp">
+        <MappingFragment StoreEntitySet="vpassSlipApp">
+          <ScalarProperty Name="outDate" ColumnName="outDate" />
+          <ScalarProperty Name="Out2" ColumnName="Out2" />
+          <ScalarProperty Name="In2" ColumnName="In2" />
+          <ScalarProperty Name="Out1" ColumnName="Out1" />
+          <ScalarProperty Name="In1" ColumnName="In1" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="apprvEIC" ColumnName="apprvEIC" />
+          <ScalarProperty Name="fullnameFirst" ColumnName="fullnameFirst" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="isOfficial" ColumnName="isOfficial" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="destination" ColumnName="destination" />
+          <ScalarProperty Name="timeIn" ColumnName="timeIn" />
+          <ScalarProperty Name="timeOut" ColumnName="timeOut" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vPtlosApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vPtlosApp">
+        <MappingFragment StoreEntitySet="vPtlosApp">
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+          <ScalarProperty Name="officeName" ColumnName="officeName" />
+          <ScalarProperty Name="accronym" ColumnName="accronym" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+          <ScalarProperty Name="groupName" ColumnName="groupName" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="aprName" ColumnName="aprName" />
+          <ScalarProperty Name="recomName" ColumnName="recomName" />
+          <ScalarProperty Name="facilitatorEIC" ColumnName="facilitatorEIC" />
+          <ScalarProperty Name="isPrintable" ColumnName="isPrintable" />
+          <ScalarProperty Name="approveStatus" ColumnName="approveStatus" />
+          <ScalarProperty Name="approvePos" ColumnName="approvePos" />
+          <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+          <ScalarProperty Name="recommendStatus" ColumnName="recommendStatus" />
+          <ScalarProperty Name="approvedDate" ColumnName="approvedDate" />
+          <ScalarProperty Name="recommendEIC" ColumnName="recommendEIC" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="returnOfficial" ColumnName="returnOfficial" />
+          <ScalarProperty Name="arrival" ColumnName="arrival" />
+          <ScalarProperty Name="departure" ColumnName="departure" />
+          <ScalarProperty Name="nameText" ColumnName="nameText" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="proceedTo" ColumnName="proceedTo" />
+          <ScalarProperty Name="dateApplied" ColumnName="dateApplied" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -47,6 +47,9 @@ namespace HRISv2.Models
         public DbSet<vUserProfile> vUserProfiles { get; set; }
         public DbSet<vUserProfileWithService> vUserProfileWithServices { get; set; }
         public DbSet<vUserProfileWithUsername> vUserProfileWithUsernames { get; set; }
+        public DbSet<tpassSlipApp> tpassSlipApps { get; set; }
+        public DbSet<vpassSlipApp> vpassSlipApps { get; set; }
+        public DbSet<vPtlosApp> vPtlosApps { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)

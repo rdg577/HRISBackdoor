@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HRISMonitoringModelStoreContainer" CdmEntityContainer="HRISMonitoringEntities">
+    <EntitySetMapping Name="tappActionDetails">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.tappActionDetail">
+        <MappingFragment StoreEntitySet="tappActionDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="actionId" ColumnName="actionId" />
+          <ScalarProperty Name="detail" ColumnName="detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tappActions">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.tappAction">
+        <MappingFragment StoreEntitySet="tappActions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="faqId" ColumnName="faqId" />
+          <ScalarProperty Name="remarksId" ColumnName="remarksId" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tappFAQs">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.tappFAQ">
+        <MappingFragment StoreEntitySet="tappFAQ">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+          <ScalarProperty Name="questionCode" ColumnName="questionCode" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tappOffices">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.tappOffice">
+        <MappingFragment StoreEntitySet="tappOffice">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+          <ScalarProperty Name="officeName" ColumnName="officeName" />
+          <ScalarProperty Name="accronym" ColumnName="accronym" />
+          <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+          <ScalarProperty Name="branch" ColumnName="branch" />
+          <ScalarProperty Name="sortTag" ColumnName="sortTag" />
+          <ScalarProperty Name="tagRemarks" ColumnName="tagRemarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trefQuestions">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.trefQuestion">
+        <MappingFragment StoreEntitySet="trefQuestions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="detail" ColumnName="detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trefRemarks">
+      <EntityTypeMapping TypeName="HRISMonitoringModel.trefRemark">
+        <MappingFragment StoreEntitySet="trefRemarks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="detail" ColumnName="detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

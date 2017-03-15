@@ -1,0 +1,238 @@
+﻿@using HRISv2.Models
+
+@{
+    ViewBag.Title = "HRIS Monitoring";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Frequently Raised Questions</h4>
+
+                <div style="display: inline-block">
+                    <button class="btn btn-sm" onclick="showProblemPanel(true);"><span class="glyphicon glyphicon-plus"></span></button>
+                    <button class="btn btn-sm"><span class="glyphicon glyphicon-print"></span></button>
+                    <button class="btn btn-sm" onclick="showQuestionPanel(true);"><span class="glyphicon glyphicon-question-sign"></span></button>
+                </div>
+                <div id="addNewQuestionPanel" class="container collapse">
+
+                    <div class="panel panel-info" style="margin-top: 20px;">
+                        <div class="panel-heading">Add New Question</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">New Question:</label>
+                                <div class="col-lg-10">
+                                    <input type="text" id="q" class="form-control"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <button type="button" onclick=" saveQ(); " class="btn btn-default" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-default" onclick="showQuestionPanel(false);" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addNewProblemPanel" class="container collapse">
+                    <div class="panel panel-info" style="margin-top: 20px;">
+                        <div class="panel-heading">New Problem</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Office:</label>
+                                <div class="col-lg-10">
+                                    @(Html.Kendo().DropDownList()
+                                              .Name("officeCode")
+                                              .DataTextField("officeName")
+                                              .DataValueField("officeCode")
+                                              .DataSource(g => g.Read("GetOffices", "FAQ"))
+                                              .OptionLabel("-- PLEASE SELECT --")
+                                              .HtmlAttributes(new { maxlength = "300", style = "width:100%; text-transform:uppercase;" })
+                                    )
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 50px;">
+                                <label class="control-label col-lg-2">Question:</label>
+                                <div class="col-lg-10">
+                                    @(Html.Kendo().DropDownList()
+                                              .Name("questionCode")
+                                              .DataTextField("detail")
+                                              .DataValueField("Id")
+                                              .DataSource(g => g.Read("GetQuestions", "FAQ"))
+                                              .OptionLabel("-- PLEASE SELECT --")
+                                              .HtmlAttributes(new { maxlength = "300", style = "width:100%; text-transform:uppercase;" })
+                                    )
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <button type="button" onclick=" saveFAQ(); " class="btn btn-default" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-default" onclick="showProblemPanel(false);" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Office</th>
+                    <th>Question</th>
+                    <th>Date</th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var faqs = (IEnumerable<tappFAQ>)ViewBag.faqs;
+                        foreach (var item in faqs)
+                        {
+                            var elementId = "action" + item.Id;
+                            <tr>
+                                <td><a href="#" onclick="displayActionForm(@item.Id); $(this).hide();"><span class="glyphicon glyphicon-flash"></span></a></td>
+                                <td>@item.tappOffice.accronym</td>
+                                <td>@item.trefQuestion.detail</td>
+                                <td>@item.timestamp</td>
+                                <td>
+                                    @foreach (var i in item.tappActions.ToList())
+                                    {
+                                        <div>@i.trefRemark.detail</div>
+                                    }
+                                </td>
+                            </tr>
+                            <tr id="@elementId" class="collapse">
+                                
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function displayActionForm(faqId) {
+        var elementId = "#action" + faqId;
+        $(elementId).show();
+        $(elementId).append(
+            "<td colspan='5' >                                  " +
+            "<label class='control-label col-lg-2'>Remark</label>            " +
+            "<input id='dropdownlist' />                        " +
+            "<script>                                           " +
+            "var dataSource = new kendo.data.DataSource({       " +
+            "            transport: {                           " +
+            "                read: {                            " +
+            "                    url: 'FAQ/GetRemarks', " +
+            "                    dataType: 'json'              " +
+            "                }                                  " +
+            "            }                                      " +
+            "        });                                        " +
+            "        $('#dropdownlist').kendoDropDownList({     " +
+            "            dataSource: dataSource,                " +
+            "            dataTextField: 'detail',               " +
+            "            dataValueField: 'Id',                  " +
+            "            optionLabel: '--PLEASE SELECT--'       " +
+            "        });                                        " +
+            "<\/script>                                         " +
+            "</td>"
+        );
+    }
+
+    function showProblemPanel(bolFlag) {
+        if (bolFlag) {
+            $("#addNewProblemPanel").show();
+        } else {
+            $("#addNewProblemPanel").hide();
+        }
+    }
+
+    function showQuestionPanel(bolFlag) {
+        if (bolFlag) {
+            $("#addNewQuestionPanel").show();
+        } else {
+            $("#addNewQuestionPanel").hide();
+        }
+    }
+
+    function saveFAQ() {
+
+        bootbox.confirm({
+            message: "<p>Done reviewing the data?</p><p>Click YES to continue.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    var officeCode = $("#officeCode").val();
+                    var questionCode = $("#questionCode").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Create", "FAQ")",
+                        data: {
+                            officeCode: officeCode,
+                            questionCode: questionCode
+                        },
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+                    });
+                }
+            }
+        });
+
+
+    }
+
+    function saveQ() {
+
+        bootbox.confirm({
+            message: "<p>Done reviewing the data?</p><p>Click YES to continue.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    var question = $("#q").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("CreateQuestion", "FAQ")",
+                        data: {
+                            question: question
+                        },
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+                    });
+                }
+            }
+        });
+
+
+    }
+</script>

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRISMonitoringModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tappActionDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="actionId" Type="Int32" Nullable="false" />
+    <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tappAction" Relationship="Self.FK_tappActionDetails_tappActions" FromRole="tappActionDetails" ToRole="tappActions" />
+  </EntityType>
+  <EntityType Name="tappAction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="faqId" Type="Int32" Nullable="false" />
+    <Property Name="remarksId" Type="Int32" Nullable="false" />
+    <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="tappActionDetails" Relationship="Self.FK_tappActionDetails_tappActions" FromRole="tappActions" ToRole="tappActionDetails" />
+    <NavigationProperty Name="tappFAQ" Relationship="Self.FK_tappActions_tappFAQ" FromRole="tappActions" ToRole="tappFAQ" />
+    <NavigationProperty Name="trefRemark" Relationship="Self.FK_tappActions_trefRemarks" FromRole="tappActions" ToRole="trefRemarks" />
+  </EntityType>
+  <EntityType Name="tappFAQ">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="questionCode" Type="Int32" Nullable="false" />
+    <Property Name="timestamp" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tappActions" Relationship="Self.FK_tappActions_tappFAQ" FromRole="tappFAQ" ToRole="tappActions" />
+    <NavigationProperty Name="tappOffice" Relationship="Self.FK_tappFAQ_tappOffice" FromRole="tappFAQ" ToRole="tappOffice" />
+    <NavigationProperty Name="trefQuestion" Relationship="Self.FK_tappFAQ_trefQuestions" FromRole="tappFAQ" ToRole="trefQuestions" />
+  </EntityType>
+  <EntityType Name="tappOffice">
+    <Key>
+      <PropertyRef Name="officeCode" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="officeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="accronym" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="officeServiceRec" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="branch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="sortTag" Type="Int32" />
+    <Property Name="tagRemarks" Type="Int32" />
+    <NavigationProperty Name="tappFAQs" Relationship="Self.FK_tappFAQ_tappOffice" FromRole="tappOffice" ToRole="tappFAQ" />
+  </EntityType>
+  <EntityType Name="trefQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tappFAQs" Relationship="Self.FK_tappFAQ_trefQuestions" FromRole="trefQuestions" ToRole="tappFAQ" />
+  </EntityType>
+  <EntityType Name="trefRemark">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="value" Type="Int32" Nullable="false" />
+    <Property Name="detail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tappActions" Relationship="Self.FK_tappActions_trefRemarks" FromRole="trefRemarks" ToRole="tappActions" />
+  </EntityType>
+  <Association Name="FK_tappActionDetails_tappActions">
+    <End Role="tappActions" Type="Self.tappAction" Multiplicity="1" />
+    <End Role="tappActionDetails" Type="Self.tappActionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tappActions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tappActionDetails">
+        <PropertyRef Name="actionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tappActions_tappFAQ">
+    <End Role="tappFAQ" Type="Self.tappFAQ" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tappActions" Type="Self.tappAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tappFAQ">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tappActions">
+        <PropertyRef Name="faqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tappActions_trefRemarks">
+    <End Role="trefRemarks" Type="Self.trefRemark" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tappActions" Type="Self.tappAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="trefRemarks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tappActions">
+        <PropertyRef Name="remarksId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tappFAQ_tappOffice">
+    <End Role="tappOffice" Type="Self.tappOffice" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tappFAQ" Type="Self.tappFAQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tappOffice">
+        <PropertyRef Name="officeCode" />
+      </Principal>
+      <Dependent Role="tappFAQ">
+        <PropertyRef Name="officeCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tappFAQ_trefQuestions">
+    <End Role="trefQuestions" Type="Self.trefQuestion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tappFAQ" Type="Self.tappFAQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="trefQuestions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tappFAQ">
+        <PropertyRef Name="questionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HRISMonitoringEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tappActionDetails" EntityType="Self.tappActionDetail" />
+    <EntitySet Name="tappActions" EntityType="Self.tappAction" />
+    <EntitySet Name="tappFAQs" EntityType="Self.tappFAQ" />
+    <EntitySet Name="tappOffices" EntityType="Self.tappOffice" />
+    <EntitySet Name="trefQuestions" EntityType="Self.trefQuestion" />
+    <EntitySet Name="trefRemarks" EntityType="Self.trefRemark" />
+    <AssociationSet Name="FK_tappActionDetails_tappActions" Association="Self.FK_tappActionDetails_tappActions">
+      <End Role="tappActions" EntitySet="tappActions" />
+      <End Role="tappActionDetails" EntitySet="tappActionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tappActions_tappFAQ" Association="Self.FK_tappActions_tappFAQ">
+      <End Role="tappFAQ" EntitySet="tappFAQs" />
+      <End Role="tappActions" EntitySet="tappActions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tappActions_trefRemarks" Association="Self.FK_tappActions_trefRemarks">
+      <End Role="trefRemarks" EntitySet="trefRemarks" />
+      <End Role="tappActions" EntitySet="tappActions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tappFAQ_tappOffice" Association="Self.FK_tappFAQ_tappOffice">
+      <End Role="tappOffice" EntitySet="tappOffices" />
+      <End Role="tappFAQ" EntitySet="tappFAQs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tappFAQ_trefQuestions" Association="Self.FK_tappFAQ_trefQuestions">
+      <End Role="trefQuestions" EntitySet="trefQuestions" />
+      <End Role="tappFAQ" EntitySet="tappFAQs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
