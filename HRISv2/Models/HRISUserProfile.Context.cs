@@ -50,6 +50,9 @@ namespace HRISv2.Models
         public DbSet<tpassSlipApp> tpassSlipApps { get; set; }
         public DbSet<vpassSlipApp> vpassSlipApps { get; set; }
         public DbSet<vPtlosApp> vPtlosApps { get; set; }
+        public DbSet<tptlosApp> tptlosApps { get; set; }
+        public DbSet<tjustifyApp> tjustifyApps { get; set; }
+        public DbSet<vJustifyApp> vJustifyApps { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)
@@ -59,6 +62,43 @@ namespace HRISv2.Models
                 new ObjectParameter("eic", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnGetEmployeeServiceRecords_Result>("[HRISEntities].[fnGetEmployeeServiceRecords](@eic)", eicParameter);
+        }
+    
+        public virtual ObjectResult<string> JustifyAction(string eIC, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> action, string actionEIC, string ctrlNo, string remarks, Nullable<int> period)
+        {
+            var eICParameter = eIC != null ?
+                new ObjectParameter("EIC", eIC) :
+                new ObjectParameter("EIC", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(System.DateTime));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            var actionEICParameter = actionEIC != null ?
+                new ObjectParameter("actionEIC", actionEIC) :
+                new ObjectParameter("actionEIC", typeof(string));
+    
+            var ctrlNoParameter = ctrlNo != null ?
+                new ObjectParameter("CtrlNo", ctrlNo) :
+                new ObjectParameter("CtrlNo", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("remarks", remarks) :
+                new ObjectParameter("remarks", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("period", period) :
+                new ObjectParameter("period", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("JustifyAction", eICParameter, startDateParameter, endDateParameter, actionParameter, actionEICParameter, ctrlNoParameter, remarksParameter, periodParameter);
         }
     }
 }

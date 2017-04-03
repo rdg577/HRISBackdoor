@@ -170,6 +170,25 @@
     <Property Name="AreaID" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="tjustifyApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CtrlNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="date" Type="date" />
+    <Property Name="logType" Type="int" />
+    <Property Name="time" Type="nvarchar" MaxLength="10" />
+    <Property Name="reason" Type="nvarchar(max)" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="period" Type="int" />
+    <Property Name="dtStamp" Type="datetime" />
+    <Property Name="logTime" Type="datetime" />
+    <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+  </EntityType>
   <EntityType Name="tpassSlipApp">
     <Key>
       <PropertyRef Name="recNo" />
@@ -186,6 +205,33 @@
     <Property Name="apprvEIC" Type="nvarchar" MaxLength="20" />
     <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
     <Property Name="isOfficialprev" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tptlosApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="25" />
+    <Property Name="dateApplied" Type="datetime" />
+    <Property Name="proceedTo" Type="nvarchar" MaxLength="150" />
+    <Property Name="purpose" Type="nvarchar(max)" />
+    <Property Name="nameText" Type="nvarchar(max)" />
+    <Property Name="departure" Type="datetime" />
+    <Property Name="arrival" Type="datetime" />
+    <Property Name="returnOfficial" Type="datetime" />
+    <Property Name="remarks" Type="nvarchar" MaxLength="150" />
+    <Property Name="recommendEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="recommendStatus" Type="int" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="approvePos" Type="nvarchar" MaxLength="50" />
+    <Property Name="approvedDate" Type="datetime" />
+    <Property Name="approveStatus" Type="int" />
+    <Property Name="isPrintable" Type="int" />
+    <Property Name="facilitatorEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tag" Type="int" />
   </EntityType>
   <EntityType Name="trefEmpGroup">
     <Key>
@@ -208,6 +254,37 @@ warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does n
     <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
     <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="totalEntries" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vJustifyApp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vJustifyApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="int" Nullable="false" />
+    <Property Name="controlNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="fullnameFirst" Type="nvarchar" MaxLength="60" />
+    <Property Name="date" Type="date" />
+    <Property Name="monthyear" Type="nvarchar" MaxLength="61" />
+    <Property Name="day" Type="int" />
+    <Property Name="logType" Type="int" />
+    <Property Name="logTitle" Type="nvarchar" MaxLength="10" />
+    <Property Name="time" Type="nvarchar" MaxLength="10" />
+    <Property Name="reason" Type="nvarchar" MaxLength="150" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="approvingOfficer" Type="nvarchar" MaxLength="60" />
+    <Property Name="period" Type="int" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="timeIn1" Type="datetime" />
+    <Property Name="timeOut1" Type="datetime" />
+    <Property Name="timeIn2" Type="datetime" />
+    <Property Name="timeOut2" Type="datetime" />
+    <Property Name="logTime" Type="datetime" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="year" Type="int" />
+    <Property Name="month" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vpassSlipApp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -360,6 +437,16 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
       </CollectionType>
     </ReturnType>
   </Function>
+  <Function Name="JustifyAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EIC" Type="nvarchar" Mode="In" />
+    <Parameter Name="startDate" Type="date" Mode="In" />
+    <Parameter Name="endDate" Type="date" Mode="In" />
+    <Parameter Name="action" Type="int" Mode="In" />
+    <Parameter Name="actionEIC" Type="nvarchar" Mode="In" />
+    <Parameter Name="CtrlNo" Type="nvarchar" Mode="In" />
+    <Parameter Name="remarks" Type="nvarchar" Mode="In" />
+    <Parameter Name="period" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="HRISUserProfileModelStoreContainer">
     <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappEmployee" EntityType="Self.tappEmployee" Schema="dbo" store:Type="Tables" />
@@ -374,7 +461,9 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttStationArea" EntityType="Self.tAttStationArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tjustifyApp" EntityType="Self.tjustifyApp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tpassSlipApp" EntityType="Self.tpassSlipApp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tptlosApp" EntityType="Self.tptlosApp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="Self.vDuplicateEICPlantillaPreparation" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -383,6 +472,34 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     [vDuplicateEICPlantillaPreparation].[EIC] AS [EIC], 
     [vDuplicateEICPlantillaPreparation].[totalEntries] AS [totalEntries]
     FROM [dbo].[vDuplicateEICPlantillaPreparation] AS [vDuplicateEICPlantillaPreparation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vJustifyApp" EntityType="Self.vJustifyApp" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vJustifyApp].[recNo] AS [recNo], 
+    [vJustifyApp].[controlNo] AS [controlNo], 
+    [vJustifyApp].[EIC] AS [EIC], 
+    [vJustifyApp].[fullnameFirst] AS [fullnameFirst], 
+    [vJustifyApp].[date] AS [date], 
+    [vJustifyApp].[monthyear] AS [monthyear], 
+    [vJustifyApp].[day] AS [day], 
+    [vJustifyApp].[logType] AS [logType], 
+    [vJustifyApp].[logTitle] AS [logTitle], 
+    [vJustifyApp].[time] AS [time], 
+    [vJustifyApp].[reason] AS [reason], 
+    [vJustifyApp].[empGroupCode] AS [empGroupCode], 
+    [vJustifyApp].[officeName] AS [officeName], 
+    [vJustifyApp].[approvingOfficer] AS [approvingOfficer], 
+    [vJustifyApp].[period] AS [period], 
+    [vJustifyApp].[approveEIC] AS [approveEIC], 
+    [vJustifyApp].[timeIn1] AS [timeIn1], 
+    [vJustifyApp].[timeOut1] AS [timeOut1], 
+    [vJustifyApp].[timeIn2] AS [timeIn2], 
+    [vJustifyApp].[timeOut2] AS [timeOut2], 
+    [vJustifyApp].[logTime] AS [logTime], 
+    [vJustifyApp].[statusID] AS [statusID], 
+    [vJustifyApp].[year] AS [year], 
+    [vJustifyApp].[month] AS [month]
+    FROM [dbo].[vJustifyApp] AS [vJustifyApp]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vpassSlipApp" EntityType="Self.vpassSlipApp" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

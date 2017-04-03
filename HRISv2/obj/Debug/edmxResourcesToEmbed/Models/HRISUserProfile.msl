@@ -363,5 +363,84 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tptlosApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tptlosApp">
+        <MappingFragment StoreEntitySet="tptlosApp">
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+          <ScalarProperty Name="facilitatorEIC" ColumnName="facilitatorEIC" />
+          <ScalarProperty Name="isPrintable" ColumnName="isPrintable" />
+          <ScalarProperty Name="approveStatus" ColumnName="approveStatus" />
+          <ScalarProperty Name="approvedDate" ColumnName="approvedDate" />
+          <ScalarProperty Name="approvePos" ColumnName="approvePos" />
+          <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+          <ScalarProperty Name="recommendStatus" ColumnName="recommendStatus" />
+          <ScalarProperty Name="recommendEIC" ColumnName="recommendEIC" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="returnOfficial" ColumnName="returnOfficial" />
+          <ScalarProperty Name="arrival" ColumnName="arrival" />
+          <ScalarProperty Name="departure" ColumnName="departure" />
+          <ScalarProperty Name="nameText" ColumnName="nameText" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="proceedTo" ColumnName="proceedTo" />
+          <ScalarProperty Name="dateApplied" ColumnName="dateApplied" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tjustifyApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tjustifyApp">
+        <MappingFragment StoreEntitySet="tjustifyApp">
+          <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+          <ScalarProperty Name="logTime" ColumnName="logTime" />
+          <ScalarProperty Name="dtStamp" ColumnName="dtStamp" />
+          <ScalarProperty Name="period" ColumnName="period" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="reason" ColumnName="reason" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="logType" ColumnName="logType" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="CtrlNo" ColumnName="CtrlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vJustifyApps">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vJustifyApp">
+        <MappingFragment StoreEntitySet="vJustifyApp">
+          <ScalarProperty Name="month" ColumnName="month" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="logTime" ColumnName="logTime" />
+          <ScalarProperty Name="timeOut2" ColumnName="timeOut2" />
+          <ScalarProperty Name="timeIn2" ColumnName="timeIn2" />
+          <ScalarProperty Name="timeOut1" ColumnName="timeOut1" />
+          <ScalarProperty Name="timeIn1" ColumnName="timeIn1" />
+          <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+          <ScalarProperty Name="period" ColumnName="period" />
+          <ScalarProperty Name="approvingOfficer" ColumnName="approvingOfficer" />
+          <ScalarProperty Name="officeName" ColumnName="officeName" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="reason" ColumnName="reason" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="logTitle" ColumnName="logTitle" />
+          <ScalarProperty Name="logType" ColumnName="logType" />
+          <ScalarProperty Name="day" ColumnName="day" />
+          <ScalarProperty Name="monthyear" ColumnName="monthyear" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="fullnameFirst" ColumnName="fullnameFirst" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="controlNo" ColumnName="controlNo" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="JustifyAction" FunctionName="HRISUserProfileModel.Store.JustifyAction" />
   </EntityContainerMapping>
 </Mapping>

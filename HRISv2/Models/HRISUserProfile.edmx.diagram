@@ -26,6 +26,9 @@
         <EntityTypeShape EntityType="HRISUserProfileModel.tpassSlipApp" Width="1.5" PointX="8.75" PointY="6" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vpassSlipApp" Width="1.5" PointX="12.75" PointY="5.125" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vPtlosApp" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tptlosApp" Width="1.5" PointX="2.75" PointY="8.625" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tjustifyApp" Width="1.5" PointX="8.75" PointY="9.5" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.vJustifyApp" Width="1.5" PointX="10.75" PointY="8.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

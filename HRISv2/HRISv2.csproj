@@ -236,10 +236,16 @@
     <Compile Include="Models\tAttStationArea.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tjustifyApp.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tlogUser.cs">
       <DependentUpon>GENERALUsernameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tpassSlipApp.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tptlosApp.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\trefEmpGroup.cs">
@@ -252,6 +258,9 @@
       <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vDuplicateEICPlantillaPreparation.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vJustifyApp.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vpassSlipApp.cs">

@@ -9,8 +9,8 @@
         <EntityTypeShape EntityType="HRISMonitoringModel.tappAction" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISMonitoringModel.tappFAQ" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISMonitoringModel.tappOffice" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISMonitoringModel.trefQuestion" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISMonitoringModel.trefRemark" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMonitoringModel.trefQuestion" Width="1.5" PointX="1.125" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMonitoringModel.trefRemark" Width="1.5" PointX="4.625" PointY="4.5" IsExpanded="true" />
         <AssociationConnector Association="HRISMonitoringModel.FK_tappActionDetails_tappActions" ManuallyRouted="false" />
         <AssociationConnector Association="HRISMonitoringModel.FK_tappActions_tappFAQ" ManuallyRouted="false" />
         <AssociationConnector Association="HRISMonitoringModel.FK_tappActions_trefRemarks" ManuallyRouted="false" />
