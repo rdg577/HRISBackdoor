@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Security.Policy;
-using System.Web;
 using System.Web.Mvc;
 using HRISv2.Models;
-using Kendo.Mvc.Infrastructure.Implementation;
 
 namespace HRISv2.Controllers
 {
@@ -225,7 +220,8 @@ namespace HRISv2.Controllers
             try
             {
                 var ptlos = db.tptlosApps.Single(r => r.recNo == id);
-                ptlos.Tag = tag;      // 3 - Recommend, 4 - Disapprove, 5 - approve, 9 - Cancel
+                ptlos.Tag = tag;      // 3 - Recommend, 4 - Disapprove, 5 - approve, 9 - Cancel, 0 - Returned
+                if (tag == 0) ptlos.recommendStatus = 0;
 
                 db.SaveChanges();
             }
