@@ -442,5 +442,24 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="JustifyAction" FunctionName="HRISUserProfileModel.Store.JustifyAction" />
+    <EntitySetMapping Name="tAttDailyLogs">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tAttDailyLog">
+        <MappingFragment StoreEntitySet="tAttDailyLog">
+          <ScalarProperty Name="nonRegDay" ColumnName="nonRegDay" />
+          <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+          <ScalarProperty Name="OverRide2" ColumnName="OverRide2" />
+          <ScalarProperty Name="OverRide1" ColumnName="OverRide1" />
+          <ScalarProperty Name="LastLog" ColumnName="LastLog" />
+          <ScalarProperty Name="Out2" ColumnName="Out2" />
+          <ScalarProperty Name="In2" ColumnName="In2" />
+          <ScalarProperty Name="Out1" ColumnName="Out1" />
+          <ScalarProperty Name="In1" ColumnName="In1" />
+          <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

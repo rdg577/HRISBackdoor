@@ -53,6 +53,7 @@ namespace HRISv2.Models
         public DbSet<tptlosApp> tptlosApps { get; set; }
         public DbSet<tjustifyApp> tjustifyApps { get; set; }
         public DbSet<vJustifyApp> vJustifyApps { get; set; }
+        public DbSet<tAttDailyLog> tAttDailyLogs { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)

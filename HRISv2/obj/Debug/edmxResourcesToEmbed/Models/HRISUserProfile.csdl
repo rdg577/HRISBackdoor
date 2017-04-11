@@ -38,6 +38,7 @@
       <Parameter Name="remarks" Mode="In" Type="String" />
       <Parameter Name="period" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="tAttDailyLogs" EntityType="HRISUserProfileModel.tAttDailyLog" />
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -454,5 +455,23 @@
     <Property Name="statusID" Type="Int32" />
     <Property Name="year" Type="Int32" />
     <Property Name="month" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tAttDailyLog">
+    <Key>
+      <PropertyRef Name="RecNo" />
+    </Key>
+    <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LogDate" Type="DateTime" Precision="0" />
+    <Property Name="In1" Type="DateTime" Precision="3" />
+    <Property Name="Out1" Type="DateTime" Precision="3" />
+    <Property Name="In2" Type="DateTime" Precision="3" />
+    <Property Name="Out2" Type="DateTime" Precision="3" />
+    <Property Name="LastLog" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OverRide1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OverRide2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="nonRegDay" Type="Int32" />
   </EntityType>
 </Schema>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using HRISv2.Models;
@@ -9,6 +10,109 @@ namespace HRISv2.Controllers
     public class ToolboxController : Controller
     {
         HRISEntities db = new HRISEntities();
+
+        public JsonResult CheckBundy(String EIC)
+        {
+            var logNow = DateTime.Now;
+            var logDate = logNow.Date;
+            var logTime = logNow.TimeOfDay;
+
+            var attDailyLog = db.tAttDailyLogs.Where(r => r.EIC == EIC).SingleOrDefault(r => r.LogDate == logDate);
+
+            String in1 = null, out1 = null, in2 = null, out2 = null;
+
+            if (attDailyLog != null)
+            {
+                if (attDailyLog.In1 != null) in1 = attDailyLog.In1.Value.ToShortTimeString();
+                if (attDailyLog.Out1 != null) out1 = attDailyLog.Out1.Value.ToShortTimeString();
+                if (attDailyLog.In2 != null) in2 = attDailyLog.In2.Value.ToShortTimeString();
+                if (attDailyLog.Out2 != null) out2 = attDailyLog.Out2.Value.ToShortTimeString();
+            }
+
+            // determine next log
+            String nextLog = null;
+            if (logTime >= new DateTime(logDate.Year, logDate.Month, logDate.Day, 6, 0, 0).TimeOfDay &&
+                logTime < new DateTime(logDate.Year, logDate.Month, logDate.Day, 12, 0, 0).TimeOfDay && 
+                in1 == null)
+            {
+                nextLog = "IN1";
+            }
+            else if (logTime >= new DateTime(logDate.Year, logDate.Month, logDate.Day, 8, 0, 0).TimeOfDay &&
+                logTime < new DateTime(logDate.Year, logDate.Month, logDate.Day, 12, 0, 0).TimeOfDay && 
+                out1 == null)
+            {
+                nextLog = "OUT1";
+            }
+            else if (logTime >= new DateTime(logDate.Year, logDate.Month, logDate.Day, 12, 30, 0).TimeOfDay &&
+                logTime < new DateTime(logDate.Year, logDate.Month, logDate.Day, 17, 0, 0).TimeOfDay &&
+                in2 == null)
+            {
+                nextLog = "IN2";
+            }
+            else if (logTime >= new DateTime(logDate.Year, logDate.Month, logDate.Day, 13, 0, 0).TimeOfDay &&
+                logTime < new DateTime(logDate.Year, logDate.Month, logDate.Day, 23, 59, 59).TimeOfDay &&
+                out2 == null)
+            {
+                nextLog = "OUT2";
+            }
+
+            return Json(new { status = new { logDate = logDate.ToShortDateString(), nextLog, in1, out1, in2, out2, attDailyLog } }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult LogBundy(String time_period, String EIC, String schemeCode)
+        {
+            var logNow = DateTime.Now;
+            var logDate = logNow.Date;
+            var logTime = logNow.TimeOfDay;
+
+            if (time_period.Equals("IN1"))
+            {
+                var l = new tAttDailyLog
+                {
+                    EIC = EIC,
+                    In1 = logNow,
+                    LogDate = logDate,
+                    LastLog = time_period,
+                    SchemeCode = schemeCode
+                };
+
+                db.tAttDailyLogs.Add(l);
+                db.SaveChanges();
+            }
+            else if (time_period.Equals("OUT1"))
+            {
+                var l = db.tAttDailyLogs.Where(r => r.EIC == EIC).SingleOrDefault(r => r.LogDate == logDate);
+                if (l != null)
+                {
+                    l.Out1 = logNow;
+                    l.LastLog = time_period;
+                    db.SaveChanges();
+                }
+            }
+            else if (time_period.Equals("IN2"))
+            {
+                var l = db.tAttDailyLogs.Where(r => r.EIC == EIC).SingleOrDefault(r => r.LogDate == logDate);
+                if (l != null)
+                {
+                    l.In2 = logNow;
+                    l.LastLog = time_period;
+                    db.SaveChanges();
+                }
+            }
+            else if (time_period.Equals("OUT2"))
+            {
+                var l = db.tAttDailyLogs.Where(r => r.EIC == EIC).SingleOrDefault(r => r.LogDate == logDate);
+                if (l != null)
+                {
+                    l.Out2 = logNow;
+                    l.LastLog = time_period;
+                    db.SaveChanges();
+                }
+            }
+
+            var log = db.tAttDailyLogs.Where(r => r.EIC == EIC).Where(r => r.LogDate == logDate);
+
+            return Json(new { log }, JsonRequestBehavior.AllowGet);
+        }
 
         class ApplicationMenu
         {
@@ -81,7 +185,6 @@ namespace HRISv2.Controllers
             dynamic wrap = new { justifications = list };
             return Json(wrap, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult JustificationPerMonth(String EIC, String approvingEIC)
         {
             var list = (from r in db.vJustifyApps
@@ -129,15 +232,7 @@ namespace HRISv2.Controllers
             dynamic wrap = new { justifications = list };
             return Json(wrap, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult JustificationApproval(
-            String EIC, 
-            int month, 
-            int year, 
-            String month_year, 
-            String approvingEIC, 
-            int statusID, 
-            int period, 
-            String remarks)
+        public JsonResult JustificationApproval(String EIC, int month, int year, String month_year, String approvingEIC, int statusID, int period, String remarks)
         {
             Boolean has_error;
             try

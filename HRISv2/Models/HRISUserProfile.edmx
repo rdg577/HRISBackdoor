@@ -129,6 +129,24 @@
           <Property Name="dateApproved" Type="date" />
           <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="tAttDailyLog">
+          <Key>
+            <PropertyRef Name="RecNo" />
+          </Key>
+          <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="LogDate" Type="date" />
+          <Property Name="In1" Type="datetime" />
+          <Property Name="Out1" Type="datetime" />
+          <Property Name="In2" Type="datetime" />
+          <Property Name="Out2" Type="datetime" />
+          <Property Name="LastLog" Type="nvarchar" MaxLength="50" />
+          <Property Name="OverRide1" Type="nvarchar" MaxLength="50" />
+          <Property Name="OverRide2" Type="nvarchar" MaxLength="50" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="nonRegDay" Type="int" />
+        </EntityType>
         <EntityType Name="tAttEmpArea">
           <Key>
             <PropertyRef Name="EIC" />
@@ -248,6 +266,8 @@
           <Property Name="groupName" Type="nvarchar" MaxLength="100" />
           <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vAttDailyLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vDuplicateEICPlantillaPreparation">
@@ -462,6 +482,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <EntitySet Name="tappSalarySched" EntityType="Self.tappSalarySched" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappServiceRecord" EntityType="Self.tappServiceRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAttDailyLog" EntityType="Self.tAttDailyLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
@@ -651,6 +672,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             <Parameter Name="remarks" Mode="In" Type="String" />
             <Parameter Name="period" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tAttDailyLogs" EntityType="HRISUserProfileModel.tAttDailyLog" />
         </EntityContainer>
         <EntityType Name="tappEmpGroup">
           <Key>
@@ -1067,6 +1089,24 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="statusID" Type="Int32" />
           <Property Name="year" Type="Int32" />
           <Property Name="month" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tAttDailyLog">
+          <Key>
+            <PropertyRef Name="RecNo" />
+          </Key>
+          <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LogDate" Type="DateTime" Precision="0" />
+          <Property Name="In1" Type="DateTime" Precision="3" />
+          <Property Name="Out1" Type="DateTime" Precision="3" />
+          <Property Name="In2" Type="DateTime" Precision="3" />
+          <Property Name="Out2" Type="DateTime" Precision="3" />
+          <Property Name="LastLog" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OverRide1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OverRide2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="nonRegDay" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1515,6 +1555,25 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="JustifyAction" FunctionName="HRISUserProfileModel.Store.JustifyAction" />
+          <EntitySetMapping Name="tAttDailyLogs">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tAttDailyLog">
+              <MappingFragment StoreEntitySet="tAttDailyLog">
+                <ScalarProperty Name="nonRegDay" ColumnName="nonRegDay" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="OverRide2" ColumnName="OverRide2" />
+                <ScalarProperty Name="OverRide1" ColumnName="OverRide1" />
+                <ScalarProperty Name="LastLog" ColumnName="LastLog" />
+                <ScalarProperty Name="Out2" ColumnName="Out2" />
+                <ScalarProperty Name="In2" ColumnName="In2" />
+                <ScalarProperty Name="Out1" ColumnName="Out1" />
+                <ScalarProperty Name="In1" ColumnName="In1" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

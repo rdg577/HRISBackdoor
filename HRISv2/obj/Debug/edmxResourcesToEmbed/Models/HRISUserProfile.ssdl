@@ -124,6 +124,24 @@
     <Property Name="dateApproved" Type="date" />
     <Property Name="approvedEIC" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <EntityType Name="tAttDailyLog">
+    <Key>
+      <PropertyRef Name="RecNo" />
+    </Key>
+    <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="50" />
+    <Property Name="ID" Type="nvarchar" MaxLength="50" />
+    <Property Name="LogDate" Type="date" />
+    <Property Name="In1" Type="datetime" />
+    <Property Name="Out1" Type="datetime" />
+    <Property Name="In2" Type="datetime" />
+    <Property Name="Out2" Type="datetime" />
+    <Property Name="LastLog" Type="nvarchar" MaxLength="50" />
+    <Property Name="OverRide1" Type="nvarchar" MaxLength="50" />
+    <Property Name="OverRide2" Type="nvarchar" MaxLength="50" />
+    <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
+    <Property Name="nonRegDay" Type="int" />
+  </EntityType>
   <EntityType Name="tAttEmpArea">
     <Key>
       <PropertyRef Name="EIC" />
@@ -243,6 +261,8 @@
     <Property Name="groupName" Type="nvarchar" MaxLength="100" />
     <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vAttDailyLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vDuplicateEICPlantillaPreparation">
@@ -457,6 +477,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tappSalarySched" EntityType="Self.tappSalarySched" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappServiceRecord" EntityType="Self.tappServiceRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttDailyLog" EntityType="Self.tAttDailyLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
