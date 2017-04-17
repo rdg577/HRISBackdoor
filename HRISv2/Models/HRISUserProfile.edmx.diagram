@@ -30,6 +30,8 @@
         <EntityTypeShape EntityType="HRISUserProfileModel.tjustifyApp" Width="1.5" PointX="8.75" PointY="9.5" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vJustifyApp" Width="1.5" PointX="10.75" PointY="8.875" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tAttDailyLog" Width="1.5" PointX="4.75" PointY="8" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappDFlexible" Width="1.5" PointX="12.75" PointY="9.875" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappDFlexiblesLog" Width="1.5" PointX="12.75" PointY="11.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

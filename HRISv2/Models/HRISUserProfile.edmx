@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HRISUserProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tappDFlexibles">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tappDFlexiblesLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="loginStatus" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="timeStamp" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tappEmpGroup">
           <Key>
             <PropertyRef Name="recNo" />
@@ -267,8 +284,6 @@
           <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'HRIS.dbo.vAttDailyLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vDuplicateEICPlantillaPreparation">
           <Key>
@@ -473,6 +488,8 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Parameter Name="period" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="HRISUserProfileModelStoreContainer">
+          <EntitySet Name="tappDFlexibles" EntityType="Self.tappDFlexibles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tappDFlexiblesLog" EntityType="Self.tappDFlexiblesLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappEmployee" EntityType="Self.tappEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappEmpStatus" EntityType="Self.tappEmpStatus" Schema="dbo" store:Type="Tables" />
@@ -673,6 +690,8 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             <Parameter Name="period" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="tAttDailyLogs" EntityType="HRISUserProfileModel.tAttDailyLog" />
+          <EntitySet Name="tappDFlexibles" EntityType="HRISUserProfileModel.tappDFlexible" />
+          <EntitySet Name="tappDFlexiblesLogs" EntityType="HRISUserProfileModel.tappDFlexiblesLog" />
         </EntityContainer>
         <EntityType Name="tappEmpGroup">
           <Key>
@@ -1107,6 +1126,23 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="OverRide2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="nonRegDay" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tappDFlexible">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EIC" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tappDFlexiblesLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="loginStatus" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="timeStamp" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1571,6 +1607,24 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EIC" ColumnName="EIC" />
                 <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappDFlexibles">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappDFlexible">
+              <MappingFragment StoreEntitySet="tappDFlexibles">
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tappDFlexiblesLogs">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tappDFlexiblesLog">
+              <MappingFragment StoreEntitySet="tappDFlexiblesLog">
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+                <ScalarProperty Name="loginStatus" ColumnName="loginStatus" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -39,6 +39,8 @@
       <Parameter Name="period" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="tAttDailyLogs" EntityType="HRISUserProfileModel.tAttDailyLog" />
+    <EntitySet Name="tappDFlexibles" EntityType="HRISUserProfileModel.tappDFlexible" />
+    <EntitySet Name="tappDFlexiblesLogs" EntityType="HRISUserProfileModel.tappDFlexiblesLog" />
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -473,5 +475,22 @@
     <Property Name="OverRide2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SchemeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
     <Property Name="nonRegDay" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tappDFlexible">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tappDFlexiblesLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EIC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="loginStatus" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="timeStamp" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

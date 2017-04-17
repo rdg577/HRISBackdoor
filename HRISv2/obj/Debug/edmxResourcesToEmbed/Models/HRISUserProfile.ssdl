@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HRISUserProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tappDFlexibles">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="EIC" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tappDFlexiblesLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="loginStatus" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="timeStamp" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="tappEmpGroup">
     <Key>
       <PropertyRef Name="recNo" />
@@ -262,8 +279,6 @@
     <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'HRIS.dbo.vAttDailyLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vDuplicateEICPlantillaPreparation">
     <Key>
@@ -468,6 +483,8 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <Parameter Name="period" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="HRISUserProfileModelStoreContainer">
+    <EntitySet Name="tappDFlexibles" EntityType="Self.tappDFlexibles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappDFlexiblesLog" EntityType="Self.tappDFlexiblesLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappEmployee" EntityType="Self.tappEmployee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappEmpStatus" EntityType="Self.tappEmpStatus" Schema="dbo" store:Type="Tables" />

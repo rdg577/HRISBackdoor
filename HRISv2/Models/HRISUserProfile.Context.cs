@@ -54,6 +54,8 @@ namespace HRISv2.Models
         public DbSet<tjustifyApp> tjustifyApps { get; set; }
         public DbSet<vJustifyApp> vJustifyApps { get; set; }
         public DbSet<tAttDailyLog> tAttDailyLogs { get; set; }
+        public DbSet<tappDFlexible> tappDFlexibles { get; set; }
+        public DbSet<tappDFlexiblesLog> tappDFlexiblesLogs { get; set; }
     
         [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
         public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)

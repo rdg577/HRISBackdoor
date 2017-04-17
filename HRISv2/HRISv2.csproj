@@ -194,6 +194,12 @@
     <Compile Include="Models\tappActionDetail.cs">
       <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tappDFlexible.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tappDFlexiblesLog.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tappEmpGroup.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
@@ -1917,10 +1923,11 @@
     <Content Include="Views\DataManagement\DetailsPlantilla.cshtml" />
     <Content Include="Views\DataManagement\CreateServiceRecord.cshtml" />
     <Content Include="Views\FAQ\Index.cshtml" />
+    <Content Include="Views\Toolbox\FormBundy.cshtml" />
+    <Content Include="Views\Toolbox\LogBundyWeb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Toolbox\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

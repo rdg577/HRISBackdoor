@@ -461,5 +461,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tappDFlexibles">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tappDFlexible">
+        <MappingFragment StoreEntitySet="tappDFlexibles">
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tappDFlexiblesLogs">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tappDFlexiblesLog">
+        <MappingFragment StoreEntitySet="tappDFlexiblesLog">
+          <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+          <ScalarProperty Name="loginStatus" ColumnName="loginStatus" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
