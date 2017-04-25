@@ -5,7 +5,7 @@
 @using System.Collections
 @using HRISv2.Models
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Service Record Details";
 }
 
 @Html.AntiForgeryToken()
@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             @{
-                IEnumerable<fnGetEmployeeServiceRecords_Result> employeeServiceRecord = (IEnumerable<fnGetEmployeeServiceRecords_Result>)ViewBag.employeeServiceRecord;
+                var employeeServiceRecord = (IEnumerable<fnGetEmployeeServiceRecords_Result>)ViewBag.employeeServiceRecord;
                 var redFlag = "";
                 foreach (var item in employeeServiceRecord.ToList())
                 {
@@ -35,11 +35,20 @@
                     var dateFrom = Convert.ToDateTime(item.dateFrom);
 
                     <tr style="@redFlag">
-                        <td>@item.designation</td>
+                        <td>@item.designation<br/><small>@item.subPosition</small></td>
                         <td>@item.statusName</td>
                         <td>@item.officeServiceRec</td>
                         <td>@dateFrom.ToShortDateString()</td>
-                        <td>@item.dateTo</td>
+                        <td>@{
+                                if (item.dateTo!= null)
+                                {
+                                    Html.Raw(item.dateTo);
+                                }
+                                else
+                                {
+                                    <span>Present</span>
+                                }
+                            }</td>
                         @if (redFlag != "")
                         {
                             <td>
@@ -50,7 +59,11 @@
                         }
                         else
                         {
-                            <td>&nbsp;</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="updateServiceRecord('@item.recNo');">
+                                    Update <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </td>
                         }
                     </tr>
 
@@ -64,6 +77,10 @@
 </div>
 
 <script>
+    function updateServiceRecord(recno) {
+        window.location.href = '@Url.Content("~/DataManagement/UpdateServiceRecord/")' + recno;
+    }
+
     function removeServiceRecord(recNo) {
         var id = recNo;
         bootbox.confirm({

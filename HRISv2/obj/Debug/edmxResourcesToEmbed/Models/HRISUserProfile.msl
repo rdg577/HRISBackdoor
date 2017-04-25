@@ -110,6 +110,9 @@
     <EntitySetMapping Name="tappServiceRecords">
       <EntityTypeMapping TypeName="HRISUserProfileModel.tappServiceRecord">
         <MappingFragment StoreEntitySet="tappServiceRecord">
+          <ScalarProperty Name="subPosition" ColumnName="subPosition" />
+          <ScalarProperty Name="subPositionCode" ColumnName="subPositionCode" />
+          <ScalarProperty Name="positionCode" ColumnName="positionCode" />
           <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
           <ScalarProperty Name="dateApproved" ColumnName="dateApproved" />
           <ScalarProperty Name="isApproved" ColumnName="isApproved" />
@@ -259,35 +262,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="fnGetEmployeeServiceRecords" FunctionName="HRISUserProfileModel.Store.fnGetEmployeeServiceRecords">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="HRISUserProfileModel.fnGetEmployeeServiceRecords_Result">
-          <ScalarProperty Name="recNo" ColumnName="recNo" />
-          <ScalarProperty Name="EIC" ColumnName="EIC" />
-          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-          <ScalarProperty Name="dateFrom" ColumnName="dateFrom" />
-          <ScalarProperty Name="dateTo" ColumnName="dateTo" />
-          <ScalarProperty Name="designation" ColumnName="designation" />
-          <ScalarProperty Name="serviceTotal" ColumnName="serviceTotal" />
-          <ScalarProperty Name="statusName" ColumnName="statusName" />
-          <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
-          <ScalarProperty Name="branch" ColumnName="branch" />
-          <ScalarProperty Name="lwpay" ColumnName="lwpay" />
-          <ScalarProperty Name="salaryPayroll" ColumnName="salaryPayroll" />
-          <ScalarProperty Name="salaryServiceRec" ColumnName="salaryServiceRec" />
-          <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
-          <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
-          <ScalarProperty Name="sepCause" ColumnName="sepCause" />
-          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
-          <ScalarProperty Name="isGovernmentService" ColumnName="isGovernmentService" />
-          <ScalarProperty Name="isInsideGovernment" ColumnName="isInsideGovernment" />
-          <ScalarProperty Name="SgStep" ColumnName="SgStep" />
-          <ScalarProperty Name="isApproved" ColumnName="isApproved" />
-          <ScalarProperty Name="dateApproved" ColumnName="dateApproved" />
-          <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="tpassSlipApps">
       <EntityTypeMapping TypeName="HRISUserProfileModel.tpassSlipApp">
         <MappingFragment StoreEntitySet="tpassSlipApp">
@@ -479,5 +453,49 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tappPositionSubs">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tappPositionSub">
+        <MappingFragment StoreEntitySet="tappPositionSub">
+          <ScalarProperty Name="accronym" ColumnName="accronym" />
+          <ScalarProperty Name="shortPositionName" ColumnName="shortPositionName" />
+          <ScalarProperty Name="subPositionName" ColumnName="subPositionName" />
+          <ScalarProperty Name="positionCode" ColumnName="positionCode" />
+          <ScalarProperty Name="subPositionCode" ColumnName="subPositionCode" />
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="fnGetEmployeeServiceRecords" FunctionName="HRISUserProfileModel.Store.fnGetEmployeeServiceRecords">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HRISUserProfileModel.fnGetEmployeeServiceRecords_Result">
+          <ScalarProperty Name="recNo" ColumnName="recNo" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="dateFrom" ColumnName="dateFrom" />
+          <ScalarProperty Name="dateTo" ColumnName="dateTo" />
+          <ScalarProperty Name="positionCode" ColumnName="positionCode" />
+          <ScalarProperty Name="designation" ColumnName="designation" />
+          <ScalarProperty Name="subPositionCode" ColumnName="subPositionCode" />
+          <ScalarProperty Name="subPosition" ColumnName="subPosition" />
+          <ScalarProperty Name="serviceTotal" ColumnName="serviceTotal" />
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="officeServiceRec" ColumnName="officeServiceRec" />
+          <ScalarProperty Name="branch" ColumnName="branch" />
+          <ScalarProperty Name="lwpay" ColumnName="lwpay" />
+          <ScalarProperty Name="salaryPayroll" ColumnName="salaryPayroll" />
+          <ScalarProperty Name="salaryServiceRec" ColumnName="salaryServiceRec" />
+          <ScalarProperty Name="paySchemeCode" ColumnName="paySchemeCode" />
+          <ScalarProperty Name="paySchemeName" ColumnName="paySchemeName" />
+          <ScalarProperty Name="sepCause" ColumnName="sepCause" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+          <ScalarProperty Name="isGovernmentService" ColumnName="isGovernmentService" />
+          <ScalarProperty Name="isInsideGovernment" ColumnName="isInsideGovernment" />
+          <ScalarProperty Name="SgStep" ColumnName="SgStep" />
+          <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+          <ScalarProperty Name="dateApproved" ColumnName="dateApproved" />
+          <ScalarProperty Name="approvedEIC" ColumnName="approvedEIC" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

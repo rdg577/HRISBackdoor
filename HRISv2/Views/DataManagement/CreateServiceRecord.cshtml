@@ -35,7 +35,7 @@
                             @(Html.Kendo().DropDownList()
                               .Name("designation")
                               .DataTextField("fullDescription")
-                              .DataValueField("sg")
+                              .DataValueField("positionCode")
                               .DataSource(g => g.Read("PositionList", "Toolbox"))
                               .OptionLabel("-- PLEASE SELECT --")
                               .HtmlAttributes(new { maxlength = "300", style = "width: 50%; text-transform:uppercase;" })
@@ -45,14 +45,25 @@
                                     @<text>
                                         function() {
                                             // display salary grade level
-                                            var sg = $("#designation").val();
-                                            $("#sg").val(sg);
+                                            var positionCode = $("#designation").val();
 
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "@Url.Action("Position", "Toolbox")",
+                                                data: { id: positionCode },
+                                                success: function (data) {
+                                                    if (data.length > 0) {
+                                                        var position = JSON.parse(JSON.stringify(data[0]));
+                                                        $("#sg").val(position.sg);
+                                                    }
+                                                },
+                                                error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+                                            });
 
-                                            $("#statusName").kendoDropDownList({
+                                            /*$("#statusName").kendoDropDownList({
                                                 dataSource: null,
                                                 optionLabel: "--PLEASE SELECT--"
-                                            });
+                                            });*/
 
                                             // load employment status
                                             var ds = new kendo.data.DataSource({
@@ -142,18 +153,30 @@
                             )
 
                             <div style="padding-top: 4px;">SG Level:
-                                <input 
-                                    type="text" name="sg" id="sg" 
-                                    style="background-color: #ffffff; 
-                                            border: 1px solid #ccc; -ms-border-radius: 4px; border-radius: 4px;
-                                            height: 34px;
-                                            padding: 6px 12px;
-                                            width: 60px" readonly="readonly" />
+                                <input
+                                    type="text" name="sg" id="sg" class="form-control"
+                                    style="background-color: #ffffff;                                                                                                                                                                                                           width: 60px" readonly="readonly"/>
                             </div>
+
+                            
 
                         </div>
                     </div>
-
+                
+                    <div class="form-group status_name">
+                        <label class="control-label col-lg-2">Sub Position:</label>
+                        <div class="col-lg-10 col-xs-12">
+                            @(Html.Kendo().DropDownList()
+                                        .Name("subPosition")
+                                        .CascadeFrom("designation")
+                                        .DataTextField("subPositionName")
+                                        .DataValueField("subPositionCode")
+                                        .DataSource(g => g.Read("SubPositionList", "Toolbox"))
+                                        .OptionLabel("-- PLEASE SELECT --")
+                                        .HtmlAttributes(new { style = "width:50%; text-transform:uppercase;" })
+                            )
+                        </div>
+                    </div>
 
                     <div class="form-group status_name">
                         <label class="control-label col-lg-2">Employment Status:</label>
@@ -203,6 +226,7 @@
                             @(Html.Kendo().DatePicker()
                               .Name("dateFrom")
                               .Max(DateTime.Now)
+                              .Format("MM/dd/yyyy")
                             )
                         </div>
                     </div>
@@ -211,8 +235,9 @@
                         <label class="control-label col-lg-2">Date Ended:</label>
                         <div class="col-lg-2 col-xs-12">
                             @(Html.Kendo().DatePicker()
-                                  .Name("dateTo")
-                                  .Max(DateTime.Now)
+                                .Name("dateTo")
+                                .Max(DateTime.Now)
+                                .Format("MM/dd/yyyy")
                                   )
                             <input type="checkbox" name="cbPresent" id="cbPresent" /> PRESENT
                         </div> 
@@ -287,6 +312,7 @@
             EIC = strArr[0].trim();
         }
         // extract employment employment period
+        // var dateFrom = $("#dateFrom").val();
         var dateFrom = $("#dateFrom").val();
         var dateTo = "";
         if (!$("#cbPresent").is(":checked")) {
@@ -294,10 +320,21 @@
         }
         // extract employee service designation
         var designation = $("#designation").data("kendoDropDownList").text();
+        var positionCode = $("#designation").data("kendoDropDownList").value();
+
+        var subPosition = null;
+        var subPositionCode = null;
+        if ($("#subPosition").data("kendoDropDownList").length >= 0) {
+            subPosition = $("#subPosition").data("kendoDropDownList").text();
+            subPositionCode = $("#subPosition").data("kendoDropDownList").value();
+        }
+
         // extract employment status
         var statusName = $("#statusName").data("kendoDropDownList").value();
         // extract employment office service record
-        var officeServiceRec = $("#officeServiceRec").data("kendoDropDownList").value();
+        var officeServiceRec = $("#officeServiceRec").data("kendoDropDownList").text();
+        // extract officeCode
+        var officeCode = $("#officeServiceRec").data("kendoDropDownList").value();;
         // extract branch
         var branch = $("#branch").val;
         // extract salaryPayroll
@@ -305,35 +342,41 @@
         // extract salaryServiceRec, paySchemeName, paySchemeCode
         var salaryServiceRec = "";
         var paySchemeName = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
-        if (paySchemeName == "D") {
+        if (paySchemeName === "D") {
             salaryServiceRec = salaryPayroll * 22 * 12;
-        } else if (paySchemeName == "M") {
+        } else if (paySchemeName === "M") {
             salaryServiceRec = salaryPayroll / 12;
-        } else if (paySchemeName == "A") {
+        } else if (paySchemeName === "A") {
             salaryServiceRec = salaryPayroll;
         }
         var paySchemeCode = $("#paySchemeName").data("kendoDropDownList").value();
         // extract officeCode
-        var officeCode = "";
+        /*var officeCode = "";
         if ($("#officeServiceRec").data("kendoDropDownList").value().length > 0) {
             officeCode = $("#officeServiceRec").data("kendoDropDownList").text().split("-")[1].trim();
-        }
+        }*/
         // extract sepCause
         var sepCause = $("#sepCause").val();
         // extract form token
         var token = $('input[name="__RequestVerificationToken"]').val();
 
+        // extract sg step
+        var sgStep = $("#step").val();
+
 
         // INSERT DATA TO TABLE
         $.ajax({
-            type: "POST",
-            url: "@Url.Action("Create", "ServiceRecord")",
+            type: "GET",
+            url: "@Url.Action("SaveNewServiceRecord", "DataManagement")",
             data: {
-                __RequestVerificationToken: token,
+                // __RequestVerificationToken: token,
                 EIC: EIC,
                 dateFrom: dateFrom,
                 dateTo: dateTo,
                 designation: designation,
+                positionCode: positionCode,
+                subPosition: subPosition,
+                subPositionCode: subPositionCode,
                 statusName: statusName,
                 officeServiceRec: officeServiceRec,
                 branch: branch,
@@ -342,12 +385,16 @@
                 paySchemeCode: paySchemeCode,
                 paySchemeName: paySchemeName,
                 sepCause: sepCause,
-                officeCode: officeCode
+                officeCode: officeCode,
+                sgStep: sgStep
             },
             success: function (data) {
-                window.location.href = '@Url.Content("~/ServiceRecord/Index")';
+                window.location.reload(true);
             },
-            error: function(errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+            error: function (errMsg) {
+                alert("Whoops! Something bad happen." + errMsg);
+                console.log(errMsg.type);
+            }
         });
     }
 
@@ -389,15 +436,15 @@
                 datatype: "json",
                 success: function (data) {
                     var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
-                    if (flag == "D") {
+                    if (flag === "D") {
                         $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22 });
                         //displaySalary(data[0].rateMonth / 22)
                     }
-                    else if (flag == "M") {
+                    else if (flag === "M") {
                         $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth });
                         //displaySalary(data[0].rateMonth)
                     }
-                    else if (flag == "A") {
+                    else if (flag === "A") {
                         $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth * 12 });
                         //displaySalary(data[0].rateMonth * 12)
                     }

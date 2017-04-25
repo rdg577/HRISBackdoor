@@ -1,0 +1,497 @@
+﻿@using HRISv2.Models
+@{
+    ViewBag.Title = "Update Service Record";
+
+    var employee = (tappEmployee)ViewBag.employee;
+    var employeeServiceRecord = (tappServiceRecord) ViewBag.employeeServiceRecord;
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #008800; color: #ffffff">
+                    <h2>Update Service Record</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group employee_name">
+                            <label class="control-label col-lg-2">Employee Name:</label>
+                            <div class="col-lg-6 col-xs-12">
+                                @if (employee != null)
+                                {
+                                    <label style="width: 100%" class="form-control">@employee.fullnameLast</label>
+                                    <input type="hidden" id="EIC" name="EIC" value="@employee.EIC" />
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group designation">
+                            <label class="control-label col-lg-2">Designation:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="designation" style="width: 50%;" />
+
+                                <div style="padding-top: 4px;">
+                                    SG Level:
+                                    <input type="text" name="sg" id="sg"
+                                           style="background-color: #ffffff;
+                                            border: 1px solid #ccc; -ms-border-radius: 4px; border-radius: 4px;
+                                            height: 34px;
+                                            padding: 6px 12px;
+                                            width: 60px" readonly="readonly" />
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group status_name">
+                            <label class="control-label col-lg-2">Sub Position:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="subPosition" style="width: 50%;" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group status_name">
+                            <label class="control-label col-lg-2">Employment Status:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="statusName" style="width: 30%;" />
+                            </div>
+                        </div>
+
+                        <div class="form-group sg_level">
+                            <label class="control-label col-lg-2">Step No.:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="step" />
+                            </div>
+
+                        </div>
+
+                        <div class="form-group paySchemeName">
+                            <label class="control-label col-lg-2">Pay Scheme:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="paySchemeName" />
+                            </div>
+                        </div>
+
+                        <div class="form-group salary">
+                            <label class="control-label col-lg-2">Salary:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="salaryPayroll" />
+                            </div>
+                        </div>
+
+                        <div class="form-group date_from">
+                            <label class="control-label col-lg-2">Date Started:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="dateFrom" placeholder="MM/DD/YYYY" />
+                            </div>
+                        </div>
+
+                        <div class="form-group date_to">
+                            <label class="control-label col-lg-2">Date Ended:</label>
+                            <div class="col-lg-2 col-xs-12">
+                                <input id="dateTo" placeholder="MM/DD/YYYY" />
+                                <input type="checkbox" name="cbPresent" id="cbPresent" /> PRESENT
+                            </div>
+                        </div>
+
+                        <div class="form-group officeServiceRec">
+                            <label class="control-label col-lg-2">Office Service:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input id="officeServiceRec" style="width:100%;text-transform:uppercase;" />
+                            </div>
+                        </div>
+
+                        <div class="form-group branch">
+                            <label class="control-label col-lg-2">Branch:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input type="text" name="branch" id="branch" value="PROV'L" style="width: auto" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group sepCause">
+                            <label class="control-label col-lg-2">Separation Cause:</label>
+                            <div class="col-lg-10 col-xs-12">
+                                <input type="text" name="sepCause" id="sepCause" value="" style="width: auto" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <input type="submit" id="btnClick" class="btn btn-primary col-lg-offset-2" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+
+        // ******* POPULATE DROPDOWNLISTS *******
+        var dsPositions = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "@Url.Action("PositionList", "Toolbox")",
+                    dataType: "json"
+                }
+            }
+        });
+        $("#designation").kendoDropDownList({
+            optionLabel: "-- SELECT --",
+            dataSource: dsPositions,
+            dataTextField: "fullDescription",
+            dataValueField: "positionCode",
+            change: function (e) {
+
+                // display salary grade level
+                processOtherElem();
+
+
+            }
+        });
+
+        // load employment status
+        var dsSubPositions = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "@Url.Action("SubPositionList", "Toolbox")",
+                    dataType: "json" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                }
+            }
+        });
+        $("#subPosition").kendoDropDownList({
+            cascadeFrom: "designation",
+            dataSource: dsSubPositions,
+            dataTextField: "subPositionName",
+            dataValueField: "subPositionCode",
+            optionLabel: "-- SELECT POSITION --"
+        });
+
+        // load office list
+        var dsOffices = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "@Url.Action("OfficeList", "Toolbox")",
+                    dataType: "json" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                }
+            }
+        });
+        $("#officeServiceRec").kendoDropDownList({
+            dataSource: dsOffices,
+            dataTextField: "officeServiceRec",
+            dataValueField: "officeCode",
+            optionLabel: "-- SELECT POSITION --"
+        });
+
+        // load employment status
+        var dsWorkStatus = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "@Url.Action("WorkStatusList", "Toolbox")",
+                    dataType: "json" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                }
+            }
+        });
+
+        jQuery("#statusName").kendoDropDownList({
+            dataSource: dsWorkStatus
+            ,dataTextField: "statusName"
+            ,dataValueField: "statusName"
+            ,optionLabel: "-- SELECT --"
+            ,htmlAttributes: { maxlength: "300", style: "width:auto; text-transform:uppercase;" }
+            ,change:
+            function () {
+                // reset salary value
+                $("#salaryPayroll").kendoNumericTextBox({ value: (0) });
+
+                var step1To8 = [
+                { text: "STEP 1", value: "1" },
+                { text: "STEP 2", value: "2" },
+                { text: "STEP 3", value: "3" },
+                { text: "STEP 4", value: "4" },
+                { text: "STEP 5", value: "5" },
+                { text: "STEP 6", value: "6" },
+                { text: "STEP 7", value: "7" },
+                { text: "STEP 8", value: "8" }
+                ];
+
+                var step1 = [
+                    { text: "STEP 1", value: "1" }
+                ];
+
+                var status_name = $("#statusName").val();
+                if (status_name.localeCompare("PERMANENT")      === 0 ||
+                    status_name.localeCompare("ELECTIVE")       === 0 ||
+                    status_name.localeCompare("CO-TERMINOUS")   === 0) {
+                    $("#step").kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: step1To8,
+                        optionLabel: "-- SELECT --",
+                        change: function () { displayPayScheme() }
+                    });
+                }
+                else {
+                    $("#step").kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: step1,
+                        optionLabel: "-- SELECT --",
+                        change: function () { displayPayScheme() }
+                    });
+                }
+            } // end - function()
+        }); // end - jQuery("#statusName")
+
+
+        $("#dateFrom").kendoDatePicker({
+            max: new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day),
+            format: "MM/dd/yyyy"
+        });
+        $("#dateTo").kendoDatePicker({
+            max: new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day),
+            format: "MM/dd/yyyy"
+        });
+
+        // ****** SET DEFAULT VALUES ******
+        $("#designation").data("kendoDropDownList").value("@employeeServiceRecord.positionCode");
+        //$("#designation").data("kendoDropDownList").trigger("change");
+        $("#designation").data("kendoDropDownList").bind("cascade", function(e) {
+            processOtherElem();
+        });
+
+        $("#subPosition").data("kendoDropDownList").value("@employeeServiceRecord.subPositionCode");
+        $("#subPosition").data("kendoDropDownList").trigger("change");
+
+        $("#statusName").data("kendoDropDownList").value("@employeeServiceRecord.statusName");
+        $("#statusName").data("kendoDropDownList").trigger("change");
+
+        $("#step").data("kendoDropDownList").value("@employeeServiceRecord.SgStep");
+        $("#step").data("kendoDropDownList").trigger("change");
+
+        $("#paySchemeName").data("kendoDropDownList").value("@employeeServiceRecord.paySchemeCode");
+        $("#paySchemeName").data("kendoDropDownList").trigger("change");
+
+        $("#salaryPayroll").data("kendoNumericTextBox").value("@employeeServiceRecord.salaryPayroll");
+        $("#salaryPayroll").data("kendoNumericTextBox").trigger("change");
+
+        $("#dateFrom").val("@employeeServiceRecord.dateFrom.Value.ToShortDateString()");
+        $("#dateTo").val("@employeeServiceRecord.dateTo");
+        $("#cbPresent").prop('checked', true);
+        if ($("#dateTo").val().length > 0)
+        {
+            $("#cbPresent").prop('checked', false);
+        }
+
+        $("#officeServiceRec").data("kendoDropDownList").value("@employeeServiceRecord.officeCode");
+        $("#officeServiceRec").data("kendoDropDownList").trigger("change");
+
+    });
+
+
+    // ***********************************************
+    function processOtherElem() {
+        // display salary grade level
+        var positionCode = $("#designation").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Position", "Toolbox")",
+            data: { id: positionCode },
+            success: function (data) {
+                if (data.length > 0) {
+                    var position = JSON.parse(JSON.stringify(data[0]));
+                    $("#sg").val(position.sg);
+                }
+            },
+            error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+        });
+
+        
+    }   // ********************** processOtherElem
+
+    $("#btnClick").click(function () {
+        bootbox.confirm({
+            message: "<p>Done reviewing the data?</p><p>Click YES to continue.</p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    savingData(@employeeServiceRecord.recNo);
+                }
+            }
+        });
+    });
+        
+
+    function savingData(recNo) {
+        /** EXTRACTION OF DATA */
+        // extract EIC
+        var EIC = $("#EIC").val();
+
+        // extract employment employment period
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = "";
+        if (!$("#cbPresent").is(":checked")) {
+            dateTo = $("#dateTo").val();
+        }
+
+        // extract employee service designation
+        var designation = $("#designation").data("kendoDropDownList").text();
+
+        // extract position code
+        var positionCode = $("#designation").data("kendoDropDownList").value();
+
+        // extract subPosition
+        var subPosition = $("#subPosition").data("kendoDropDownList").text();
+        console.log(subPosition);
+
+        // extract subPosition
+        var subPositionCode = $("#subPosition").data("kendoDropDownList").value();
+        console.log(subPositionCode);
+
+        // extract employment status
+        var statusName = $("#statusName").data("kendoDropDownList").value();
+
+        // extract employment office service record
+        var officeServiceRec = $("#officeServiceRec").data("kendoDropDownList").text();
+
+        // extract employment office service code
+        var officeCode = $("#officeServiceRec").data("kendoDropDownList").value();
+
+        /*// extract officeCode
+        var officeCode = "";
+        if ($("#officeServiceRec").data("kendoDropDownList").value().length > 0) {
+            officeCode = $("#officeServiceRec").data("kendoDropDownList").text().split("-")[1].trim();
+        }*/
+
+        // extract branch
+        var branch = $("#branch").val();
+
+        // extract salaryPayroll
+        var salaryPayroll = $("#salaryPayroll").data("kendoNumericTextBox").value();
+
+        // extract salaryServiceRec, paySchemeName, paySchemeCode
+        var salaryServiceRec = "";
+        var paySchemeName = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
+        if (paySchemeName == "D") {
+            salaryServiceRec = salaryPayroll * 22 * 12;
+        } else if (paySchemeName == "M") {
+            salaryServiceRec = salaryPayroll / 12;
+        } else if (paySchemeName == "A") {
+            salaryServiceRec = salaryPayroll;
+        }
+        var paySchemeCode = $("#paySchemeName").data("kendoDropDownList").value();
+
+        
+
+        // extract sepCause
+        var sepCause = $("#sepCause").val();
+
+        // extract form token
+        var token = $('input[name="__RequestVerificationToken"]').val();
+
+        // extract sgStep
+        var sgStep = $("#step").val();
+
+
+        // INSERT DATA TO TABLE
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UpdateServiceRecord", "DataManagement")",
+            data: {
+                __RequestVerificationToken: token,
+                recNo: recNo,
+                EIC: EIC,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
+                designation: designation,
+                positionCode: positionCode,
+                subPositionCode: subPositionCode,
+                subPosition: subPosition,
+                statusName: statusName,
+                officeServiceRec: officeServiceRec,
+                branch: branch,
+                salaryPayroll: salaryPayroll,
+                salaryServiceRec: salaryServiceRec,
+                paySchemeCode: paySchemeCode,
+                paySchemeName: paySchemeName,
+                sepCause: sepCause,
+                officeCode: officeCode,
+                sgStep: sgStep
+            },
+            success: function (data) {
+                window.location.href = '@Url.Content("~/DataManagement/DisplayServiceRecord/")' + EIC;
+            },
+            error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+        });
+    }
+
+    function displayPayScheme() {
+        // initialize salary
+        $("#salaryPayroll").kendoNumericTextBox({ value: 0 });
+        displaySalary();
+
+        $("#paySchemeName").kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "@Url.Action("SalarySchemeList", "Toolbox")" // /hris/Toolbox/SalarySchemeList
+                    }
+                }
+            },
+            dataTextField: "paySchemeName",
+            dataValueField: "paySchemeCode",
+            optionLabel: "-- SELECT --",
+            change:
+                function () {
+                    $("#salaryPayroll").kendoNumericTextBox({ value: 0 });
+                    displaySalary();
+                } // end-of-function()
+
+        });
+    }
+
+    function displaySalary() {
+        var sgVal = $("#sg").val();
+        var stepVal = $("#step").val();
+
+        if (sgVal && stepVal) {
+            // query salary schedule using sg and step values
+            $.ajax({
+                url: "@Url.Action("GetSalarySchedule", "Toolbox")", // /hris/Toolbox/GetSalarySchedule
+                data: { sg: sgVal, step: stepVal },
+                type: "GET",
+                datatype: "json",
+                success: function (data) {
+                    var flag = $("#paySchemeName").data("kendoDropDownList").text().substr(0, 1);
+                    if (flag === "D") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth / 22 });
+                        //displaySalary(data[0].rateMonth / 22)
+                    }
+                    else if (flag === "M") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth });
+                        //displaySalary(data[0].rateMonth)
+                    }
+                    else if (flag === "A") {
+                        $("#salaryPayroll").kendoNumericTextBox({ value: data[0].rateMonth * 12 });
+                        //displaySalary(data[0].rateMonth * 12)
+                    }
+
+                },
+                error: function (errMsg) { console.log("Whoops! Something bad happen." + errMsg) }
+            });
+
+        } // end-of-if
+    }
+</script>
+}

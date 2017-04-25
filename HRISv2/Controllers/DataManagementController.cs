@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -41,8 +42,7 @@ namespace HRISv2.Controllers
             }
             return View(tappEmployee.OrderBy(u => u.fullnameLast).ToPagedList(pageNumber, pageSize));
         }
-
-
+        
         // GET: EditUserProfile/5
         public ActionResult EditUserProfile(string id)
         {
@@ -201,7 +201,6 @@ namespace HRISv2.Controllers
             ViewBag.employeeServiceRecord = employeeServiceRecord.OrderByDescending(g => g.dateFrom);
 
             return View();
-
         }
 
         // POST: DisplayServiceRecord/5
@@ -214,6 +213,101 @@ namespace HRISv2.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        
+        /*public ActionResult Create([Bind(Include = "EIC, dateFrom, dateTo, positionCode, designation,  subPositionCode, subPosition, statusName, " +
+                  "officeServiceRec, branch, salaryPayroll, salaryServiceRec, paySchemeCode, paySchemeName, sepCause, officeCode, SgStep")] tappServiceRecord tappServiceRecord)
+        {
+            if (ModelState.IsValid)
+            {
+                db.tappServiceRecords.Add(tappServiceRecord);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "DataManagement");
+        }*/
+        public ActionResult SaveNewServiceRecord(String EIC, DateTime dateFrom, string dateTo, String positionCode, String designation,
+            String subPositionCode, String subPosition, String statusName, String officeServiceRec, String branch, Decimal salaryPayroll,
+            Decimal salaryServiceRec, String paySchemeCode, String paySchemeName, String sepCause, String officeCode, String sgStep)
+        {
+            var has_error = false;
+
+            try
+            {
+                var serviceRec = new tappServiceRecord()
+                {
+                    EIC = EIC,
+                    dateFrom = dateFrom,
+                    dateTo = dateTo != "" ? DateTime.ParseExact(dateTo, "MM/dd/yyyy", null).Date.ToString("yyyy-MM-dd"):"",
+                    positionCode = positionCode,
+                    designation = designation,
+                    subPosition = subPosition,
+                    subPositionCode = subPositionCode,
+                    statusName = statusName,
+                    officeServiceRec = officeServiceRec,
+                    branch = branch,
+                    salaryPayroll = salaryPayroll,
+                    salaryServiceRec = salaryServiceRec,
+                    paySchemeCode = paySchemeCode,
+                    paySchemeName = paySchemeName,
+                    sepCause = sepCause,
+                    officeCode = officeCode,
+                    SgStep = sgStep
+                };
+                db.tappServiceRecords.Add(serviceRec);
+                db.SaveChanges();
+                
+            }
+            catch (Exception exception)
+            {
+                has_error = true;
+                return Content(dateFrom + "\n\n" + dateTo + "\n\n" +  exception.ToString());
+            }
+            return Content(has_error.ToString());
+        }
+
+        // GET: UpdateServiceRecord/5
+        public ActionResult UpdateServiceRecord(int id)
+        {
+            var employeeServiceRecord = db.tappServiceRecords.Single(r => r.recNo == id);
+            var employee = db.tappEmployees.SingleOrDefault(r => r.EIC == employeeServiceRecord.EIC);
+            
+            ViewBag.employee = employee;
+            ViewBag.employeeServiceRecord = employeeServiceRecord;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateServiceRecord(int recNo, String EIC, DateTime dateFrom, String dateTo, String designation, String positionCode,
+                String subPositionCode, String subPosition, String statusName, String officeServiceRec, String branch, 
+                Decimal salaryPayroll, Decimal salaryServiceRec, String paySchemeCode, String paySchemeName, String sepCause, String officeCode, String sgStep)
+        {
+            var serviceRec = db.tappServiceRecords.Find(recNo);
+            serviceRec.EIC = EIC;
+            serviceRec.dateFrom = dateFrom;
+            serviceRec.dateTo = dateTo.Equals("") ? null: dateTo;
+            serviceRec.positionCode = positionCode;
+            serviceRec.designation = designation;
+            serviceRec.subPositionCode = subPositionCode;
+            serviceRec.subPosition = subPosition;
+            serviceRec.statusName = statusName;
+            serviceRec.officeServiceRec = officeServiceRec;
+            serviceRec.branch = branch;
+            serviceRec.salaryPayroll = salaryPayroll;
+            serviceRec.salaryServiceRec = salaryServiceRec;
+            serviceRec.paySchemeCode = paySchemeCode;
+            serviceRec.paySchemeName = paySchemeName;
+            serviceRec.sepCause = sepCause;
+            serviceRec.officeCode = officeCode;
+            serviceRec.SgStep = sgStep;
+
+            // save changes
+            db.SaveChanges();
+
+            return Content("ok");
         }
 
         // GET: DetailsPlantilla/5

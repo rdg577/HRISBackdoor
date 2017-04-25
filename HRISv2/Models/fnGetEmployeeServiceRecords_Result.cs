@@ -18,7 +18,10 @@ namespace HRISv2.Models
         public string Fullname { get; set; }
         public Nullable<System.DateTime> dateFrom { get; set; }
         public string dateTo { get; set; }
+        public string positionCode { get; set; }
         public string designation { get; set; }
+        public string subPositionCode { get; set; }
+        public string subPosition { get; set; }
         public Nullable<int> serviceTotal { get; set; }
         public string statusName { get; set; }
         public string officeServiceRec { get; set; }

@@ -8,7 +8,7 @@ namespace HRISv2.Controllers
 {
     public class DuplicatePlantillaController : Controller
     {
-        HRISEntities _db=new HRISEntities();
+        HRISEntities _db = new HRISEntities();
 
         // GET: DuplicatePlantilla
         public ActionResult Index(string currentFilter, string searchString, int? page)

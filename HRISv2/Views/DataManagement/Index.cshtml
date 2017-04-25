@@ -65,11 +65,11 @@
                         }
                            
                         <td>
-                            <a href="@Url.Action("EditUserProfile", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Edit BATS Area, Group Name, Attendance Schemme"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href="@Url.Action("RemoveLoginAccount", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Reset Login Account"><span class="glyphicon glyphicon-refresh"></span></a>
-                            <a href="@Url.Action("DisplayServiceRecord", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Remove Duplicate Service Record"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                            <a href="@Url.Action("DetailsPlantilla", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Remove Duplicate Plantilla Record"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                            <a href="@Url.Action("DetailsUserProfile", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="View Profile details"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="@Url.Action("EditUserProfile", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Edit BATS Area, Group Name, Attendance Schemme" style="background-color: lightsalmon"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="@Url.Action("RemoveLoginAccount", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Reset Login Account" style="background-color: lightsteelblue"><span class="glyphicon glyphicon-refresh"></span></a>
+                            <a href="@Url.Action("DisplayServiceRecord", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Remove Duplicate / Update Service Record" style="background-color: lightgreen"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                            <a href="@Url.Action("DetailsPlantilla", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="Remove Duplicate Plantilla Record" style="background-color: lightcyan"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                            <a href="@Url.Action("DetailsUserProfile", "DataManagement", new { id = item.EIC })" class="btn btn-sm btn-default" title="View Profile details" style="background-color: gold"><span class="glyphicon glyphicon-eye-open"></span></a>
                         </td>
                     </tr>
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using HRISv2.Models;
@@ -255,7 +254,7 @@ namespace HRISv2.Controllers
             // save all changes
             db.SaveChanges();
 
-            BundyTransaction(EIC, time_period);
+            // BundyTransaction(EIC, time_period);
 
             var log = db.tAttDailyLogs.Where(r => r.EIC == EIC).Where(r => r.LogDate == logDate);
 
@@ -481,7 +480,20 @@ namespace HRISv2.Controllers
             {
                 var ptlos = db.tptlosApps.Single(r => r.recNo == id);
                 ptlos.Tag = tag;      // 3 - Recommend, 4 - Disapprove, 5 - approve, 9 - Cancel, 0 - Returned
-                if (tag == 0) ptlos.recommendStatus = 0;
+                // update to code
+                if (tag == 5)   // if approve
+                {
+                    ptlos.approvedDate = DateTime.Now;
+                    ptlos.approveStatus = 1;    // 0 - default, 1 - approve, 3 - cancel
+                    ptlos.remarks = "Approved";
+                }
+
+                if (tag == 0)   // if returned
+                {
+                    ptlos.recommendStatus = 0;
+                    ptlos.approveStatus = 0;    // 0 - default, 1 - approve, 3 - cancel
+                    ptlos.remarks = "Returned";
+                }
 
                 db.SaveChanges();
             }
@@ -679,7 +691,26 @@ namespace HRISv2.Controllers
         public JsonResult PositionList()
         {
             var list = (from r in db.tappPositions
+                orderby r.fullDescription
+                select r).ToArray();
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        
+        public JsonResult Position(string id)
+        {
+            var list = (from r in db.tappPositions
                         orderby r.fullDescription
+                        where r.positionCode==id
+                        select r).ToList();
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SubPositionList()
+        {
+            var list = (from r in db.tappPositionSubs
+                        orderby r.subPositionName
                         select r).ToList();
 
             return Json(list, JsonRequestBehavior.AllowGet);

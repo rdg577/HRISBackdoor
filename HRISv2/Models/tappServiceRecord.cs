@@ -35,5 +35,8 @@ namespace HRISv2.Models
         public Nullable<int> isApproved { get; set; }
         public Nullable<System.DateTime> dateApproved { get; set; }
         public string approvedEIC { get; set; }
+        public string positionCode { get; set; }
+        public string subPositionCode { get; set; }
+        public string subPosition { get; set; }
     }
 }

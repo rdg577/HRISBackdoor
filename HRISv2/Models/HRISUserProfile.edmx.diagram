@@ -32,6 +32,7 @@
         <EntityTypeShape EntityType="HRISUserProfileModel.tAttDailyLog" Width="1.5" PointX="4.75" PointY="8" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappDFlexible" Width="1.5" PointX="12.75" PointY="9.875" />
         <EntityTypeShape EntityType="HRISUserProfileModel.tappDFlexiblesLog" Width="1.5" PointX="12.75" PointY="11.5" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tappPositionSub" Width="1.5" PointX="6.875" PointY="10.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

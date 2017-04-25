@@ -82,6 +82,17 @@
     <Property Name="accronym" Type="nvarchar" MaxLength="100" />
     <Property Name="sg" Type="int" />
   </EntityType>
+  <EntityType Name="tappPositionSub">
+    <Key>
+      <PropertyRef Name="subPositionCode" />
+    </Key>
+    <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="subPositionCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="positionCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="subPositionName" Type="nvarchar" MaxLength="100" />
+    <Property Name="shortPositionName" Type="nvarchar" MaxLength="100" />
+    <Property Name="accronym" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="tappPreparation">
     <Key>
       <PropertyRef Name="recNo" />
@@ -123,7 +134,10 @@
     <Property Name="EIC" Type="nvarchar" MaxLength="25" />
     <Property Name="dateFrom" Type="date" />
     <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+    <Property Name="positionCode" Type="nvarchar" MaxLength="30" />
     <Property Name="designation" Type="nvarchar" MaxLength="200" />
+    <Property Name="subPositionCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="subPosition" Type="nvarchar" MaxLength="50" />
     <Property Name="statusName" Type="nvarchar" MaxLength="30" />
     <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
     <Property Name="branch" Type="nvarchar" MaxLength="50" />
@@ -450,7 +464,10 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="Fullname" Type="nvarchar" MaxLength="60" />
           <Property Name="dateFrom" Type="date" />
           <Property Name="dateTo" Type="nvarchar" MaxLength="12" />
+          <Property Name="positionCode" Type="nvarchar" MaxLength="30" />
           <Property Name="designation" Type="nvarchar" MaxLength="200" />
+          <Property Name="subPositionCode" Type="nvarchar" MaxLength="30" />
+          <Property Name="subPosition" Type="nvarchar" MaxLength="50" />
           <Property Name="serviceTotal" Type="int" />
           <Property Name="statusName" Type="nvarchar" MaxLength="30" />
           <Property Name="officeServiceRec" Type="nvarchar" MaxLength="150" />
@@ -490,6 +507,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tappEmpStatus" EntityType="Self.tappEmpStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappOffice" EntityType="Self.tappOffice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappPosition" EntityType="Self.tappPosition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tappPositionSub" EntityType="Self.tappPositionSub" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappPreparation" EntityType="Self.tappPreparation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappSalarySched" EntityType="Self.tappSalarySched" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />

@@ -218,6 +218,9 @@
     <Compile Include="Models\tappPosition.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tappPositionSub.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tappPreparation.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
@@ -779,6 +782,7 @@
       <DependentUpon>HRISMonitoringModel.edmx</DependentUpon>
       <LastGenOutput>HRISMonitoringModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1925,6 +1929,7 @@
     <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\Toolbox\FormBundy.cshtml" />
     <Content Include="Views\Toolbox\LogBundyWeb.cshtml" />
+    <Content Include="Views\DataManagement\UpdateServiceRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

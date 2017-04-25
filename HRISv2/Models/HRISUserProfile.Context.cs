@@ -56,16 +56,7 @@ namespace HRISv2.Models
         public DbSet<tAttDailyLog> tAttDailyLogs { get; set; }
         public DbSet<tappDFlexible> tappDFlexibles { get; set; }
         public DbSet<tappDFlexiblesLog> tappDFlexiblesLogs { get; set; }
-    
-        [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
-        public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)
-        {
-            var eicParameter = eic != null ?
-                new ObjectParameter("eic", eic) :
-                new ObjectParameter("eic", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnGetEmployeeServiceRecords_Result>("[HRISEntities].[fnGetEmployeeServiceRecords](@eic)", eicParameter);
-        }
+        public DbSet<tappPositionSub> tappPositionSubs { get; set; }
     
         public virtual ObjectResult<string> JustifyAction(string eIC, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> action, string actionEIC, string ctrlNo, string remarks, Nullable<int> period)
         {
@@ -102,6 +93,16 @@ namespace HRISv2.Models
                 new ObjectParameter("period", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("JustifyAction", eICParameter, startDateParameter, endDateParameter, actionParameter, actionEICParameter, ctrlNoParameter, remarksParameter, periodParameter);
+        }
+    
+        [EdmFunction("HRISEntities", "fnGetEmployeeServiceRecords")]
+        public virtual IQueryable<fnGetEmployeeServiceRecords_Result> fnGetEmployeeServiceRecords(string eic)
+        {
+            var eicParameter = eic != null ?
+                new ObjectParameter("eic", eic) :
+                new ObjectParameter("eic", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnGetEmployeeServiceRecords_Result>("[HRISEntities].[fnGetEmployeeServiceRecords](@eic)", eicParameter);
         }
     }
 }

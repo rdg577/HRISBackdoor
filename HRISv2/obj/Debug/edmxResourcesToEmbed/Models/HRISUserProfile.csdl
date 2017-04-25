@@ -19,9 +19,6 @@
     <EntitySet Name="vUserProfiles" EntityType="HRISUserProfileModel.vUserProfile" />
     <EntitySet Name="vUserProfileWithServices" EntityType="HRISUserProfileModel.vUserProfileWithService" />
     <EntitySet Name="vUserProfileWithUsernames" EntityType="HRISUserProfileModel.vUserProfileWithUsername" />
-    <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
-      <Parameter Name="eic" Mode="In" Type="String" />
-    </FunctionImport>
     <EntitySet Name="tpassSlipApps" EntityType="HRISUserProfileModel.tpassSlipApp" />
     <EntitySet Name="vpassSlipApps" EntityType="HRISUserProfileModel.vpassSlipApp" />
     <EntitySet Name="vPtlosApps" EntityType="HRISUserProfileModel.vPtlosApp" />
@@ -41,6 +38,10 @@
     <EntitySet Name="tAttDailyLogs" EntityType="HRISUserProfileModel.tAttDailyLog" />
     <EntitySet Name="tappDFlexibles" EntityType="HRISUserProfileModel.tappDFlexible" />
     <EntitySet Name="tappDFlexiblesLogs" EntityType="HRISUserProfileModel.tappDFlexiblesLog" />
+    <EntitySet Name="tappPositionSubs" EntityType="HRISUserProfileModel.tappPositionSub" />
+    <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
+      <Parameter Name="eic" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -165,6 +166,9 @@
     <Property Name="isApproved" Type="Int32" />
     <Property Name="dateApproved" Type="DateTime" Precision="0" />
     <Property Name="approvedEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="positionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="subPositionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="subPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="tAttEmpArea">
     <Key>
@@ -285,31 +289,6 @@
     <Property Name="AreaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
   </EntityType>
-  <ComplexType Name="fnGetEmployeeServiceRecords_Result">
-    <Property Type="Int32" Name="recNo" Nullable="false" />
-    <Property Type="String" Name="EIC" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="Fullname" Nullable="true" MaxLength="60" />
-    <Property Type="DateTime" Name="dateFrom" Nullable="true" Precision="10" />
-    <Property Type="String" Name="dateTo" Nullable="true" MaxLength="12" />
-    <Property Type="String" Name="designation" Nullable="true" MaxLength="200" />
-    <Property Type="Int32" Name="serviceTotal" Nullable="true" />
-    <Property Type="String" Name="statusName" Nullable="true" MaxLength="30" />
-    <Property Type="String" Name="officeServiceRec" Nullable="true" MaxLength="150" />
-    <Property Type="String" Name="branch" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="lwpay" Nullable="true" MaxLength="50" />
-    <Property Type="Decimal" Name="salaryPayroll" Nullable="true" Precision="19" Scale="4" />
-    <Property Type="Decimal" Name="salaryServiceRec" Nullable="true" Precision="19" Scale="4" />
-    <Property Type="String" Name="paySchemeCode" Nullable="true" MaxLength="3" />
-    <Property Type="String" Name="paySchemeName" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="sepCause" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="officeCode" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="isGovernmentService" Nullable="true" MaxLength="3" />
-    <Property Type="String" Name="isInsideGovernment" Nullable="true" MaxLength="3" />
-    <Property Type="String" Name="SgStep" Nullable="true" MaxLength="5" />
-    <Property Type="Int32" Name="isApproved" Nullable="true" />
-    <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
-    <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
-  </ComplexType>
   <EntityType Name="tpassSlipApp">
     <Key>
       <PropertyRef Name="recNo" />
@@ -493,4 +472,43 @@
     <Property Name="loginStatus" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
     <Property Name="timeStamp" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
+  <EntityType Name="tappPositionSub">
+    <Key>
+      <PropertyRef Name="subPositionCode" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subPositionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="positionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="subPositionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="shortPositionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="accronym" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="fnGetEmployeeServiceRecords_Result">
+    <Property Type="Int32" Name="recNo" Nullable="false" />
+    <Property Type="String" Name="EIC" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Fullname" Nullable="true" MaxLength="60" />
+    <Property Type="DateTime" Name="dateFrom" Nullable="true" Precision="10" />
+    <Property Type="String" Name="dateTo" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="positionCode" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="designation" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="subPositionCode" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="subPosition" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="serviceTotal" Nullable="true" />
+    <Property Type="String" Name="statusName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="officeServiceRec" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="branch" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="lwpay" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="salaryPayroll" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="Decimal" Name="salaryServiceRec" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="String" Name="paySchemeCode" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="paySchemeName" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="sepCause" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="officeCode" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="isGovernmentService" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="isInsideGovernment" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="SgStep" Nullable="true" MaxLength="5" />
+    <Property Type="Int32" Name="isApproved" Nullable="true" />
+    <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
+    <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
+  </ComplexType>
 </Schema>
