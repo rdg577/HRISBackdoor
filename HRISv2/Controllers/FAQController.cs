@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using HRISv2.Models;
+using HRIS.Models;
 
-namespace HRISv2.Controllers
+namespace HRIS.Controllers
 {
     public class FAQController : Controller
     {

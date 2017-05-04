@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using HRISv2.Models;
+using HRIS.Models;
 using PagedList;
 
-namespace HRISv2.Controllers
+namespace HRIS.Controllers
 {
     public class DuplicatePlantillaController : Controller
     {

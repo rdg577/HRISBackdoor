@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace HRISv2
+namespace HRIS
 {
     public class RouteConfig
     {

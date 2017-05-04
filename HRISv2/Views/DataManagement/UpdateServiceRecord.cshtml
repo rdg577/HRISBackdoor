@@ -1,4 +1,4 @@
-﻿@using HRISv2.Models
+﻿@using HRIS.Models
 @{
     ViewBag.Title = "Update Service Record";
 
@@ -279,10 +279,9 @@
 
         $("#dateFrom").val("@employeeServiceRecord.dateFrom.Value.ToShortDateString()");
         $("#dateTo").val("@employeeServiceRecord.dateTo");
-        $("#cbPresent").prop('checked', true);
-        if ($("#dateTo").val().length > 0)
+        if ($("#dateTo").val() === "")
         {
-            $("#cbPresent").prop('checked', false);
+            $("#cbPresent").prop("checked", true);
         }
 
         $("#officeServiceRec").data("kendoDropDownList").value("@employeeServiceRecord.officeCode");
@@ -305,10 +304,10 @@
                     $("#sg").val(position.sg);
                 }
             },
-            error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+            error: function (errMsg) { console.log("processOtherElem:\n\nWhoops! Something bad happen." + errMsg); }
         });
 
-        
+
     }   // ********************** processOtherElem
 
     $("#btnClick").click(function () {
@@ -331,7 +330,7 @@
             }
         });
     });
-        
+
 
     function savingData(recNo) {
         /** EXTRACTION OF DATA */
@@ -351,13 +350,12 @@
         // extract position code
         var positionCode = $("#designation").data("kendoDropDownList").value();
 
-        // extract subPosition
-        var subPosition = $("#subPosition").data("kendoDropDownList").text();
-        console.log(subPosition);
-
-        // extract subPosition
-        var subPositionCode = $("#subPosition").data("kendoDropDownList").value();
-        console.log(subPositionCode);
+        var subPosition = null;
+        var subPositionCode = null;
+        if ($("#subPosition").data("kendoDropDownList").length >= 0) {
+            subPosition = $("#subPosition").data("kendoDropDownList").text();
+            subPositionCode = $("#subPosition").data("kendoDropDownList").value();
+        }
 
         // extract employment status
         var statusName = $("#statusName").data("kendoDropDownList").value();
@@ -367,12 +365,6 @@
 
         // extract employment office service code
         var officeCode = $("#officeServiceRec").data("kendoDropDownList").value();
-
-        /*// extract officeCode
-        var officeCode = "";
-        if ($("#officeServiceRec").data("kendoDropDownList").value().length > 0) {
-            officeCode = $("#officeServiceRec").data("kendoDropDownList").text().split("-")[1].trim();
-        }*/
 
         // extract branch
         var branch = $("#branch").val();
@@ -391,14 +383,12 @@
             salaryServiceRec = salaryPayroll;
         }
         var paySchemeCode = $("#paySchemeName").data("kendoDropDownList").value();
-
         
-
         // extract sepCause
         var sepCause = $("#sepCause").val();
 
         // extract form token
-        var token = $('input[name="__RequestVerificationToken"]').val();
+        // var token = $('input[name="__RequestVerificationToken"]').val();
 
         // extract sgStep
         var sgStep = $("#step").val();
@@ -409,7 +399,7 @@
             type: "POST",
             url: "@Url.Action("UpdateServiceRecord", "DataManagement")",
             data: {
-                __RequestVerificationToken: token,
+                //__RequestVerificationToken: token,
                 recNo: recNo,
                 EIC: EIC,
                 dateFrom: dateFrom,
@@ -432,7 +422,7 @@
             success: function (data) {
                 window.location.href = '@Url.Content("~/DataManagement/DisplayServiceRecord/")' + EIC;
             },
-            error: function (errMsg) { alert("Whoops! Something bad happen." + errMsg); }
+            error: function (errMsg) { console.log("Whoops! Something bad happen." + errMsg); }
         });
     }
 

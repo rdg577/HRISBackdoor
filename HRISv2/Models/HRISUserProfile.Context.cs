@@ -10,7 +10,7 @@
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Core.Objects.DataClasses;
 
-namespace HRISv2.Models
+namespace HRIS.Models
 {
     using System;
     using System.Data.Entity;

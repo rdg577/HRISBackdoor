@@ -4,10 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using HRISv2.Models;
+using HRIS.Models;
 using PagedList;
 
-namespace HRISv2.Controllers
+namespace HRIS.Controllers
 {
     public class DataManagementController : Controller
     {
@@ -74,7 +74,7 @@ namespace HRISv2.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("EditUserProfile")]
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public ActionResult EditUserProfile(string EIC, string empGroupCode, string AreaID, string SchemeCode)
         {
             try
@@ -169,7 +169,7 @@ namespace HRISv2.Controllers
 
         // POST: RemoveLoginAccount/5
         [HttpPost, ActionName("RemoveLoginAccount")]
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public ActionResult RemoveAccount(string id)
         {
             tlogUser logUser = dbGeneral.tlogUser.Single(u => u.EIC == id);
@@ -205,7 +205,7 @@ namespace HRISv2.Controllers
 
         // POST: DisplayServiceRecord/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public ActionResult DeleteServiceRecord(int id)
         {
             tappServiceRecord empServiceRecord = db.tappServiceRecords.Find(id);
@@ -280,7 +280,7 @@ namespace HRISv2.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public ActionResult UpdateServiceRecord(int recNo, String EIC, DateTime dateFrom, String dateTo, String designation, String positionCode,
                 String subPositionCode, String subPosition, String statusName, String officeServiceRec, String branch, 
                 Decimal salaryPayroll, Decimal salaryServiceRec, String paySchemeCode, String paySchemeName, String sepCause, String officeCode, String sgStep)
@@ -325,7 +325,7 @@ namespace HRISv2.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public ActionResult DeletePlatilla(int id)
         {
             tappPreparation tappPreparation = db.tappPreparations.Find(id);

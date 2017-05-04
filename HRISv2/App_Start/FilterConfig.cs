@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HRISv2
+namespace HRIS
 {
     public class FilterConfig
     {

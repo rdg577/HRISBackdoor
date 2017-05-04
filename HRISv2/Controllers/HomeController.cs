@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HRISv2.Controllers
+namespace HRIS.Controllers
 {
     public class HomeController : Controller
     {

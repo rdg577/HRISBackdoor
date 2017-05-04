@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using HRISv2.Models;
+using HRIS.Models;
 
-namespace HRISv2.Controllers
+namespace HRIS.Controllers
 {
     
     public class ToolboxController : Controller
