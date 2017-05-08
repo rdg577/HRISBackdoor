@@ -23,8 +23,6 @@
     <EntitySet Name="vpassSlipApps" EntityType="HRISUserProfileModel.vpassSlipApp" />
     <EntitySet Name="vPtlosApps" EntityType="HRISUserProfileModel.vPtlosApp" />
     <EntitySet Name="tptlosApps" EntityType="HRISUserProfileModel.tptlosApp" />
-    <EntitySet Name="tjustifyApps" EntityType="HRISUserProfileModel.tjustifyApp" />
-    <EntitySet Name="vJustifyApps" EntityType="HRISUserProfileModel.vJustifyApp" />
     <FunctionImport Name="JustifyAction" ReturnType="Collection(String)">
       <Parameter Name="EIC" Mode="In" Type="String" />
       <Parameter Name="startDate" Mode="In" Type="DateTime" />
@@ -42,6 +40,9 @@
     <FunctionImport Name="fnGetEmployeeServiceRecords" IsComposable="true" ReturnType="Collection(HRISUserProfileModel.fnGetEmployeeServiceRecords_Result)">
       <Parameter Name="eic" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="tAttDTRs" EntityType="HRISUserProfileModel.tAttDTR" />
+    <EntitySet Name="tjustifyApps" EntityType="HRISUserProfileModel.tjustifyApp" />
+    <EntitySet Name="vJustifyApps" EntityType="HRISUserProfileModel.vJustifyApp" />
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -389,54 +390,6 @@
     <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Tag" Type="Int32" />
   </EntityType>
-  <EntityType Name="tjustifyApp">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CtrlNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="controlNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="date" Type="DateTime" Precision="0" />
-    <Property Name="logType" Type="Int32" />
-    <Property Name="time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="statusID" Type="Int32" />
-    <Property Name="period" Type="Int32" />
-    <Property Name="dtStamp" Type="DateTime" Precision="3" />
-    <Property Name="logTime" Type="DateTime" Precision="3" />
-    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="vJustifyApp">
-    <Key>
-      <PropertyRef Name="recNo" />
-    </Key>
-    <Property Name="recNo" Type="Int32" Nullable="false" />
-    <Property Name="controlNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="date" Type="DateTime" Precision="0" />
-    <Property Name="monthyear" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
-    <Property Name="day" Type="Int32" />
-    <Property Name="logType" Type="Int32" />
-    <Property Name="logTitle" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="reason" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="approvingOfficer" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="period" Type="Int32" />
-    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="timeIn1" Type="DateTime" Precision="3" />
-    <Property Name="timeOut1" Type="DateTime" Precision="3" />
-    <Property Name="timeIn2" Type="DateTime" Precision="3" />
-    <Property Name="timeOut2" Type="DateTime" Precision="3" />
-    <Property Name="logTime" Type="DateTime" Precision="3" />
-    <Property Name="statusID" Type="Int32" />
-    <Property Name="year" Type="Int32" />
-    <Property Name="month" Type="Int32" />
-  </EntityType>
   <EntityType Name="tAttDailyLog">
     <Key>
       <PropertyRef Name="RecNo" />
@@ -511,4 +464,81 @@
     <Property Type="DateTime" Name="dateApproved" Nullable="true" Precision="10" />
     <Property Type="String" Name="approvedEIC" Nullable="true" MaxLength="20" />
   </ComplexType>
+  <EntityType Name="tAttDTR">
+    <Key>
+      <PropertyRef Name="DtrID" />
+    </Key>
+    <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DtrID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Period" Type="Int32" />
+    <Property Name="Tag" Type="Int32" />
+    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="dtStamp" Type="DateTime" Precision="3" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="timesTardy" Type="Int32" />
+    <Property Name="timesUnder" Type="Int32" />
+    <Property Name="wTotTardy" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="wTotUnder" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="timesAWOL" Type="Int32" />
+    <Property Name="timesPassSlip" Type="Int32" />
+    <Property Name="Tardy" Type="Int32" />
+    <Property Name="Undertime" Type="Int32" />
+    <Property Name="statusName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="returnTag" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tjustifyApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CtrlNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="controlNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="logType" Type="Int32" />
+    <Property Name="time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="period" Type="Int32" />
+    <Property Name="dtStamp" Type="DateTime" Precision="3" />
+    <Property Name="logTime" Type="DateTime" Precision="3" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="returnTag" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vJustifyApp">
+    <Key>
+      <PropertyRef Name="recNo" />
+    </Key>
+    <Property Name="recNo" Type="Int32" Nullable="false" />
+    <Property Name="controlNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="fullnameFirst" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="monthyear" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+    <Property Name="day" Type="Int32" />
+    <Property Name="logType" Type="Int32" />
+    <Property Name="logTitle" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="approvingOfficer" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="period" Type="Int32" />
+    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="timeIn1" Type="DateTime" Precision="3" />
+    <Property Name="timeOut1" Type="DateTime" Precision="3" />
+    <Property Name="timeIn2" Type="DateTime" Precision="3" />
+    <Property Name="timeOut2" Type="DateTime" Precision="3" />
+    <Property Name="logTime" Type="DateTime" Precision="3" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="returnTag" Type="Int32" />
+  </EntityType>
 </Schema>

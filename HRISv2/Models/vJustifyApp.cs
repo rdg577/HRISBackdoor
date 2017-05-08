@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+namespace HRISv2.Models
 {
     using System;
     using System.Collections.Generic;
@@ -38,5 +38,6 @@ namespace HRIS.Models
         public Nullable<int> statusID { get; set; }
         public Nullable<int> year { get; set; }
         public Nullable<int> month { get; set; }
+        public Nullable<int> returnTag { get; set; }
     }
 }

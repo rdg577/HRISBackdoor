@@ -173,6 +173,33 @@
     <Property Name="SchemeCode" Type="nvarchar" MaxLength="25" />
     <Property Name="nonRegDay" Type="int" />
   </EntityType>
+  <EntityType Name="tAttDTR">
+    <Key>
+      <PropertyRef Name="DtrID" />
+    </Key>
+    <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DtrID" Type="nvarchar" MaxLength="18" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Period" Type="int" />
+    <Property Name="Tag" Type="int" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="dtStamp" Type="datetime" />
+    <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="timesTardy" Type="int" />
+    <Property Name="timesUnder" Type="int" />
+    <Property Name="wTotTardy" Type="nvarchar" MaxLength="15" />
+    <Property Name="wTotUnder" Type="nvarchar" MaxLength="15" />
+    <Property Name="timesAWOL" Type="int" />
+    <Property Name="timesPassSlip" Type="int" />
+    <Property Name="Tardy" Type="int" />
+    <Property Name="Undertime" Type="int" />
+    <Property Name="statusName" Type="nvarchar" MaxLength="20" />
+    <Property Name="returnTag" Type="int" />
+  </EntityType>
   <EntityType Name="tAttEmpArea">
     <Key>
       <PropertyRef Name="EIC" />
@@ -237,6 +264,7 @@
     <Property Name="dtStamp" Type="datetime" />
     <Property Name="logTime" Type="datetime" />
     <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="returnTag" Type="int" />
   </EntityType>
   <EntityType Name="tpassSlipApp">
     <Key>
@@ -320,7 +348,7 @@ warning 6002: The table/view 'HRIS.dbo.vJustifyApp' does not have a primary key 
     <Property Name="logType" Type="int" />
     <Property Name="logTitle" Type="nvarchar" MaxLength="10" />
     <Property Name="time" Type="nvarchar" MaxLength="10" />
-    <Property Name="reason" Type="nvarchar" MaxLength="150" />
+    <Property Name="reason" Type="nvarchar(max)" />
     <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
     <Property Name="officeName" Type="nvarchar" MaxLength="100" />
     <Property Name="approvingOfficer" Type="nvarchar" MaxLength="60" />
@@ -334,6 +362,7 @@ warning 6002: The table/view 'HRIS.dbo.vJustifyApp' does not have a primary key 
     <Property Name="statusID" Type="int" />
     <Property Name="year" Type="int" />
     <Property Name="month" Type="int" />
+    <Property Name="returnTag" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vpassSlipApp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -513,6 +542,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tappSalarySchem" EntityType="Self.tappSalarySchem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappServiceRecord" EntityType="Self.tappServiceRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttDailyLog" EntityType="Self.tAttDailyLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tAttDTR" EntityType="Self.tAttDTR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpArea" EntityType="Self.tAttEmpArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttEmpScheme" EntityType="Self.tAttEmpScheme" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tAttScheme" EntityType="Self.tAttScheme" Schema="dbo" store:Type="Tables" />
@@ -554,7 +584,8 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     [vJustifyApp].[logTime] AS [logTime], 
     [vJustifyApp].[statusID] AS [statusID], 
     [vJustifyApp].[year] AS [year], 
-    [vJustifyApp].[month] AS [month]
+    [vJustifyApp].[month] AS [month], 
+    [vJustifyApp].[returnTag] AS [returnTag]
     FROM [dbo].[vJustifyApp] AS [vJustifyApp]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vpassSlipApp" EntityType="Self.vpassSlipApp" store:Type="Views" store:Schema="dbo">

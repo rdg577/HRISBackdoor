@@ -7,12 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+namespace HRISv2.Models
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    
     public partial class GENERALEntities : DbContext
     {
         public GENERALEntities()

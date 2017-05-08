@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+using System;
+
+namespace HRISv2.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tlogUser
     {
         public int recNo { get; set; }

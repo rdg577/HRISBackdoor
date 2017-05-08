@@ -30,6 +30,6 @@ D:\reden\MVC\HRISv2\HRISv2\bin\System.Web.WebPages.Deployment.xml
 D:\reden\MVC\HRISv2\HRISv2\bin\System.Web.WebPages.Razor.xml
 D:\reden\MVC\HRISv2\HRISv2\bin\Antlr3.Runtime.pdb
 D:\reden\MVC\HRISv2\HRISv2\bin\Newtonsoft.Json.xml
-D:\reden\MVC\HRISv2\HRISv2\obj\Debug\HRIS.csprojResolveAssemblyReference.cache
 D:\reden\MVC\HRISv2\HRISv2\obj\Debug\HRISv2.dll
 D:\reden\MVC\HRISv2\HRISv2\obj\Debug\HRISv2.pdb
+D:\reden\MVC\HRISv2\HRISv2\obj\Debug\HRIS.csprojResolveAssemblyReference.cache

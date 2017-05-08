@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace HRIS
+namespace HRISv2
 {
     public class BundleConfig
     {

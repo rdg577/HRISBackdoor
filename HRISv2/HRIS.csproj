@@ -236,6 +236,9 @@
     <Compile Include="Models\tAttDailyLog.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tAttDTR.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tAttEmpArea.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>

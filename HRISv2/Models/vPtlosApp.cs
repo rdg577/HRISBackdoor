@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+namespace HRISv2.Models
 {
     using System;
     using System.Collections.Generic;

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+namespace HRISv2.Models
 {
     using System;
     using System.Collections.Generic;
@@ -28,5 +28,6 @@ namespace HRIS.Models
         public Nullable<System.DateTime> dtStamp { get; set; }
         public Nullable<System.DateTime> logTime { get; set; }
         public string userEIC { get; set; }
+        public Nullable<int> returnTag { get; set; }
     }
 }

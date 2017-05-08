@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using HRIS.Models;
+using HRISv2.Models;
 using PagedList;
 
-namespace HRIS.Controllers
+namespace HRISv2.Controllers
 {
     public class ServiceRecordController : Controller
     {

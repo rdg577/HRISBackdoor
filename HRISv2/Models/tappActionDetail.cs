@@ -7,11 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+namespace HRISv2.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tappActionDetail
     {
         public int Id { get; set; }

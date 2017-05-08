@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using HRIS.Models;
+using HRISv2.Models;
+using Kendo.Mvc.Infrastructure.Implementation;
 
-namespace HRIS.Controllers
+namespace HRISv2.Controllers
 {
     
     public class ToolboxController : Controller
     {
         HRISEntities db = new HRISEntities();
 
+        //********* Begin --- WEB BUNDY *********
         public ActionResult FormBundy(String EIC)
         {
             // var EIC = Session["EIC"].ToString();
@@ -78,7 +80,6 @@ namespace HRIS.Controllers
 
             return View();
         }
-        
         [HttpPost]
         public ActionResult LogBundyWeb(String time_period, String EIC, String schemeCode)
         {
@@ -136,8 +137,9 @@ namespace HRIS.Controllers
 
             return Content("1");
         }
+        //********* End --- WEB BUNDY *********
 
-
+        //********* Begin --- App BUNDY *********
         public JsonResult CheckBundy(String EIC)
         {
             if (IsFlexi(EIC))
@@ -277,6 +279,7 @@ namespace HRIS.Controllers
             db.tappDFlexiblesLogs.Add(bt);
             db.SaveChanges();
         }
+        //********* End --- App BUNDY *********
 
         class ApplicationMenu
         {
@@ -293,6 +296,7 @@ namespace HRIS.Controllers
                 TotalApplications = totalApplications;
             }
         }
+
         public JsonResult GetAllApplications(String approvingEIC)
         {
             var passSlipApp = (from r in db.vpassSlipApps
@@ -311,20 +315,127 @@ namespace HRIS.Controllers
                             where g.approveEIC == approvingEIC
                             select g).Count();
 
+            var revertJustificationApp = (from g in db.tjustifyApps
+                                    where g.statusID == 1               // 1 - is approved
+                                    where g.approveEIC == approvingEIC
+                                    where g.returnTag == 1
+                                    select g).Count();
+
+            var returnDtrApp = (from g in db.tAttDTRs
+                                    where g.Tag == 1                
+                                    where g.approveEIC == approvingEIC
+                                    where g.returnTag == 1
+                                    select g).Count();
+
             var applicationMenus = new List<ApplicationMenu>();
             var menu1 = new ApplicationMenu(1, "PASS SLIP", "", passSlipApp);
             var menu2 = new ApplicationMenu(2, "PTLOS", "", ptlosApp);
             var menu3 = new ApplicationMenu(3, "JUSTIFICATION", "", justificationApp);
+            var menu4 = new ApplicationMenu(4, "REVERT - JUSTIFICATION", "", revertJustificationApp);
+            var menu5 = new ApplicationMenu(5, "RETURN - DTR", "", returnDtrApp);
             applicationMenus.Add(menu1);
             applicationMenus.Add(menu2);
             applicationMenus.Add(menu3);
+            applicationMenus.Add(menu4);
+            applicationMenus.Add(menu5);
+            applicationMenus.Reverse();
 
             return Json(applicationMenus, JsonRequestBehavior.AllowGet);
         }
 
         // ****** BEGIN --- Justification ******
+        public JsonResult JustificationRevertDetail(String EIC, String approvingEIC, int month, int year, int period)
+        {
+            var list = (from r in db.vJustifyApps
+                        where r.EIC == EIC
+                        where r.approveEIC == approvingEIC
+                        where r.month == month
+                        where r.year == year
+                        where r.period == period
+                        where r.returnTag == 1
+                        select new
+                        {
+                            r.fullnameFirst,
+                            r.logType,
+                            r.logTitle,
+                            r.time,
+                            date = r.date.ToString(),
+                            r.reason
+                        }).ToList();
+            dynamic wrap = new { justifications = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult JustificationRevertPerMonth(String EIC, String approvingEIC)
+        {
+            /**
+             * Returns a list of Justifications per Month for revert
+             */
+            var list = (from r in db.vJustifyApps
+                        group r by new
+                        {
+                            month_year = r.monthyear,
+                            r.EIC,
+                            r.approveEIC,
+                            r.month,
+                            r.year,
+                            r.period,
+                            r.statusID,
+                            r.returnTag,
+                            total = (from y in db.vJustifyApps
+                                     where y.EIC == r.EIC
+                                     where y.monthyear == r.monthyear
+                                     where y.period == r.period
+                                     select y).Count()
+                        } into g
+                        orderby g.Key.year, g.Key.month
+                        where g.Key.EIC == EIC
+                        where g.Key.approveEIC == approvingEIC
+                        where g.Key.statusID == 1
+                        where g.Key.returnTag == 1
+                        select g.Key).ToList();
+            dynamic wrap = new { justifications = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult JustificationRevert(String approvingEIC)
+        {
+            /**
+             * Returns a list of Justifications for revert
+             */
+            var list = (from r in db.tjustifyApps
+                        group r by new
+                        {
+                            r.EIC,
+                            r.approveEIC,
+                            r.statusID,
+                            fullnameFirst = (from s in db.tappEmployees where s.EIC==r.EIC select s.fullnameFirst).FirstOrDefault().ToString(),
+                            r.returnTag,
+                            total = (from y in db.tjustifyApps
+                                     where y.EIC == r.EIC
+                                     where y.approveEIC == r.approveEIC
+                                     where y.returnTag == 1
+                                     select y).Count()
+                        } into g
+                        orderby g.Key.fullnameFirst
+                        where g.Key.approveEIC == approvingEIC
+                        where g.Key.returnTag == 1
+                        select new
+                        {
+                            g.Key.EIC,
+                            g.Key.approveEIC,
+                            g.Key.statusID,
+                            g.Key.fullnameFirst,
+                            g.Key.returnTag,
+                            g.Key.total
+                        });
+
+            dynamic wrap = new { justifications = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult JustificationPending(String approvingEIC)
         {
+            /**
+             * Returns a list of Justification Totals for Approval
+             */
             var list = (from r in db.vJustifyApps
                         group r by new
                         {
@@ -351,6 +462,9 @@ namespace HRIS.Controllers
         }
         public JsonResult JustificationPerMonth(String EIC, String approvingEIC)
         {
+            /**
+             * Returns a list of Justifications per Month for Approval
+             */
             var list = (from r in db.vJustifyApps
                         group r by new
                         {
@@ -658,6 +772,7 @@ namespace HRIS.Controllers
             return Json(listWrapper, JsonRequestBehavior.AllowGet);
         }
         // ****** END --- PASS SLIPS ******
+
         public JsonResult EmployeeList()
         {
             //var list = db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
@@ -687,7 +802,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult PositionList()
         {
             var list = (from r in db.tappPositions
@@ -696,7 +810,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-        
         public JsonResult Position(string id)
         {
             var list = (from r in db.tappPositions
@@ -706,7 +819,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult SubPositionList()
         {
             var list = (from r in db.tappPositionSubs
@@ -715,7 +827,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult WorkStatusList()
         {
             var list = (from r in db.tappEmpStatus
@@ -725,7 +836,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-        
         public JsonResult OfficeList()
         {
             var list = (from r in db.tappOffices
@@ -745,7 +855,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult SalarySchemeList()
         {
             var list = (from r in db.tappSalarySchems
@@ -760,7 +869,6 @@ namespace HRIS.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult GetSalarySchedule(int sg, int step)
         {
             var salSched = (from r in db.tappSalaryScheds

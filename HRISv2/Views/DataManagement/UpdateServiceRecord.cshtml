@@ -1,5 +1,4 @@
-﻿@using HRIS.Models
-@{
+﻿@{
     ViewBag.Title = "Update Service Record";
 
     var employee = (tappEmployee)ViewBag.employee;
@@ -435,7 +434,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "@Url.Action("SalarySchemeList", "Toolbox")" // /hris/Toolbox/SalarySchemeList
+                        url: "@Url.Action("SalarySchemeList", "Toolbox")" 
                     }
                 }
             },
@@ -458,7 +457,7 @@
         if (sgVal && stepVal) {
             // query salary schedule using sg and step values
             $.ajax({
-                url: "@Url.Action("GetSalarySchedule", "Toolbox")", // /hris/Toolbox/GetSalarySchedule
+                url: "@Url.Action("GetSalarySchedule", "Toolbox")", 
                 data: { sg: sgVal, step: stepVal },
                 type: "GET",
                 datatype: "json",

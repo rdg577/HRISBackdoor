@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using HRIS.Models;
+using HRISv2.Models;
 
-namespace HRIS.Controllers
+namespace HRISv2.Controllers
 {
     public class FAQController : Controller
     {

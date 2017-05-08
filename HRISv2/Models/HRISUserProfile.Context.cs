@@ -10,7 +10,7 @@
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Core.Objects.DataClasses;
 
-namespace HRIS.Models
+namespace HRISv2.Models
 {
     using System;
     using System.Data.Entity;
@@ -51,12 +51,13 @@ namespace HRIS.Models
         public DbSet<vpassSlipApp> vpassSlipApps { get; set; }
         public DbSet<vPtlosApp> vPtlosApps { get; set; }
         public DbSet<tptlosApp> tptlosApps { get; set; }
-        public DbSet<tjustifyApp> tjustifyApps { get; set; }
-        public DbSet<vJustifyApp> vJustifyApps { get; set; }
         public DbSet<tAttDailyLog> tAttDailyLogs { get; set; }
         public DbSet<tappDFlexible> tappDFlexibles { get; set; }
         public DbSet<tappDFlexiblesLog> tappDFlexiblesLogs { get; set; }
         public DbSet<tappPositionSub> tappPositionSubs { get; set; }
+        public DbSet<tAttDTR> tAttDTRs { get; set; }
+        public DbSet<tjustifyApp> tjustifyApps { get; set; }
+        public DbSet<vJustifyApp> vJustifyApps { get; set; }
     
         public virtual ObjectResult<string> JustifyAction(string eIC, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> action, string actionEIC, string ctrlNo, string remarks, Nullable<int> period)
         {

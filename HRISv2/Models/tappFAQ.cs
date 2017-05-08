@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HRIS.Models
+using System;
+using System.Collections.Generic;
+
+namespace HRISv2.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tappFAQ
     {
         public tappFAQ()

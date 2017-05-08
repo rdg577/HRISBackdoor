@@ -1,4 +1,4 @@
-﻿@using HRIS.Models
+﻿@using HRISv2.Models
 @{
     ViewBag.Title = "Create";
 }
@@ -407,7 +407,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "@Url.Action("SalarySchemeList", "Toolbox")" // /hris/Toolbox/SalarySchemeList
+                        url: "@Url.Action("SalarySchemeList", "Toolbox")" // /HRISv2/Toolbox/SalarySchemeList
                     }
                 }
             },
@@ -430,7 +430,7 @@
         if (sgVal && stepVal) {
             // query salary schedule using sg and step values
             $.ajax({
-                url: "@Url.Action("GetSalarySchedule", "Toolbox")", // /hris/Toolbox/GetSalarySchedule
+                url: "@Url.Action("GetSalarySchedule", "Toolbox")", 
                 data: { sg: sgVal, step: stepVal },
                 type: "GET",
                 datatype: "json",
