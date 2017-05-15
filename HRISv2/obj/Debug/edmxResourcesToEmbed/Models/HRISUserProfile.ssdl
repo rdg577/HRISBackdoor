@@ -321,6 +321,44 @@
     <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vAttDTR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vAttDTR">
+    <Key>
+      <PropertyRef Name="RecNo" />
+      <PropertyRef Name="DtrID" />
+    </Key>
+    <Property Name="RecNo" Type="int" Nullable="false" />
+    <Property Name="DtrID" Type="nvarchar" MaxLength="18" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Period" Type="int" />
+    <Property Name="Tag" Type="int" />
+    <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="dtStamp" Type="datetime" />
+    <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="timesTardy" Type="int" />
+    <Property Name="timesUnder" Type="int" />
+    <Property Name="wTotTardy" Type="nvarchar" MaxLength="15" />
+    <Property Name="wTotUnder" Type="nvarchar" MaxLength="15" />
+    <Property Name="timesAWOL" Type="int" />
+    <Property Name="timesPassSlip" Type="int" />
+    <Property Name="Tardy" Type="int" />
+    <Property Name="Undertime" Type="int" />
+    <Property Name="transCode" Type="nvarchar" MaxLength="110" />
+    <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
+    <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="statusName" Type="nvarchar" MaxLength="20" />
+    <Property Name="class" Type="nvarchar" MaxLength="50" />
+    <Property Name="dayTardy" Type="numeric" Precision="15" Scale="3" />
+    <Property Name="dayUnder" Type="numeric" Precision="15" Scale="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vDuplicateEICPlantillaPreparation">
     <Key>
@@ -483,6 +521,14 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
     <Property Name="UserName" Type="nvarchar" MaxLength="30" />
   </EntityType>
+  <Function Name="DtrAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DtrID" Type="nvarchar" Mode="In" />
+    <Parameter Name="txtperiod" Type="nvarchar" Mode="In" />
+    <Parameter Name="Period" Type="int" Mode="In" />
+    <Parameter Name="action" Type="int" Mode="In" />
+    <Parameter Name="actionEIC" Type="nvarchar" Mode="In" />
+    <Parameter Name="remarks" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="fnGetEmployeeServiceRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="eic" Type="nvarchar" Mode="In" />
     <ReturnType>
@@ -551,6 +597,40 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <EntitySet Name="tpassSlipApp" EntityType="Self.tpassSlipApp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tptlosApp" EntityType="Self.tptlosApp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vAttDTR" EntityType="Self.vAttDTR" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vAttDTR].[RecNo] AS [RecNo], 
+    [vAttDTR].[DtrID] AS [DtrID], 
+    [vAttDTR].[EIC] AS [EIC], 
+    [vAttDTR].[Year] AS [Year], 
+    [vAttDTR].[Month] AS [Month], 
+    [vAttDTR].[Period] AS [Period], 
+    [vAttDTR].[Tag] AS [Tag], 
+    [vAttDTR].[approveEIC] AS [approveEIC], 
+    [vAttDTR].[statusID] AS [statusID], 
+    [vAttDTR].[Remarks] AS [Remarks], 
+    [vAttDTR].[dtStamp] AS [dtStamp], 
+    [vAttDTR].[userEIC] AS [userEIC], 
+    [vAttDTR].[timesTardy] AS [timesTardy], 
+    [vAttDTR].[timesUnder] AS [timesUnder], 
+    [vAttDTR].[wTotTardy] AS [wTotTardy], 
+    [vAttDTR].[wTotUnder] AS [wTotUnder], 
+    [vAttDTR].[timesAWOL] AS [timesAWOL], 
+    [vAttDTR].[timesPassSlip] AS [timesPassSlip], 
+    [vAttDTR].[Tardy] AS [Tardy], 
+    [vAttDTR].[Undertime] AS [Undertime], 
+    [vAttDTR].[transCode] AS [transCode], 
+    [vAttDTR].[empGroupCode] AS [empGroupCode], 
+    [vAttDTR].[officeCode] AS [officeCode], 
+    [vAttDTR].[officeName] AS [officeName], 
+    [vAttDTR].[fullnameLast] AS [fullnameLast], 
+    [vAttDTR].[groupName] AS [groupName], 
+    [vAttDTR].[statusName] AS [statusName], 
+    [vAttDTR].[class] AS [class], 
+    [vAttDTR].[dayTardy] AS [dayTardy], 
+    [vAttDTR].[dayUnder] AS [dayUnder]
+    FROM [dbo].[vAttDTR] AS [vAttDTR]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="Self.vDuplicateEICPlantillaPreparation" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vDuplicateEICPlantillaPreparation].[recNo] AS [recNo], 

@@ -11,8 +11,171 @@ namespace HRISv2.Controllers
     public class ToolboxController : Controller
     {
         HRISEntities db = new HRISEntities();
+        
+        public JsonResult GetAllApplications(String approvingEIC)
+        {
+            var passSlipApp = (from r in db.vpassSlipApps
+                               where r.statusID == 0
+                               where r.apprvEIC == approvingEIC
+                               select r).Count();
 
-        //********* Begin --- WEB BUNDY *********
+            var ptlosApp = (from g in db.vPtlosApps
+                            where g.recommendStatus == 1
+                            where g.Tag == 3
+                            where g.approveEIC == approvingEIC
+                            select g).Count();
+
+            var justificationApp = (from g in db.tjustifyApps
+                                    where g.statusID == null
+                                    where g.approveEIC == approvingEIC
+                                    select g).Count();
+
+            var revertJustificationApp = (from g in db.tjustifyApps
+                                          where g.statusID == 1               // 1 - is approved
+                                          where g.approveEIC == approvingEIC
+                                          where g.returnTag == 1
+                                          select g).Count();
+
+            var returnDtrApp = (from g in db.tAttDTRs
+                                where g.approveEIC == approvingEIC
+                                where g.returnTag == 1
+                                select g).Count();
+
+            var applicationMenus = new List<ApplicationMenu>();
+            var menu1 = new ApplicationMenu(1, "PASS SLIP", "", passSlipApp);
+            var menu2 = new ApplicationMenu(2, "PTLOS", "", ptlosApp);
+            var menu3 = new ApplicationMenu(3, "JUSTIFICATION", "", justificationApp);
+            var menu4 = new ApplicationMenu(4, "REVERT - JUSTIFICATION", "", revertJustificationApp);
+            var menu5 = new ApplicationMenu(5, "RETURN - DTR", "", returnDtrApp);
+            applicationMenus.Add(menu1);
+            applicationMenus.Add(menu2);
+            applicationMenus.Add(menu3);
+            applicationMenus.Add(menu4);
+            applicationMenus.Add(menu5);
+            applicationMenus.Reverse();
+
+            return Json(applicationMenus, JsonRequestBehavior.AllowGet);
+        }
+        
+        /*
+         * DTR
+         */
+        public JsonResult DTRAction(String DtrId, String strPeriod, int intPeriod, int action, String approvingEIC, String remarks)
+        {
+            Boolean has_error;
+            try
+            {
+                // invoke the store procedure for DTR
+                db.DtrAction(DtrId, strPeriod, intPeriod, action, approvingEIC, remarks);
+                db.SaveChanges();
+
+                has_error = false;
+            }
+            catch (Exception ex)
+            {
+                has_error = true;
+            }
+
+            dynamic wrap = new { dtr_action = new { has_error } };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult DTRReturnRequest(String approvingEIC)
+        {
+            /**
+             * Returns a list of Employee that requests return of their DTRs
+             */
+            var list = (from r in db.tAttDTRs
+                        group r by new
+                        {
+                            r.EIC,
+                            r.approveEIC,
+                            fullnameFirst = (from s in db.tappEmployees where s.EIC == r.EIC select s.fullnameFirst).FirstOrDefault().ToString().Trim(),
+                            r.returnTag,
+                            total = (from y in db.tAttDTRs
+                                     where y.EIC == r.EIC
+                                     where y.approveEIC == r.approveEIC
+                                     where y.returnTag == 1
+                                     select y).Count()
+                        } into g
+                        orderby g.Key.fullnameFirst
+                        where g.Key.approveEIC == approvingEIC
+                        where g.Key.returnTag == 1
+                        select new
+                        {
+                            g.Key.EIC,
+                            g.Key.approveEIC,
+                            g.Key.fullnameFirst,
+                            g.Key.total,
+                            g.Key.returnTag
+                        });
+
+            dynamic wrap = new { dtrs = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DTRReturnRequestPerEmployee(String EIC, String approvingEIC)
+        {
+            /**
+             * Returns a list of DTRs requested by employee
+             */
+            var list = (from r in db.tAttDTRs
+                        group r by new
+                        {
+                            r.DtrID,
+                            r.Year,
+                            r.Month,
+                            r.Period,
+                            r.EIC,
+                            r.approveEIC,
+                            r.Remarks,
+                            r.returnTag,
+                            fullnameFirst = (from s in db.tappEmployees where s.EIC == r.EIC select s.fullnameFirst).FirstOrDefault().ToString().Trim()
+                        } into g
+                        orderby new { g.Key.Year, g.Key.Month, g.Key.Period } descending
+                        where g.Key.approveEIC == approvingEIC
+                        where g.Key.EIC == EIC
+                        where g.Key.returnTag == 1
+                        select new
+                        {
+                            g.Key.DtrID,
+                            g.Key.Year,
+                            g.Key.Month,
+                            g.Key.Period,
+                            g.Key.EIC,
+                            g.Key.approveEIC,
+                            g.Key.fullnameFirst,
+                            g.Key.Remarks,
+                            g.Key.returnTag
+                        });
+
+            dynamic wrap = new { dtrs = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DTRDetail(String DtrId)
+        {
+            /**
+             * Returns DTR detail requested by employee for return
+             */
+            var list = (from r in db.tAttDTRs
+                        where r.DtrID == DtrId
+                        where r.returnTag == 1  
+                        select new
+                        {
+                            r.DtrID,
+                            r.EIC,
+                            r.approveEIC,
+                            r.Remarks,
+                            r.returnTag,
+                            fullnameFirst = (from s in db.tappEmployees where s.EIC == r.EIC select s.fullnameFirst).FirstOrDefault().ToString().Trim()
+                        });
+
+            dynamic wrap = new { dtr = list };
+            return Json(wrap, JsonRequestBehavior.AllowGet);
+        }
+
+        /*
+         * ******** Begin --- WEB BUNDY *********
+         */
         public ActionResult FormBundy(String EIC)
         {
             // var EIC = Session["EIC"].ToString();
@@ -137,9 +300,11 @@ namespace HRISv2.Controllers
 
             return Content("1");
         }
-        //********* End --- WEB BUNDY *********
+        
 
-        //********* Begin --- App BUNDY *********
+        /*
+         * ******** Begin --- App BUNDY *********
+         */
         public JsonResult CheckBundy(String EIC)
         {
             if (IsFlexi(EIC))
@@ -279,71 +444,10 @@ namespace HRISv2.Controllers
             db.tappDFlexiblesLogs.Add(bt);
             db.SaveChanges();
         }
-        //********* End --- App BUNDY *********
 
-        class ApplicationMenu
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public string IconUrl { get; set; }
-            public int TotalApplications { get; set; }
-
-            public ApplicationMenu(int _Id, string title, string iconUrl, int totalApplications)
-            {
-                Id = _Id;
-                Title = title;
-                IconUrl = iconUrl;
-                TotalApplications = totalApplications;
-            }
-        }
-
-        public JsonResult GetAllApplications(String approvingEIC)
-        {
-            var passSlipApp = (from r in db.vpassSlipApps
-                               where r.statusID == 0
-                               where r.apprvEIC == approvingEIC
-                               select r).Count();
-
-            var ptlosApp = (from g in db.vPtlosApps
-                            where g.recommendStatus == 1
-                            where g.Tag == 3
-                            where g.approveEIC == approvingEIC
-                            select g).Count();
-
-            var justificationApp = (from g in db.tjustifyApps
-                            where g.statusID == null
-                            where g.approveEIC == approvingEIC
-                            select g).Count();
-
-            var revertJustificationApp = (from g in db.tjustifyApps
-                                    where g.statusID == 1               // 1 - is approved
-                                    where g.approveEIC == approvingEIC
-                                    where g.returnTag == 1
-                                    select g).Count();
-
-            var returnDtrApp = (from g in db.tAttDTRs
-                                    where g.Tag == 1                
-                                    where g.approveEIC == approvingEIC
-                                    where g.returnTag == 1
-                                    select g).Count();
-
-            var applicationMenus = new List<ApplicationMenu>();
-            var menu1 = new ApplicationMenu(1, "PASS SLIP", "", passSlipApp);
-            var menu2 = new ApplicationMenu(2, "PTLOS", "", ptlosApp);
-            var menu3 = new ApplicationMenu(3, "JUSTIFICATION", "", justificationApp);
-            var menu4 = new ApplicationMenu(4, "REVERT - JUSTIFICATION", "", revertJustificationApp);
-            var menu5 = new ApplicationMenu(5, "RETURN - DTR", "", returnDtrApp);
-            applicationMenus.Add(menu1);
-            applicationMenus.Add(menu2);
-            applicationMenus.Add(menu3);
-            applicationMenus.Add(menu4);
-            applicationMenus.Add(menu5);
-            applicationMenus.Reverse();
-
-            return Json(applicationMenus, JsonRequestBehavior.AllowGet);
-        }
-
-        // ****** BEGIN --- Justification ******
+        /*
+         * ****** BEGIN --- Justification ******
+         */
         public JsonResult JustificationRevertDetail(String EIC, String approvingEIC, int month, int year, int period)
         {
             var list = (from r in db.vJustifyApps
@@ -550,9 +654,10 @@ namespace HRISv2.Controllers
             return Json(wrap, JsonRequestBehavior.AllowGet);
 
         }
-        // ****** END --- Justification ******
 
-        // ****** BEGIN --- PTLOS ******
+        /*
+         * ****** BEGIN --- PTLOS ******
+         */
         public JsonResult GetPTLOSApplications(String approvingEIC)
         {
             var list = (from r in db.tptlosApps
@@ -619,9 +724,10 @@ namespace HRISv2.Controllers
             dynamic wrap = new {ptlos_approval = new {tag}};
             return Json(wrap,JsonRequestBehavior.AllowGet);
         }
-        // ****** END --- PTLOS ******
 
-        // ****** BEGIN --- PASS SLIPS ******
+        /*
+         * ****** BEGIN --- PASS SLIPS ******
+         */
         public JsonResult PassSlipApproval(int id, int statusId, int isOfficial)
         {
             
@@ -771,8 +877,10 @@ namespace HRISv2.Controllers
 
             return Json(listWrapper, JsonRequestBehavior.AllowGet);
         }
-        // ****** END --- PASS SLIPS ******
 
+        /*
+         * Different Listings
+         */
         public JsonResult EmployeeList()
         {
             //var list = db.tappEmployee.OrderBy(g => g.fullnameLast).ToList();
@@ -877,6 +985,22 @@ namespace HRISv2.Controllers
                             where r.isActive == 1
                             select r).ToList();
             return Json(salSched, JsonRequestBehavior.AllowGet);
+        }
+    }
+
+    class ApplicationMenu
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string IconUrl { get; set; }
+        public int TotalApplications { get; set; }
+
+        public ApplicationMenu(int _Id, string title, string iconUrl, int totalApplications)
+        {
+            Id = _Id;
+            Title = title;
+            IconUrl = iconUrl;
+            TotalApplications = totalApplications;
         }
     }
 }

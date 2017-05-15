@@ -43,6 +43,15 @@
     <EntitySet Name="tAttDTRs" EntityType="HRISUserProfileModel.tAttDTR" />
     <EntitySet Name="tjustifyApps" EntityType="HRISUserProfileModel.tjustifyApp" />
     <EntitySet Name="vJustifyApps" EntityType="HRISUserProfileModel.vJustifyApp" />
+    <FunctionImport Name="DtrAction" ReturnType="Collection(String)">
+      <Parameter Name="DtrID" Mode="In" Type="String" />
+      <Parameter Name="txtperiod" Mode="In" Type="String" />
+      <Parameter Name="Period" Mode="In" Type="Int32" />
+      <Parameter Name="action" Mode="In" Type="Int32" />
+      <Parameter Name="actionEIC" Mode="In" Type="String" />
+      <Parameter Name="remarks" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="vAttDTRs" EntityType="HRISUserProfileModel.vAttDTR" />
   </EntityContainer>
   <EntityType Name="tappEmpGroup">
     <Key>
@@ -540,5 +549,41 @@
     <Property Name="year" Type="Int32" />
     <Property Name="month" Type="Int32" />
     <Property Name="returnTag" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vAttDTR">
+    <Key>
+      <PropertyRef Name="RecNo" />
+      <PropertyRef Name="DtrID" />
+    </Key>
+    <Property Name="RecNo" Type="Int32" Nullable="false" />
+    <Property Name="DtrID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Period" Type="Int32" />
+    <Property Name="Tag" Type="Int32" />
+    <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="dtStamp" Type="DateTime" Precision="3" />
+    <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="timesTardy" Type="Int32" />
+    <Property Name="timesUnder" Type="Int32" />
+    <Property Name="wTotTardy" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="wTotUnder" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="timesAWOL" Type="Int32" />
+    <Property Name="timesPassSlip" Type="Int32" />
+    <Property Name="Tardy" Type="Int32" />
+    <Property Name="Undertime" Type="Int32" />
+    <Property Name="transCode" Type="String" MaxLength="110" FixedLength="false" Unicode="true" />
+    <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="statusName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dayTardy" Type="Decimal" Precision="15" Scale="3" />
+    <Property Name="dayUnder" Type="Decimal" Precision="15" Scale="3" />
   </EntityType>
 </Schema>

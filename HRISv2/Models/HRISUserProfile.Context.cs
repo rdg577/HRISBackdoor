@@ -58,6 +58,7 @@ namespace HRISv2.Models
         public DbSet<tAttDTR> tAttDTRs { get; set; }
         public DbSet<tjustifyApp> tjustifyApps { get; set; }
         public DbSet<vJustifyApp> vJustifyApps { get; set; }
+        public DbSet<vAttDTR> vAttDTRs { get; set; }
     
         public virtual ObjectResult<string> JustifyAction(string eIC, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> action, string actionEIC, string ctrlNo, string remarks, Nullable<int> period)
         {
@@ -104,6 +105,35 @@ namespace HRISv2.Models
                 new ObjectParameter("eic", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnGetEmployeeServiceRecords_Result>("[HRISEntities].[fnGetEmployeeServiceRecords](@eic)", eicParameter);
+        }
+    
+        public virtual ObjectResult<string> DtrAction(string dtrID, string txtperiod, Nullable<int> period, Nullable<int> action, string actionEIC, string remarks)
+        {
+            var dtrIDParameter = dtrID != null ?
+                new ObjectParameter("DtrID", dtrID) :
+                new ObjectParameter("DtrID", typeof(string));
+    
+            var txtperiodParameter = txtperiod != null ?
+                new ObjectParameter("txtperiod", txtperiod) :
+                new ObjectParameter("txtperiod", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            var actionEICParameter = actionEIC != null ?
+                new ObjectParameter("actionEIC", actionEIC) :
+                new ObjectParameter("actionEIC", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("remarks", remarks) :
+                new ObjectParameter("remarks", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("DtrAction", dtrIDParameter, txtperiodParameter, periodParameter, actionParameter, actionEICParameter, remarksParameter);
         }
     }
 }

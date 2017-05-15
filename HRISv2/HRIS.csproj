@@ -272,6 +272,9 @@
     <Compile Include="Models\trefRemark.cs">
       <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vAttDTR.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vDuplicateEICPlantillaPreparation.cs">
       <DependentUpon>HRISUserProfile.tt</DependentUpon>
     </Compile>

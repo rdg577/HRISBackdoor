@@ -326,6 +326,44 @@
           <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.vAttDTR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vAttDTR">
+          <Key>
+            <PropertyRef Name="RecNo" />
+            <PropertyRef Name="DtrID" />
+          </Key>
+          <Property Name="RecNo" Type="int" Nullable="false" />
+          <Property Name="DtrID" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Period" Type="int" />
+          <Property Name="Tag" Type="int" />
+          <Property Name="approveEIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="statusID" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="dtStamp" Type="datetime" />
+          <Property Name="userEIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="timesTardy" Type="int" />
+          <Property Name="timesUnder" Type="int" />
+          <Property Name="wTotTardy" Type="nvarchar" MaxLength="15" />
+          <Property Name="wTotUnder" Type="nvarchar" MaxLength="15" />
+          <Property Name="timesAWOL" Type="int" />
+          <Property Name="timesPassSlip" Type="int" />
+          <Property Name="Tardy" Type="int" />
+          <Property Name="Undertime" Type="int" />
+          <Property Name="transCode" Type="nvarchar" MaxLength="110" />
+          <Property Name="empGroupCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="officeCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="officeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="fullnameLast" Type="nvarchar" MaxLength="60" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="20" />
+          <Property Name="class" Type="nvarchar" MaxLength="50" />
+          <Property Name="dayTardy" Type="numeric" Precision="15" Scale="3" />
+          <Property Name="dayUnder" Type="numeric" Precision="15" Scale="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'HRIS.dbo.vDuplicateEICPlantillaPreparation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vDuplicateEICPlantillaPreparation">
           <Key>
@@ -488,6 +526,14 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="AreaID" Type="nvarchar" MaxLength="50" />
           <Property Name="UserName" Type="nvarchar" MaxLength="30" />
         </EntityType>
+        <Function Name="DtrAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DtrID" Type="nvarchar" Mode="In" />
+          <Parameter Name="txtperiod" Type="nvarchar" Mode="In" />
+          <Parameter Name="Period" Type="int" Mode="In" />
+          <Parameter Name="action" Type="int" Mode="In" />
+          <Parameter Name="actionEIC" Type="nvarchar" Mode="In" />
+          <Parameter Name="remarks" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="fnGetEmployeeServiceRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="eic" Type="nvarchar" Mode="In" />
           <ReturnType>
@@ -556,6 +602,40 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <EntitySet Name="tpassSlipApp" EntityType="Self.tpassSlipApp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tptlosApp" EntityType="Self.tptlosApp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="trefEmpGroup" EntityType="Self.trefEmpGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vAttDTR" EntityType="Self.vAttDTR" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vAttDTR].[RecNo] AS [RecNo], 
+    [vAttDTR].[DtrID] AS [DtrID], 
+    [vAttDTR].[EIC] AS [EIC], 
+    [vAttDTR].[Year] AS [Year], 
+    [vAttDTR].[Month] AS [Month], 
+    [vAttDTR].[Period] AS [Period], 
+    [vAttDTR].[Tag] AS [Tag], 
+    [vAttDTR].[approveEIC] AS [approveEIC], 
+    [vAttDTR].[statusID] AS [statusID], 
+    [vAttDTR].[Remarks] AS [Remarks], 
+    [vAttDTR].[dtStamp] AS [dtStamp], 
+    [vAttDTR].[userEIC] AS [userEIC], 
+    [vAttDTR].[timesTardy] AS [timesTardy], 
+    [vAttDTR].[timesUnder] AS [timesUnder], 
+    [vAttDTR].[wTotTardy] AS [wTotTardy], 
+    [vAttDTR].[wTotUnder] AS [wTotUnder], 
+    [vAttDTR].[timesAWOL] AS [timesAWOL], 
+    [vAttDTR].[timesPassSlip] AS [timesPassSlip], 
+    [vAttDTR].[Tardy] AS [Tardy], 
+    [vAttDTR].[Undertime] AS [Undertime], 
+    [vAttDTR].[transCode] AS [transCode], 
+    [vAttDTR].[empGroupCode] AS [empGroupCode], 
+    [vAttDTR].[officeCode] AS [officeCode], 
+    [vAttDTR].[officeName] AS [officeName], 
+    [vAttDTR].[fullnameLast] AS [fullnameLast], 
+    [vAttDTR].[groupName] AS [groupName], 
+    [vAttDTR].[statusName] AS [statusName], 
+    [vAttDTR].[class] AS [class], 
+    [vAttDTR].[dayTardy] AS [dayTardy], 
+    [vAttDTR].[dayUnder] AS [dayUnder]
+    FROM [dbo].[vAttDTR] AS [vAttDTR]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vDuplicateEICPlantillaPreparation" EntityType="Self.vDuplicateEICPlantillaPreparation" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vDuplicateEICPlantillaPreparation].[recNo] AS [recNo], 
@@ -743,6 +823,15 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <EntitySet Name="tAttDTRs" EntityType="HRISUserProfileModel.tAttDTR" />
           <EntitySet Name="tjustifyApps" EntityType="HRISUserProfileModel.tjustifyApp" />
           <EntitySet Name="vJustifyApps" EntityType="HRISUserProfileModel.vJustifyApp" />
+          <FunctionImport Name="DtrAction" ReturnType="Collection(String)">
+            <Parameter Name="DtrID" Mode="In" Type="String" />
+            <Parameter Name="txtperiod" Mode="In" Type="String" />
+            <Parameter Name="Period" Mode="In" Type="Int32" />
+            <Parameter Name="action" Mode="In" Type="Int32" />
+            <Parameter Name="actionEIC" Mode="In" Type="String" />
+            <Parameter Name="remarks" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="vAttDTRs" EntityType="HRISUserProfileModel.vAttDTR" />
         </EntityContainer>
         <EntityType Name="tappEmpGroup">
           <Key>
@@ -1240,6 +1329,42 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="year" Type="Int32" />
           <Property Name="month" Type="Int32" />
           <Property Name="returnTag" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vAttDTR">
+          <Key>
+            <PropertyRef Name="RecNo" />
+            <PropertyRef Name="DtrID" />
+          </Key>
+          <Property Name="RecNo" Type="Int32" Nullable="false" />
+          <Property Name="DtrID" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Period" Type="Int32" />
+          <Property Name="Tag" Type="Int32" />
+          <Property Name="approveEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="statusID" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dtStamp" Type="DateTime" Precision="3" />
+          <Property Name="userEIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="timesTardy" Type="Int32" />
+          <Property Name="timesUnder" Type="Int32" />
+          <Property Name="wTotTardy" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="wTotUnder" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="timesAWOL" Type="Int32" />
+          <Property Name="timesPassSlip" Type="Int32" />
+          <Property Name="Tardy" Type="Int32" />
+          <Property Name="Undertime" Type="Int32" />
+          <Property Name="transCode" Type="String" MaxLength="110" FixedLength="false" Unicode="true" />
+          <Property Name="empGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="officeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="fullnameLast" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="statusName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dayTardy" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="dayUnder" Type="Decimal" Precision="15" Scale="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1770,6 +1895,43 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
                 <ScalarProperty Name="EIC" ColumnName="EIC" />
                 <ScalarProperty Name="controlNo" ColumnName="controlNo" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DtrAction" FunctionName="HRISUserProfileModel.Store.DtrAction" />
+          <EntitySetMapping Name="vAttDTRs">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.vAttDTR">
+              <MappingFragment StoreEntitySet="vAttDTR">
+                <ScalarProperty Name="dayUnder" ColumnName="dayUnder" />
+                <ScalarProperty Name="dayTardy" ColumnName="dayTardy" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+                <ScalarProperty Name="officeName" ColumnName="officeName" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+                <ScalarProperty Name="transCode" ColumnName="transCode" />
+                <ScalarProperty Name="Undertime" ColumnName="Undertime" />
+                <ScalarProperty Name="Tardy" ColumnName="Tardy" />
+                <ScalarProperty Name="timesPassSlip" ColumnName="timesPassSlip" />
+                <ScalarProperty Name="timesAWOL" ColumnName="timesAWOL" />
+                <ScalarProperty Name="wTotUnder" ColumnName="wTotUnder" />
+                <ScalarProperty Name="wTotTardy" ColumnName="wTotTardy" />
+                <ScalarProperty Name="timesUnder" ColumnName="timesUnder" />
+                <ScalarProperty Name="timesTardy" ColumnName="timesTardy" />
+                <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+                <ScalarProperty Name="dtStamp" ColumnName="dtStamp" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
+                <ScalarProperty Name="DtrID" ColumnName="DtrID" />
+                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

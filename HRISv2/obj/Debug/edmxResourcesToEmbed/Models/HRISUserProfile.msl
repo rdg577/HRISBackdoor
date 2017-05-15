@@ -527,5 +527,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DtrAction" FunctionName="HRISUserProfileModel.Store.DtrAction" />
+    <EntitySetMapping Name="vAttDTRs">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.vAttDTR">
+        <MappingFragment StoreEntitySet="vAttDTR">
+          <ScalarProperty Name="dayUnder" ColumnName="dayUnder" />
+          <ScalarProperty Name="dayTardy" ColumnName="dayTardy" />
+          <ScalarProperty Name="class" ColumnName="class" />
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="groupName" ColumnName="groupName" />
+          <ScalarProperty Name="fullnameLast" ColumnName="fullnameLast" />
+          <ScalarProperty Name="officeName" ColumnName="officeName" />
+          <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+          <ScalarProperty Name="empGroupCode" ColumnName="empGroupCode" />
+          <ScalarProperty Name="transCode" ColumnName="transCode" />
+          <ScalarProperty Name="Undertime" ColumnName="Undertime" />
+          <ScalarProperty Name="Tardy" ColumnName="Tardy" />
+          <ScalarProperty Name="timesPassSlip" ColumnName="timesPassSlip" />
+          <ScalarProperty Name="timesAWOL" ColumnName="timesAWOL" />
+          <ScalarProperty Name="wTotUnder" ColumnName="wTotUnder" />
+          <ScalarProperty Name="wTotTardy" ColumnName="wTotTardy" />
+          <ScalarProperty Name="timesUnder" ColumnName="timesUnder" />
+          <ScalarProperty Name="timesTardy" ColumnName="timesTardy" />
+          <ScalarProperty Name="userEIC" ColumnName="userEIC" />
+          <ScalarProperty Name="dtStamp" ColumnName="dtStamp" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="approveEIC" ColumnName="approveEIC" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="DtrID" ColumnName="DtrID" />
+          <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
