@@ -564,5 +564,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tapp212Image">
+      <EntityTypeMapping TypeName="HRISUserProfileModel.tapp212Image">
+        <MappingFragment StoreEntitySet="tapp212Image">
+          <ScalarProperty Name="imageData" ColumnName="imageData" />
+          <ScalarProperty Name="EIC" ColumnName="EIC" />
+          <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

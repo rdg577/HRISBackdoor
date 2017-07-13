@@ -1,66 +1,66 @@
 ﻿@{
     ViewBag.Title = "Oras Na";
-    var logDate = (DateTime) ViewBag.logDate;
-    
+    var logDate = (DateTime)ViewBag.logDate;
+
     if (ViewBag.isFlexi)
-     {
-         <div class="row">
-             <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                 <div class="panel panel-default">
-                     <div class="panel-heading" style="background-color: darkblue; color: orangered;">
-                         <h3>Oras Na</h3>
-                     </div>
-                     <table class="table">
-                         <thead>
-                             <tr style="background-color: royalblue; color: white;"><th style="text-align: center">@logDate.ToString("dd MMM yyyy [ ddd ]") </th></tr>
-                         </thead>
-                         <tbody>
-                         <tr>
-                             <td>
-                                 @if (ViewBag.nextLog == "IN1")
-                                 {
-                                    <button onclick="log('IN1', '@ViewBag.EIC', '@ViewBag.schemeCode');" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">AM In</button>
-                                 }
-                                 else
-                                 {
-                                    <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        @{
-                                            if (ViewBag.in1 != null)
-                                            {
-                                                <span>AM In [ <b>@ViewBag.in1</b> ]</span>
-                                            }
-                                            else
-                                            {
-                                                <span>AM In</span>
-                                            }
+    {
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: darkblue; color: orangered;">
+                        <h3>Oras Na</h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr style="background-color: royalblue; color: white;"><th style="text-align: center">@logDate.ToString("dd MMM yyyy [ ddd ]") </th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @if (ViewBag.nextLog == "IN1")
+                                    {
+                                        <button onclick="log('IN1', '@ViewBag.EIC', '@ViewBag.schemeCode');" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">AM In</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            @{
+                                        if (ViewBag.in1 != null)
+                                        {
+                                            <span>AM In [ <b>@ViewBag.in1</b> ]</span>
                                         }
-                                    </button>
-                                 }
-                             </td>
-                         </tr>
-                         <tr>
-                             <td>
-                                @if (ViewBag.nextLog == "OUT1")
-                                {
-                                    <button onclick="log('OUT1', '@ViewBag.EIC', '@ViewBag.schemeCode');" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">AM Out</button>
-                                }
-                                else
-                                {
-                                    <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        @{
-                                            if (ViewBag.out1 != null)
-                                            {
-                                                <span>AM Out [ <b>@ViewBag.out1</b> ]</span>
-                                            }
-                                            else
-                                            {
-                                                <span>AM Out</span>
-                                            }
+                                        else
+                                        {
+                                            <span>AM In</span>
                                         }
-                                    </button>
-                                }
-                             </td>
-                         </tr>
+                                            }
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @if (ViewBag.nextLog == "OUT1")
+                                    {
+                                        <button onclick="log('OUT1', '@ViewBag.EIC', '@ViewBag.schemeCode');" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">AM Out</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            @{
+                                        if (ViewBag.out1 != null)
+                                        {
+                                            <span>AM Out [ <b>@ViewBag.out1</b> ]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>AM Out</span>
+                                        }
+                                            }
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
                             <tr>
                                 <td>
                                     @if (ViewBag.nextLog == "IN2")
@@ -71,14 +71,14 @@
                                     {
                                         <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             @{
-                                                if (ViewBag.in2 != null)
-                                                {
-                                                    <span>PM In [ <b>@ViewBag.in2</b> ]</span>
-                                                }
-                                                else
-                                                {
-                                                    <span>PM In</span>
-                                                }
+                                        if (ViewBag.in2 != null)
+                                        {
+                                            <span>PM In [ <b>@ViewBag.in2</b> ]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>PM In</span>
+                                        }
                                             }
                                         </button>
                                     }
@@ -94,35 +94,35 @@
                                     {
                                         <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             @{
-                                                if (ViewBag.out2 != null)
-                                                {
-                                                    <span>PM Out [ <b>@ViewBag.out2</b> ]</span>
-                                                }
-                                                else
-                                                {
-                                                    <span>PM Out</span>
-                                                }
+                                        if (ViewBag.out2 != null)
+                                        {
+                                            <span>PM Out [ <b>@ViewBag.out2</b> ]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>PM Out</span>
+                                        }
                                             }
                                         </button>
                                     }
                                 </td>
                             </tr>
-                         </tbody>
-                     </table>
+                        </tbody>
+                    </table>
 
-                 </div>
-             </div>
-         </div>
-     }
-     else
-     {
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
         <div class="well well-lg alert-danger">Sorry, you are not enrolled in Flexi Sched.</div>
-     }
+    }
 }
 <script>
     function log(time_period, EIC, schemeCode) {
         $.ajax({
-            url: "@Url.Action("LogBundyWeb", "Toolbox")", 
+            url: "@Url.Action("LogBundyWeb", "Toolbox")",
             data: { time_period: time_period, EIC: EIC, schemeCode: schemeCode },
             type: "POST",
             datatype: "json",
@@ -133,5 +133,3 @@
         });
     }
 </script>
-
-

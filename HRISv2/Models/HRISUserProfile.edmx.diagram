@@ -35,6 +35,7 @@
         <EntityTypeShape EntityType="HRISUserProfileModel.tjustifyApp" Width="1.5" PointX="8.75" PointY="9.5" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vJustifyApp" Width="1.5" PointX="10.75" PointY="9" />
         <EntityTypeShape EntityType="HRISUserProfileModel.vAttDTR" Width="1.5" PointX="6.75" PointY="12.375" />
+        <EntityTypeShape EntityType="HRISUserProfileModel.tapp212Image" Width="1.5" PointX="12.75" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

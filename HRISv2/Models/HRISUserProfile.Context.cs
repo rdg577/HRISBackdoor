@@ -59,6 +59,7 @@ namespace HRISv2.Models
         public DbSet<tjustifyApp> tjustifyApps { get; set; }
         public DbSet<vJustifyApp> vJustifyApps { get; set; }
         public DbSet<vAttDTR> vAttDTRs { get; set; }
+        public DbSet<tapp212Image> tapp212Image { get; set; }
     
         public virtual ObjectResult<string> JustifyAction(string eIC, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> action, string actionEIC, string ctrlNo, string remarks, Nullable<int> period)
         {

@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HRISUserProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tapp212Image">
+    <Key>
+      <PropertyRef Name="RecNo" />
+    </Key>
+    <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="imageData" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="tappDFlexibles">
     <Key>
       <PropertyRef Name="Id" />
@@ -575,6 +583,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
     <Parameter Name="period" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="HRISUserProfileModelStoreContainer">
+    <EntitySet Name="tapp212Image" EntityType="Self.tapp212Image" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappDFlexibles" EntityType="Self.tappDFlexibles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappDFlexiblesLog" EntityType="Self.tappDFlexiblesLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />

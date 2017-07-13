@@ -58,6 +58,24 @@ namespace HRISv2.Controllers
         }
         
         /*
+         * User Profile Image
+         */
+        public ActionResult UserImage(string id)
+        {
+            var cover = GetImageFromDataBase(id);
+            return cover != null ? File(cover, "image/jpeg") : null;
+        }
+
+        public byte[] GetImageFromDataBase(string Id)
+        {
+            var q = from temp in db.tapp212Image 
+                    where temp.EIC == Id 
+                    select temp.imageData;
+            byte[] cover = q.SingleOrDefault();
+            return cover;
+        }
+
+        /*
          * DTR
          */
         public JsonResult DTRAction(String DtrId, String strPeriod, int intPeriod, int action, String approvingEIC, String remarks)
@@ -698,13 +716,19 @@ namespace HRISv2.Controllers
             try
             {
                 var ptlos = db.tptlosApps.Single(r => r.recNo == id);
-                ptlos.Tag = tag;      // 3 - Recommend, 4 - Disapprove, 5 - approve, 9 - Cancel, 0 - Returned
+                ptlos.Tag = tag;      // 3 - Recommend, 5 - approve, 6 - Disapprove, 9 - Cancel, 0 - Returned
                 // update to code
                 if (tag == 5)   // if approve
                 {
                     ptlos.approvedDate = DateTime.Now;
                     ptlos.approveStatus = 1;    // 0 - default, 1 - approve, 3 - cancel
                     ptlos.remarks = "Approved";
+                }
+
+                if (tag == 6)   // if disapprove
+                {
+                    ptlos.approveStatus = 2;
+                    ptlos.remarks = "Disapproved";
                 }
 
                 if (tag == 0)   // if returned

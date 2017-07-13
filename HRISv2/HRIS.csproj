@@ -188,6 +188,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRISUserProfile.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\tapp212Image.cs">
+      <DependentUpon>HRISUserProfile.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tappAction.cs">
       <DependentUpon>HRISMonitoringModel.tt</DependentUpon>
     </Compile>

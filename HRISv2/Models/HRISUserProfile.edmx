@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HRISUserProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tapp212Image">
+          <Key>
+            <PropertyRef Name="RecNo" />
+          </Key>
+          <Property Name="RecNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="imageData" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tappDFlexibles">
           <Key>
             <PropertyRef Name="Id" />
@@ -580,6 +588,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Parameter Name="period" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="HRISUserProfileModelStoreContainer">
+          <EntitySet Name="tapp212Image" EntityType="Self.tapp212Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappDFlexibles" EntityType="Self.tappDFlexibles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappDFlexiblesLog" EntityType="Self.tappDFlexiblesLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tappEmpGroup" EntityType="Self.tappEmpGroup" Schema="dbo" store:Type="Tables" />
@@ -832,6 +841,7 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
             <Parameter Name="remarks" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vAttDTRs" EntityType="HRISUserProfileModel.vAttDTR" />
+          <EntitySet Name="tapp212Image" EntityType="HRISUserProfileModel.tapp212Image" />
         </EntityContainer>
         <EntityType Name="tappEmpGroup">
           <Key>
@@ -1365,6 +1375,14 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
           <Property Name="class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="dayTardy" Type="Decimal" Precision="15" Scale="3" />
           <Property Name="dayUnder" Type="Decimal" Precision="15" Scale="3" />
+        </EntityType>
+        <EntityType Name="tapp212Image">
+          <Key>
+            <PropertyRef Name="RecNo" />
+          </Key>
+          <Property Name="RecNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="imageData" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1931,6 +1949,15 @@ warning 6002: The table/view 'HRIS.dbo.vUserProfileWithUsername' does not have a
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="EIC" ColumnName="EIC" />
                 <ScalarProperty Name="DtrID" ColumnName="DtrID" />
+                <ScalarProperty Name="RecNo" ColumnName="RecNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tapp212Image">
+            <EntityTypeMapping TypeName="HRISUserProfileModel.tapp212Image">
+              <MappingFragment StoreEntitySet="tapp212Image">
+                <ScalarProperty Name="imageData" ColumnName="imageData" />
+                <ScalarProperty Name="EIC" ColumnName="EIC" />
                 <ScalarProperty Name="RecNo" ColumnName="RecNo" />
               </MappingFragment>
             </EntityTypeMapping>
